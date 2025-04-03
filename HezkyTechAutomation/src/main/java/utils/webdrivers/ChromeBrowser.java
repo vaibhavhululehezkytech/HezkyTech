@@ -23,10 +23,19 @@ class ChromeBrowser extends DriverManager {
     	WebDriver driver = null;
 
         try {
-        	 System.setProperty("webdriver.chrome.driver", "C:\\Users\\vaibh\\eclipse-workspace\\ABC\\chromedriver\\chromedriver.exe");
-     		ChromeOptions options = new ChromeOptions();
-     		options.setBinary("C:\\Vaibhav Personal\\SELENIUM\\chrome-win64\\chrome.exe");
-     		 driver = new ChromeDriver(options);
+System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); // Update path if needed
+            
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");  // Run Chrome without UI
+            options.addArguments("--no-sandbox");  // Bypass OS security model
+            options.addArguments("--disable-dev-shm-usage");  // Overcome limited resources issues
+            
+            driver = new ChromeDriver(options);
+            
+       //  	 System.setProperty("webdriver.chrome.driver", "C:\\Users\\vaibh\\eclipse-workspace\\ABC\\chromedriver\\chromedriver.exe");
+     		// ChromeOptions options = new ChromeOptions();
+     		// options.setBinary("C:\\Vaibhav Personal\\SELENIUM\\chrome-win64\\chrome.exe");
+     		//  driver = new ChromeDriver(options);
            /* WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver(getChromeOptions());*/
         } catch (Exception e) {
