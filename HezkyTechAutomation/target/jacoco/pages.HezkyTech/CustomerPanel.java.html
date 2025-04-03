@@ -1,0 +1,1201 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerPanel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">pages.HezkyTech</a> &gt; <span class="el_source">CustomerPanel.java</span></div><h1>CustomerPanel.java</h1><pre class="source lang-java linenums">package pages.HezkyTech;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
+import pages.PageActionsBase;
+import pages.uipages.HezkyTech.CustomerPanelPageUI;
+import utils.readers.Config;
+import utils.webdrivers.DriverManager;
+
+public class CustomerPanel extends PageActionsBase {
+
+	/**
+	 * This class contains only login page related actions method
+	 * 
+	 * @author Vaibhav Hulule
+	 */
+
+	public CustomerPanel(DriverManager driverManager) {
+<span class="fc" id="L25">		super(driverManager, new CustomerPanelPageUI());</span>
+<span class="fc" id="L26">		browserActions.load(Config.getAccessBaseURL());</span>
+<span class="fc" id="L27">	}</span>
+
+	/**
+	 * Method is used to login the page and accessible by outside classes
+	 * 
+	 * @param userName
+	 * @param password
+	 */
+	// verify Page Scroll Presence
+	public void verifyPageScrollPresence() {
+<span class="fc" id="L37">		browserActions.verifyPageScrollPresence();</span>
+<span class="fc" id="L38">	}</span>
+
+//Navigate Back From Various  Links
+	public void navigateBackFromVariousLinks() {
+<span class="fc" id="L42">		checkBrokenLinks();</span>
+<span class="fc" id="L43">	}</span>
+
+	// Check Broken links on landing page
+	public void checkBrokenLinks() {
+<span class="fc" id="L47">		String checkBrokenLinksList = &quot;checkBrokenLinks&quot;;</span>
+<span class="fc" id="L48">		List&lt;WebElement&gt; checkBrokenLinksListElements = pageObject.getList(checkBrokenLinksList);</span>
+
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		for (int i = 0; i &lt; checkBrokenLinksListElements.size(); i++) {</span>
+			try {
+				// Re-locate elements to avoid StaleElementReferenceException
+<span class="fc" id="L53">				checkBrokenLinksListElements = pageObject.getList(checkBrokenLinksList);</span>
+<span class="fc" id="L54">				WebElement link = checkBrokenLinksListElements.get(i);</span>
+
+<span class="fc" id="L56">				String url = link.getAttribute(&quot;href&quot;);</span>
+
+<span class="pc bpc" id="L58" title="3 of 6 branches missed.">				if (url == null || url.isEmpty() || url.equals(&quot;#&quot;)) {</span>
+<span class="nc" id="L59">					System.out.println(&quot;Skipping invalid or empty link.&quot;);</span>
+<span class="nc" id="L60">					continue;</span>
+				}
+
+<span class="pc bpc" id="L63" title="1 of 4 branches missed.">				if (link.isDisplayed() &amp;&amp; link.isEnabled()) {</span>
+<span class="fc" id="L64">					System.out.println(&quot;Checking link: &quot; + url);</span>
+
+					// Scroll to the link
+<span class="fc" id="L67">					browserActions.scrollToLoadElementVisible(link, checkBrokenLinksList);</span>
+
+					// Check if the link is actually clickable
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">					if (browserActions.waitForElementClickable(link, largePageTimeout, checkBrokenLinksList)) {</span>
+
+						// Verify if the link is broken using HTTP request
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">						if (isLinkBroken(url)) {</span>
+<span class="nc" id="L74">							System.out.println(&quot;Broken Link Found: &quot; + url);</span>
+						} else {
+<span class="fc" id="L76">							System.out.println(&quot;Valid Link: &quot; + url);</span>
+<span class="fc" id="L77">							link.click();</span>
+
+							// Navigate back after clicking
+<span class="fc" id="L80">							browserActions.goToBackPage();</span>
+						}
+					}
+				} else {
+<span class="fc" id="L84">					System.out.println(&quot;Link is NOT clickable: &quot; + url);</span>
+				}
+<span class="nc" id="L86">			} catch (StaleElementReferenceException e) {</span>
+<span class="nc" id="L87">				System.out.println(&quot;Stale Element: Re-locating the link.&quot;);</span>
+<span class="nc" id="L88">			} catch (Exception e) {</span>
+<span class="nc" id="L89">				System.out.println(&quot;Exception while clicking the link.&quot;);</span>
+<span class="nc" id="L90">				e.printStackTrace();</span>
+<span class="pc" id="L91">			}</span>
+		}
+<span class="fc" id="L93">	}</span>
+
+	/**
+	 * Checks if the given URL is broken (returns HTTP error).
+	 */
+	private boolean isLinkBroken(String url) {
+		try {
+<span class="fc" id="L100">			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();</span>
+<span class="fc" id="L101">			connection.setRequestMethod(&quot;HEAD&quot;);</span>
+<span class="fc" id="L102">			connection.connect();</span>
+<span class="fc" id="L103">			int responseCode = connection.getResponseCode();</span>
+
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			return responseCode &gt;= 400; // If 400+ response, it's broken</span>
+<span class="nc" id="L106">		} catch (Exception e) {</span>
+<span class="nc" id="L107">			System.out.println(&quot;Error checking link: &quot; + url);</span>
+<span class="nc" id="L108">			return true;</span>
+		}
+	}
+	/**
+	 * Checks if the user can log in using valid credentials
+	 */
+	public void fillUpCredintials(String userName, String customerID, String password) {
+
+<span class="nc" id="L116">		logManager.logInformation(&quot;Trying to login: &quot;, true, true);</span>
+<span class="nc" id="L117">		addCustomerIDDetails(customerID);</span>
+<span class="nc" id="L118">		addUserNameDetails(userName);</span>
+<span class="nc" id="L119">		addPasswordDetails(password);</span>
+<span class="nc" id="L120">		clickOnLoginButton();</span>
+<span class="nc" id="L121">	}</span>
+
+	/**
+	 * Method is used to add userName in UserName Text-field
+	 * 
+	 * @param userName
+	 */
+	private void addCustomerIDDetails(String customerID) {
+<span class="nc" id="L129">		String customerIDTextField = &quot;customerID&quot;;</span>
+<span class="nc" id="L130">		WebElement customerIDTextFieldElement = pageObject.getTextField(customerIDTextField);</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(customerIDTextFieldElement, largestPageTimeout, customerIDTextField)) {</span>
+<span class="nc" id="L133">			browserActions.addDataInTheTextField(customerIDTextFieldElement, customerID, customerIDTextField);</span>
+
+		} else {
+
+<span class="nc" id="L137">			Assert.fail(&quot;customerID field is not accessible&quot;);</span>
+		}
+
+<span class="nc" id="L140">	}</span>
+
+	private void addUserNameDetails(String userName) {
+<span class="nc" id="L143">		String userNameTextField = &quot;userName&quot;;</span>
+<span class="nc" id="L144">		WebElement userNameTextFieldElement = pageObject.getTextField(userNameTextField);</span>
+
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(userNameTextFieldElement, largestPageTimeout, userNameTextField)) {</span>
+<span class="nc" id="L147">			browserActions.addDataInTheTextField(userNameTextFieldElement, userName, userNameTextField);</span>
+
+		} else {
+
+<span class="nc" id="L151">			Assert.fail(&quot;Username field is not accessible&quot;);</span>
+		}
+
+<span class="nc" id="L154">	}</span>
+
+	/**
+	 * Method is used to add password in Password Text-field
+	 * 
+	 * @param password
+	 */
+	private void addPasswordDetails(String password) {
+<span class="nc" id="L162">		String passwordTextField = &quot;password&quot;;</span>
+<span class="nc" id="L163">		WebElement passwordTextFieldElement = pageObject.getTextField(passwordTextField);</span>
+
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(passwordTextFieldElement, largePageTimeout, passwordTextField)) {</span>
+<span class="nc" id="L166">			browserActions.addDataInTheTextField(passwordTextFieldElement, password, passwordTextField);</span>
+		} else {
+
+<span class="nc" id="L169">			Assert.fail(&quot;Password fied is not accessible&quot;);</span>
+		}
+
+<span class="nc" id="L172">	}</span>
+
+	/**
+	 * Method is used to Click on Login Button
+	 */
+	private void clickOnLoginButton() {
+<span class="nc" id="L178">		logManager.logInformation(&quot;Trying to click on login button: &quot;, true, true);</span>
+
+<span class="nc" id="L180">		String signInButton = &quot;signIn&quot;;</span>
+<span class="nc" id="L181">		WebElement signInButtonElement = pageObject.getButton(signInButton);</span>
+
+<span class="nc" id="L183">		String usernameValidationText = &quot;usernameValidation&quot;;</span>
+<span class="nc" id="L184">		WebElement usernameValidationTextElement = pageObject.getText(usernameValidationText);</span>
+
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(signInButtonElement, largePageTimeout, signInButton)) {</span>
+<span class="nc" id="L187">			browserActions.clickButton(signInButtonElement, signInButton);</span>
+<span class="nc" id="L188">			browserActions.waitForSeconds(smallPageTimeout);</span>
+
+<span class="nc" id="L190">			Assert.assertTrue(browserActions.waitForElementVisible(usernameValidationTextElement, largePageTimeout,</span>
+					usernameValidationText), &quot;Login Failed , Username Title text not visible&quot;);
+		}
+
+<span class="nc" id="L194">	}</span>
+
+	// companyLogoText on landingPage
+	public void verifyCompnyLogoLodedOnLandingPage() {
+<span class="fc" id="L198">		logManager.logInformation(&quot;Trying to verify Comapny logo is loaded or not: &quot;, true, true);</span>
+
+<span class="fc" id="L200">		String companyLogoOnLandingPageText = &quot;companyLogoOnLandingPage&quot;;</span>
+<span class="fc" id="L201">		WebElement companyLogoOnLandingPageTextElement = pageObject.getText(companyLogoOnLandingPageText);</span>
+
+<span class="fc" id="L203">		Assert.assertTrue(browserActions.waitForElementVisible(companyLogoOnLandingPageTextElement, largePageTimeout,</span>
+				companyLogoOnLandingPageText), &quot;Company logo not visible&quot;);
+<span class="fc" id="L205">	}</span>
+
+	// companyLogoText
+	public void verifyCompnyLogoLoded() {
+<span class="nc" id="L209">		logManager.logInformation(&quot;Trying to verify Comapny logo is loaded or not: &quot;, true, true);</span>
+
+<span class="nc" id="L211">		String companyLogoText = &quot;companyLogo&quot;;</span>
+<span class="nc" id="L212">		WebElement companyLogoTextElement = pageObject.getText(companyLogoText);</span>
+
+<span class="nc" id="L214">		Assert.assertTrue(</span>
+<span class="nc" id="L215">				browserActions.waitForElementVisible(companyLogoTextElement, largePageTimeout, companyLogoText),</span>
+				&quot;Company logo not visible&quot;);
+<span class="nc" id="L217">	}</span>
+
+	// Dashboard Button
+	public void dashboardButton() {
+<span class="nc" id="L221">		logManager.logInformation(&quot;Trying to click on Dashboard button: &quot;, true, true);</span>
+
+<span class="nc" id="L223">		String dashboardButton = &quot;dashboard&quot;;</span>
+<span class="nc" id="L224">		WebElement dashboardButtonElement = pageObject.getButton(dashboardButton);</span>
+
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(dashboardButtonElement, largePageTimeout, dashboardButton)) {</span>
+<span class="nc" id="L227">			browserActions.clickButton(dashboardButtonElement, dashboardButton);</span>
+<span class="nc" id="L228">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L229">			logManager.logInformation(&quot;Clicked on Dashboard button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L231">			Assert.fail(&quot;Dashboard Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L233">	}</span>
+
+// Asset button
+	public void assetsButton() {
+<span class="nc" id="L237">		logManager.logInformation(&quot;Trying to click on Assets button: &quot;, true, true);</span>
+
+<span class="nc" id="L239">		String assetsButton = &quot;assets&quot;;</span>
+<span class="nc" id="L240">		WebElement assetsButtonElement = pageObject.getButton(assetsButton);</span>
+
+<span class="nc bnc" id="L242" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(assetsButtonElement, largePageTimeout, assetsButton)) {</span>
+<span class="nc" id="L243">			browserActions.clickButton(assetsButtonElement, assetsButton);</span>
+<span class="nc" id="L244">			browserActions.waitForSeconds(smallPageTimeout);</span>
+
+<span class="nc" id="L246">			logManager.logInformation(&quot;clicked on Assets button&quot;, true, true);</span>
+		} else {
+
+<span class="nc" id="L249">			Assert.fail(&quot;Assets Button/Dropdown is not Clickable &quot;);</span>
+		}
+<span class="nc" id="L251">	}</span>
+
+	// Incidents Button
+	public void incidentsButton() {
+<span class="nc" id="L255">		logManager.logInformation(&quot;Trying to click on Incidents button: &quot;, true, true);</span>
+
+<span class="nc" id="L257">		String incidentsButton = &quot;incidents&quot;;</span>
+<span class="nc" id="L258">		WebElement incidentsButtonElement = pageObject.getButton(incidentsButton);</span>
+
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(incidentsButtonElement, largePageTimeout, incidentsButton)) {</span>
+<span class="nc" id="L261">			browserActions.clickButton(incidentsButtonElement, incidentsButton);</span>
+<span class="nc" id="L262">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L263">			logManager.logInformation(&quot;Clicked on Incidents button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L265">			Assert.fail(&quot;Incidents Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L267">	}</span>
+
+	// Reports Button
+	public void reportsButton() {
+<span class="nc" id="L271">		logManager.logInformation(&quot;Trying to click on Reports button: &quot;, true, true);</span>
+
+<span class="nc" id="L273">		String reportsButton = &quot;reports&quot;;</span>
+<span class="nc" id="L274">		WebElement reportsButtonElement = pageObject.getButton(reportsButton);</span>
+
+<span class="nc bnc" id="L276" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(reportsButtonElement, largePageTimeout, reportsButton)) {</span>
+<span class="nc" id="L277">			browserActions.clickButton(reportsButtonElement, reportsButton);</span>
+<span class="nc" id="L278">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L279">			logManager.logInformation(&quot;Clicked on Reports button&quot;, true, true);</span>
+<span class="nc" id="L280">			browserActions.uploadFileUsingRobotClass(reportsButton, reportsButtonElement);</span>
+		} else {
+<span class="nc" id="L282">			Assert.fail(&quot;Reports Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L284">	}</span>
+
+	// Admin Button
+	public void adminButton() {
+<span class="nc" id="L288">		logManager.logInformation(&quot;Trying to click on Admin button: &quot;, true, true);</span>
+
+<span class="nc" id="L290">		String adminButton = &quot;admin&quot;;</span>
+<span class="nc" id="L291">		WebElement adminButtonElement = pageObject.getButton(adminButton);</span>
+
+<span class="nc bnc" id="L293" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(adminButtonElement, largePageTimeout, adminButton)) {</span>
+<span class="nc" id="L294">			browserActions.clickButton(adminButtonElement, adminButton);</span>
+<span class="nc" id="L295">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L296">			logManager.logInformation(&quot;Clicked on Admin button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L298">			Assert.fail(&quot;Admin Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L300">	}</span>
+
+	// Show More 1 Button
+	public void showMore1Button() {
+<span class="nc" id="L304">		logManager.logInformation(&quot;Trying to click on Show More 1 button: &quot;, true, true);</span>
+
+<span class="nc" id="L306">		String showMore1Button = &quot;showMore1&quot;;</span>
+<span class="nc" id="L307">		WebElement showMore1ButtonElement = pageObject.getButton(showMore1Button);</span>
+
+<span class="nc bnc" id="L309" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(showMore1ButtonElement, largePageTimeout, showMore1Button)) {</span>
+<span class="nc" id="L310">			browserActions.clickButton(showMore1ButtonElement, showMore1Button);</span>
+<span class="nc" id="L311">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L312">			logManager.logInformation(&quot;Clicked on Show More 1 button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L314">			Assert.fail(&quot;Show More 1 Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L316">	}</span>
+
+	// Show More 2 Button
+	public void showMore2Button() {
+<span class="nc" id="L320">		logManager.logInformation(&quot;Trying to click on Show More 2 button: &quot;, true, true);</span>
+
+<span class="nc" id="L322">		String showMore2Button = &quot;showMore2&quot;;</span>
+<span class="nc" id="L323">		WebElement showMore2ButtonElement = pageObject.getButton(showMore2Button);</span>
+
+<span class="nc bnc" id="L325" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(showMore2ButtonElement, largePageTimeout, showMore2Button)) {</span>
+<span class="nc" id="L326">			browserActions.clickButton(showMore2ButtonElement, showMore2Button);</span>
+<span class="nc" id="L327">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L328">			logManager.logInformation(&quot;Clicked on Show More 2 button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L330">			Assert.fail(&quot;Show More 2 Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L332">	}</span>
+
+	// Show Less 1 Button
+	public void showLess1Button() {
+<span class="nc" id="L336">		logManager.logInformation(&quot;Trying to click on Show Less 1 button: &quot;, true, true);</span>
+
+<span class="nc" id="L338">		String showLess1Button = &quot;showLess1&quot;;</span>
+<span class="nc" id="L339">		WebElement showLess1ButtonElement = pageObject.getButton(showLess1Button);</span>
+
+<span class="nc bnc" id="L341" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(showLess1ButtonElement, largePageTimeout, showLess1Button)) {</span>
+<span class="nc" id="L342">			browserActions.clickButton(showLess1ButtonElement, showLess1Button);</span>
+<span class="nc" id="L343">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L344">			logManager.logInformation(&quot;Clicked on Show Less 1 button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L346">			Assert.fail(&quot;Show Less 1 Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L348">	}</span>
+
+	// Show Less 2 Button
+	public void showLess2Button() {
+<span class="nc" id="L352">		logManager.logInformation(&quot;Trying to click on Show Less 2 button: &quot;, true, true);</span>
+
+<span class="nc" id="L354">		String showLess2Button = &quot;showLess2&quot;;</span>
+<span class="nc" id="L355">		WebElement showLess2ButtonElement = pageObject.getButton(showLess2Button);</span>
+
+<span class="nc bnc" id="L357" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(showLess2ButtonElement, largePageTimeout, showLess2Button)) {</span>
+<span class="nc" id="L358">			browserActions.clickButton(showLess2ButtonElement, showLess2Button);</span>
+<span class="nc" id="L359">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L360">			logManager.logInformation(&quot;Clicked on Show Less 2 button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L362">			Assert.fail(&quot;Show Less 2 Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L364">	}</span>
+
+	// Location Icon Button
+	public void locationIconButton() {
+<span class="nc" id="L368">		logManager.logInformation(&quot;Trying to click on Location Icon button: &quot;, true, true);</span>
+
+<span class="nc" id="L370">		String locationIconButton = &quot;locationIcon&quot;;</span>
+<span class="nc" id="L371">		WebElement locationIconButtonElement = pageObject.getButton(locationIconButton);</span>
+
+<span class="nc bnc" id="L373" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(locationIconButtonElement, largePageTimeout, locationIconButton)) {</span>
+<span class="nc" id="L374">			browserActions.clickButton(locationIconButtonElement, locationIconButton);</span>
+<span class="nc" id="L375">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L376">			logManager.logInformation(&quot;Clicked on Location Icon button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L378">			Assert.fail(&quot;Location Icon Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L380">	}</span>
+
+	// expandLocationButton
+	public void expandLocationButton() {
+<span class="nc" id="L384">		logManager.logInformation(&quot;Trying to click expand Location  button: &quot;, true, true);</span>
+
+<span class="nc" id="L386">		String expandLocationButton = &quot;expandLocation&quot;;</span>
+<span class="nc" id="L387">		WebElement expandLocationButtonElement = pageObject.getButton(expandLocationButton);</span>
+
+<span class="nc bnc" id="L389" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(expandLocationButtonElement, largePageTimeout,</span>
+				expandLocationButton)) {
+<span class="nc" id="L391">			browserActions.clickButton(expandLocationButtonElement, expandLocationButton);</span>
+<span class="nc" id="L392">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L393">			logManager.logInformation(&quot;Clicked on Expand Location Icon button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L395">			Assert.fail(&quot;Expand Location is not clickable&quot;);</span>
+		}
+<span class="nc" id="L397">	}</span>
+
+	// selectLocationButton
+	public void selectLocationButton() {
+<span class="nc" id="L401">		logManager.logInformation(&quot;Trying to click on Select Location  button: &quot;, true, true);</span>
+
+<span class="nc" id="L403">		String selectLocationButton = &quot;selectLocation&quot;;</span>
+<span class="nc" id="L404">		WebElement selectLocationButtonElement = pageObject.getButton(selectLocationButton);</span>
+
+<span class="nc bnc" id="L406" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(selectLocationButtonElement, largePageTimeout,</span>
+				selectLocationButton)) {
+<span class="nc" id="L408">			browserActions.clickButton(selectLocationButtonElement, selectLocationButton);</span>
+<span class="nc" id="L409">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L410">			logManager.logInformation(&quot;Location is selected&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L412">			Assert.fail(&quot;Location   is not selected&quot;);</span>
+		}
+<span class="nc" id="L414">	}</span>
+
+	// Notification Icon Button
+	public void notificationIconButton() {
+<span class="nc" id="L418">		logManager.logInformation(&quot;Trying to click on Notification Icon button: &quot;, true, true);</span>
+
+<span class="nc" id="L420">		String notificationIconButton = &quot;notificationIcon&quot;;</span>
+<span class="nc" id="L421">		WebElement notificationIconButtonElement = pageObject.getButton(notificationIconButton);</span>
+
+<span class="nc bnc" id="L423" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(notificationIconButtonElement, largePageTimeout,</span>
+				notificationIconButton)) {
+<span class="nc" id="L425">			browserActions.clickButton(notificationIconButtonElement, notificationIconButton);</span>
+<span class="nc" id="L426">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L427">			logManager.logInformation(&quot;Clicked on Notification Icon button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L429">			Assert.fail(&quot;Notification Icon Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L431">	}</span>
+
+	// UserName Button
+	public void userNameButton() {
+<span class="nc" id="L435">		logManager.logInformation(&quot;Trying to click on UserName button: &quot;, true, true);</span>
+
+<span class="nc" id="L437">		String userNameButton = &quot;userName&quot;;</span>
+<span class="nc" id="L438">		WebElement userNameButtonElement = pageObject.getButton(userNameButton);</span>
+
+<span class="nc bnc" id="L440" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(userNameButtonElement, largePageTimeout, userNameButton)) {</span>
+<span class="nc" id="L441">			browserActions.clickButton(userNameButtonElement, userNameButton);</span>
+<span class="nc" id="L442">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L443">			logManager.logInformation(&quot;Clicked on UserName button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L445">			Assert.fail(&quot;UserName Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L447">	}</span>
+
+	// Assigned User Button
+	public void assignedUserButton() {
+<span class="nc" id="L451">		logManager.logInformation(&quot;Trying to click on Assigned User button: &quot;, true, true);</span>
+
+<span class="nc" id="L453">		String assignedUserButton = &quot;assignedUser&quot;;</span>
+<span class="nc" id="L454">		WebElement assignedUserButtonElement = pageObject.getButton(assignedUserButton);</span>
+
+<span class="nc bnc" id="L456" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(assignedUserButtonElement, largePageTimeout, assignedUserButton)) {</span>
+<span class="nc" id="L457">			browserActions.clickButton(assignedUserButtonElement, assignedUserButton);</span>
+<span class="nc" id="L458">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L459">			logManager.logInformation(&quot;Clicked on Assigned User button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L461">			Assert.fail(&quot;Assigned User Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L463">	}</span>
+
+	// Acknowledge Button
+	public void acknowledgeButton() {
+<span class="nc" id="L467">		logManager.logInformation(&quot;Trying to click on Acknowledge button: &quot;, true, true);</span>
+
+<span class="nc" id="L469">		String acknowledgeButton = &quot;acknowledge&quot;;</span>
+<span class="nc" id="L470">		WebElement acknowledgeButtonElement = pageObject.getButton(acknowledgeButton);</span>
+
+<span class="nc bnc" id="L472" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(acknowledgeButtonElement, largePageTimeout, acknowledgeButton)) {</span>
+<span class="nc" id="L473">			browserActions.clickButton(acknowledgeButtonElement, acknowledgeButton);</span>
+<span class="nc" id="L474">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L475">			logManager.logInformation(&quot;Clicked on Acknowledge button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L477">			Assert.fail(&quot;Acknowledge Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L479">	}</span>
+
+	// Alert Okay Button
+	public void alertOkayButton() {
+<span class="nc" id="L483">		logManager.logInformation(&quot;Trying to click on Alert Okay button: &quot;, true, true);</span>
+
+<span class="nc" id="L485">		String alertOkayButton = &quot;alertOkay&quot;;</span>
+<span class="nc" id="L486">		WebElement alertOkayButtonElement = pageObject.getButton(alertOkayButton);</span>
+
+<span class="nc bnc" id="L488" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(alertOkayButtonElement, largePageTimeout, alertOkayButton)) {</span>
+<span class="nc" id="L489">			browserActions.clickButton(alertOkayButtonElement, alertOkayButton);</span>
+<span class="nc" id="L490">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L491">			logManager.logInformation(&quot;Clicked on Alert Okay button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L493">			Assert.fail(&quot;Alert Okay Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L495">	}</span>
+
+	// Alert Cancel Button
+	public void alertCancelButton() {
+<span class="nc" id="L499">		logManager.logInformation(&quot;Trying to click on Alert Cancel button: &quot;, true, true);</span>
+
+<span class="nc" id="L501">		String alertCancelButton = &quot;alertCancel&quot;;</span>
+<span class="nc" id="L502">		WebElement alertCancelButtonElement = pageObject.getButton(alertCancelButton);</span>
+
+<span class="nc bnc" id="L504" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(alertCancelButtonElement, largePageTimeout, alertCancelButton)) {</span>
+<span class="nc" id="L505">			browserActions.clickButton(alertCancelButtonElement, alertCancelButton);</span>
+<span class="nc" id="L506">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L507">			logManager.logInformation(&quot;Clicked on Alert Cancel button&quot;, true, true);</span>
+		}
+<span class="nc" id="L509">	}</span>
+
+	// Verify Alert popup loaded
+	public void verifyAlertPopupTextVisible() {
+<span class="nc" id="L513">		logManager.logInformation(&quot;Trying to verify if the Alert popup text is visible: &quot;, true, true);</span>
+
+<span class="nc" id="L515">		String alertPopupValidationText = &quot;alertPopupText&quot;;</span>
+<span class="nc" id="L516">		WebElement alertPopupTextElement = pageObject.getText(alertPopupValidationText);</span>
+
+<span class="nc bnc" id="L518" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(alertPopupTextElement, smallPageTimeout, alertPopupValidationText)) {</span>
+<span class="nc" id="L519">			logManager.logInformation(&quot;Alert popup text is visible&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L521">			Assert.fail(&quot;Alert popup text is not visible&quot;);</span>
+		}
+<span class="nc" id="L523">	}</span>
+
+	// Asset Page //
+	// Asset Count Button
+	public void clickAssetCountButton() {
+<span class="nc" id="L528">		logManager.logInformation(&quot;Trying to click on Asset Count button: &quot;, true, true);</span>
+
+<span class="nc" id="L530">		String assetCountButton = &quot;assetCount&quot;;</span>
+<span class="nc" id="L531">		WebElement assetCountButtonElement = pageObject.getButton(assetCountButton);</span>
+
+<span class="nc bnc" id="L533" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(assetCountButtonElement, largePageTimeout, assetCountButton)) {</span>
+<span class="nc" id="L534">			browserActions.clickButton(assetCountButtonElement, assetCountButton);</span>
+<span class="nc" id="L535">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L536">			logManager.logInformation(&quot;Clicked on Asset Count button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L538">			Assert.fail(&quot;Asset Count Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L540">	}</span>
+
+	// Normal Asset Button
+	public void clickNormalAssetButton() {
+<span class="nc" id="L544">		logManager.logInformation(&quot;Trying to click on Normal Asset button: &quot;, true, true);</span>
+
+<span class="nc" id="L546">		String normalAssetButton = &quot;normalAsset&quot;;</span>
+<span class="nc" id="L547">		WebElement normalAssetButtonElement = pageObject.getButton(normalAssetButton);</span>
+
+<span class="nc bnc" id="L549" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(normalAssetButtonElement, largePageTimeout, normalAssetButton)) {</span>
+<span class="nc" id="L550">			browserActions.clickButton(normalAssetButtonElement, normalAssetButton);</span>
+<span class="nc" id="L551">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L552">			logManager.logInformation(&quot;Clicked on Normal Asset button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L554">			Assert.fail(&quot;Normal Asset Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L556">	}</span>
+
+	// Asset with Alarm Button
+	public void clickAssetWithAlarmButton() {
+<span class="nc" id="L560">		logManager.logInformation(&quot;Trying to click on Asset with Alarm button: &quot;, true, true);</span>
+
+<span class="nc" id="L562">		String assetWithAlarmButton = &quot;assetWithAlarm&quot;;</span>
+<span class="nc" id="L563">		WebElement assetWithAlarmButtonElement = pageObject.getButton(assetWithAlarmButton);</span>
+
+<span class="nc bnc" id="L565" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(assetWithAlarmButtonElement, largePageTimeout,</span>
+				assetWithAlarmButton)) {
+<span class="nc" id="L567">			browserActions.clickButton(assetWithAlarmButtonElement, assetWithAlarmButton);</span>
+<span class="nc" id="L568">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L569">			logManager.logInformation(&quot;Clicked on Asset with Alarm button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L571">			Assert.fail(&quot;Asset with Alarm Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L573">	}</span>
+
+	// Inactive Asset Button
+	public void clickInactiveAssetButton() {
+<span class="nc" id="L577">		logManager.logInformation(&quot;Trying to click on Inactive Asset button: &quot;, true, true);</span>
+
+<span class="nc" id="L579">		String inactiveAssetButton = &quot;inactiveAsset&quot;;</span>
+<span class="nc" id="L580">		WebElement inactiveAssetButtonElement = pageObject.getButton(inactiveAssetButton);</span>
+
+<span class="nc bnc" id="L582" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(inactiveAssetButtonElement, largePageTimeout, inactiveAssetButton)) {</span>
+<span class="nc" id="L583">			browserActions.clickButton(inactiveAssetButtonElement, inactiveAssetButton);</span>
+<span class="nc" id="L584">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L585">			logManager.logInformation(&quot;Clicked on Inactive Asset button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L587">			Assert.fail(&quot;Inactive Asset Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L589">	}</span>
+
+	// Add Asset Button
+	public void clickAddAssetButton() {
+<span class="nc" id="L593">		logManager.logInformation(&quot;Trying to click on Add Asset button: &quot;, true, true);</span>
+
+<span class="nc" id="L595">		String addAssetButton = &quot;addAsset&quot;;</span>
+<span class="nc" id="L596">		WebElement addAssetButtonElement = pageObject.getButton(addAssetButton);</span>
+
+<span class="nc bnc" id="L598" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(addAssetButtonElement, largePageTimeout, addAssetButton)) {</span>
+<span class="nc" id="L599">			browserActions.clickButton(addAssetButtonElement, addAssetButton);</span>
+<span class="nc" id="L600">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L601">			logManager.logInformation(&quot;Clicked on Add Asset button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L603">			Assert.fail(&quot;Add Asset Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L605">	}</span>
+
+	// Reload Search Asset Button
+	public void clickReloadSearchAssetButton() {
+<span class="nc" id="L609">		logManager.logInformation(&quot;Trying to click on Reload Search Asset button: &quot;, true, true);</span>
+
+<span class="nc" id="L611">		String reloadSearchAssetButton = &quot;reloadSearchAsset&quot;;</span>
+<span class="nc" id="L612">		WebElement reloadSearchAssetButtonElement = pageObject.getButton(reloadSearchAssetButton);</span>
+
+<span class="nc bnc" id="L614" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(reloadSearchAssetButtonElement, largePageTimeout,</span>
+				reloadSearchAssetButton)) {
+<span class="nc" id="L616">			browserActions.clickButton(reloadSearchAssetButtonElement, reloadSearchAssetButton);</span>
+<span class="nc" id="L617">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L618">			logManager.logInformation(&quot;Clicked on Reload Search Asset button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L620">			Assert.fail(&quot;Reload Search Asset Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L622">	}</span>
+
+	// Filter Asset Button
+	public void clickFilterAssetButton() {
+<span class="nc" id="L626">		logManager.logInformation(&quot;Trying to click on Filter Asset button: &quot;, true, true);</span>
+
+<span class="nc" id="L628">		String filterAssetButton = &quot;filterAsset&quot;;</span>
+<span class="nc" id="L629">		WebElement filterAssetButtonElement = pageObject.getButton(filterAssetButton);</span>
+
+<span class="nc bnc" id="L631" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(filterAssetButtonElement, largePageTimeout, filterAssetButton)) {</span>
+<span class="nc" id="L632">			browserActions.clickButton(filterAssetButtonElement, filterAssetButton);</span>
+<span class="nc" id="L633">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L634">			logManager.logInformation(&quot;Clicked on Filter Asset button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L636">			Assert.fail(&quot;Filter Asset Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L638">	}</span>
+
+	// Expand Asset Button
+	public void clickExpandAssetButton() {
+<span class="nc" id="L642">		logManager.logInformation(&quot;Trying to click on Expand Asset button: &quot;, true, true);</span>
+
+<span class="nc" id="L644">		String expandAssetButton = &quot;expandAsset&quot;;</span>
+<span class="nc" id="L645">		WebElement expandAssetButtonElement = pageObject.getButton(expandAssetButton);</span>
+
+<span class="nc bnc" id="L647" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(expandAssetButtonElement, largePageTimeout, expandAssetButton)) {</span>
+<span class="nc" id="L648">			browserActions.clickButton(expandAssetButtonElement, expandAssetButton);</span>
+<span class="nc" id="L649">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L650">			logManager.logInformation(&quot;Clicked on Expand Asset button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L652">			Assert.fail(&quot;Expand Asset Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L654">	}</span>
+
+	// Edit Asset Button
+	public void clickEditAssetButton() {
+<span class="nc" id="L658">		logManager.logInformation(&quot;Trying to click on Edit Asset button: &quot;, true, true);</span>
+
+<span class="nc" id="L660">		String editAssetButton = &quot;editAsset&quot;;</span>
+<span class="nc" id="L661">		WebElement editAssetButtonElement = pageObject.getButton(editAssetButton);</span>
+
+<span class="nc bnc" id="L663" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(editAssetButtonElement, largePageTimeout, editAssetButton)) {</span>
+<span class="nc" id="L664">			browserActions.clickButton(editAssetButtonElement, editAssetButton);</span>
+<span class="nc" id="L665">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L666">			logManager.logInformation(&quot;Clicked on Edit Asset button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L668">			Assert.fail(&quot;Edit Asset Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L670">	}</span>
+
+	// Add Asset page
+	// Close Add Asset Page Button
+	public void clickCloseAddAssetPageButton() {
+<span class="nc" id="L675">		logManager.logInformation(&quot;Trying to click on Close Add Asset Page button: &quot;, true, true);</span>
+
+<span class="nc" id="L677">		String closeAddAssetPageButton = &quot;closeAddAssetPage&quot;;</span>
+<span class="nc" id="L678">		WebElement closeAddAssetPageButtonElement = pageObject.getButton(closeAddAssetPageButton);</span>
+
+<span class="nc bnc" id="L680" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(closeAddAssetPageButtonElement, largePageTimeout,</span>
+				closeAddAssetPageButton)) {
+<span class="nc" id="L682">			browserActions.clickButton(closeAddAssetPageButtonElement, closeAddAssetPageButton);</span>
+<span class="nc" id="L683">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L684">			logManager.logInformation(&quot;Clicked on Close Add Asset Page button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L686">			Assert.fail(&quot;Close Add Asset Page Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L688">	}</span>
+
+	// Configure New Sensor Button
+	public void clickConfigureNewSensorButton() {
+<span class="nc" id="L692">		logManager.logInformation(&quot;Trying to click on Configure New Sensor button: &quot;, true, true);</span>
+
+<span class="nc" id="L694">		String configureNewSensorButton = &quot;configureNewSensor&quot;;</span>
+<span class="nc" id="L695">		WebElement configureNewSensorButtonElement = pageObject.getButton(configureNewSensorButton);</span>
+
+<span class="nc bnc" id="L697" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(configureNewSensorButtonElement, largePageTimeout,</span>
+				configureNewSensorButton)) {
+<span class="nc" id="L699">			browserActions.clickButton(configureNewSensorButtonElement, configureNewSensorButton);</span>
+<span class="nc" id="L700">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L701">			logManager.logInformation(&quot;Clicked on Configure New Sensor button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L703">			Assert.fail(&quot;Configure New Sensor Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L705">	}</span>
+
+	// Submit Asset Button
+	public void clickSubmitAssetButton() {
+<span class="nc" id="L709">		logManager.logInformation(&quot;Trying to click on Submit Asset button: &quot;, true, true);</span>
+
+<span class="nc" id="L711">		String submitAssetButton = &quot;submitAsset&quot;;</span>
+<span class="nc" id="L712">		WebElement submitAssetButtonElement = pageObject.getButton(submitAssetButton);</span>
+
+<span class="nc bnc" id="L714" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(submitAssetButtonElement, largePageTimeout, submitAssetButton)) {</span>
+<span class="nc" id="L715">			browserActions.clickButton(submitAssetButtonElement, submitAssetButton);</span>
+<span class="nc" id="L716">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L717">			logManager.logInformation(&quot;Clicked on Submit Asset button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L719">			Assert.fail(&quot;Submit Asset Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L721">	}</span>
+
+	// Submit and Add Another Asset Button
+	public void clickSubmitAndAddAnotherAssetButton() {
+<span class="nc" id="L725">		logManager.logInformation(&quot;Trying to click on Submit and Add Another Asset button: &quot;, true, true);</span>
+
+<span class="nc" id="L727">		String submitAndAddAnotherAssetButton = &quot;submitAndAddAnotherAsset&quot;;</span>
+<span class="nc" id="L728">		WebElement submitAndAddAnotherAssetButtonElement = pageObject.getButton(submitAndAddAnotherAssetButton);</span>
+
+<span class="nc bnc" id="L730" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(submitAndAddAnotherAssetButtonElement, largePageTimeout,</span>
+				submitAndAddAnotherAssetButton)) {
+<span class="nc" id="L732">			browserActions.clickButton(submitAndAddAnotherAssetButtonElement, submitAndAddAnotherAssetButton);</span>
+<span class="nc" id="L733">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L734">			logManager.logInformation(&quot;Clicked on Submit and Add Another Asset button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L736">			Assert.fail(&quot;Submit and Add Another Asset Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L738">	}</span>
+
+	// Reset Add Asset Page Button
+	public void clickResetAddAssetPage() {
+<span class="nc" id="L742">		logManager.logInformation(&quot;Trying to click on Reset Add Asset Page button: &quot;, true, true);</span>
+
+<span class="nc" id="L744">		String resetAddAssetPageButton = &quot;resetAddAssetPage&quot;;</span>
+<span class="nc" id="L745">		WebElement resetAddAssetPageButtonElement = pageObject.getButton(resetAddAssetPageButton);</span>
+
+<span class="nc bnc" id="L747" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(resetAddAssetPageButtonElement, largePageTimeout,</span>
+				resetAddAssetPageButton)) {
+<span class="nc" id="L749">			browserActions.clickButton(resetAddAssetPageButtonElement, resetAddAssetPageButton);</span>
+<span class="nc" id="L750">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L751">			logManager.logInformation(&quot;Clicked on Reset Add Asset Page button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L753">			Assert.fail(&quot;Reset Add Asset Page Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L755">	}</span>
+
+	// select environment
+	public void clickSelectEnvironmentButton() {
+<span class="nc" id="L759">		logManager.logInformation(&quot;Trying to click on Select Environment button&quot;, true, true);</span>
+
+<span class="nc" id="L761">		String selectEnvioronmentButton = &quot;selectEnvioronment&quot;;</span>
+<span class="nc" id="L762">		WebElement selectEnvioronmentButtonElement = pageObject.getButton(selectEnvioronmentButton);</span>
+<span class="nc bnc" id="L763" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(selectEnvioronmentButtonElement, largePageTimeout,</span>
+				selectEnvioronmentButton)) {
+<span class="nc" id="L765">			browserActions.clickButton(selectEnvioronmentButtonElement, selectEnvioronmentButton);</span>
+<span class="nc" id="L766">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L767">			logManager.logInformation(&quot;Clicked on Select Environment button&quot;, true, true);</span>
+
+			// Now select the &quot;Cooler&quot; option
+<span class="nc" id="L770">			String selectCoolerOptionButton = &quot;selectCoolerOption&quot;; // Optional, for logging</span>
+<span class="nc" id="L771">			WebElement selectCoolerButtonElement = pageObject.getButton(selectCoolerOptionButton);</span>
+
+<span class="nc bnc" id="L773" title="All 2 branches missed.">			if (browserActions.waitForElementClickable(selectCoolerButtonElement, largePageTimeout,</span>
+					selectCoolerOptionButton)) {
+<span class="nc" id="L775">				browserActions.clickButton(selectCoolerButtonElement, selectCoolerOptionButton);</span>
+<span class="nc" id="L776">				browserActions.waitForSeconds(smallestPageTimeout);</span>
+<span class="nc" id="L777">				logManager.logInformation(&quot;Selected Cooler environment&quot;, true, true);</span>
+			} else {
+<span class="nc" id="L779">				Assert.fail(&quot;Cooler option is not clickable&quot;);</span>
+			}
+<span class="nc" id="L781">		} else {</span>
+<span class="nc" id="L782">			Assert.fail(&quot;Select Environment Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L784">	}</span>
+
+	// Asset Name Textfield
+	public void addAssetNameDetails(String assetName) {
+<span class="nc" id="L788">		String assetNameTextField = &quot;assetName&quot;;</span>
+<span class="nc" id="L789">		WebElement assetNameTextFieldElement = pageObject.getTextField(assetNameTextField); // Direct reference to the</span>
+																							// field
+
+<span class="nc bnc" id="L792" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(assetNameTextFieldElement, largestPageTimeout, assetNameTextField)) {</span>
+<span class="nc" id="L793">			browserActions.addDataInTheTextField(assetNameTextFieldElement, assetName, assetNameTextField);</span>
+		} else {
+<span class="nc" id="L795">			Assert.fail(&quot;Asset name field is not accessible&quot;);</span>
+		}
+<span class="nc" id="L797">	}</span>
+
+	// Make Textfield
+	public void addMakeDetails(String make) {
+<span class="nc" id="L801">		String makeTextField = &quot;make&quot;;</span>
+<span class="nc" id="L802">		WebElement makeTextFieldElement = pageObject.getTextField(makeTextField); // Direct reference to the field</span>
+
+<span class="nc bnc" id="L804" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(makeTextFieldElement, largestPageTimeout, makeTextField)) {</span>
+<span class="nc" id="L805">			browserActions.addDataInTheTextField(makeTextFieldElement, make, makeTextField);</span>
+		} else {
+<span class="nc" id="L807">			Assert.fail(&quot;Make field is not accessible&quot;);</span>
+		}
+<span class="nc" id="L809">	}</span>
+
+	// Model Textfield
+	public void addModelDetails(String model) {
+<span class="nc" id="L813">		String modelTextField = &quot;model&quot;;</span>
+<span class="nc" id="L814">		WebElement modelTextFieldElement = pageObject.getTextField(modelTextField); // Direct reference to the field</span>
+
+<span class="nc bnc" id="L816" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(modelTextFieldElement, largestPageTimeout, modelTextField)) {</span>
+<span class="nc" id="L817">			browserActions.addDataInTheTextField(modelTextFieldElement, model, modelTextField);</span>
+		} else {
+<span class="nc" id="L819">			Assert.fail(&quot;Model field is not accessible&quot;);</span>
+		}
+<span class="nc" id="L821">	}</span>
+
+	// Tag Textfield
+	public void addTagDetails(String tag) {
+<span class="nc" id="L825">		String tagTextField = &quot;tag&quot;;</span>
+<span class="nc" id="L826">		WebElement tagTextFieldElement = pageObject.getTextField(tagTextField); // Direct reference to the field</span>
+
+<span class="nc bnc" id="L828" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(tagTextFieldElement, largestPageTimeout, tagTextField)) {</span>
+<span class="nc" id="L829">			browserActions.addDataInTheTextField(tagTextFieldElement, tag, tagTextField);</span>
+		} else {
+<span class="nc" id="L831">			Assert.fail(&quot;Tag field is not accessible&quot;);</span>
+		}
+<span class="nc" id="L833">	}</span>
+
+	// Search Device EUI Textfield
+	public void addSearchDeviceEUIDetails(String deviceEUI) {
+<span class="nc" id="L837">		String searchDeviceEUITextField = &quot;searchdeviceEUI&quot;;</span>
+<span class="nc" id="L838">		WebElement searchDeviceEUITextFieldElement = pageObject.getTextField(searchDeviceEUITextField); // Direct</span>
+																										// reference to
+																										// the field
+
+<span class="nc bnc" id="L842" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(searchDeviceEUITextFieldElement, largestPageTimeout,</span>
+				searchDeviceEUITextField)) {
+<span class="nc" id="L844">			browserActions.addDataInTheTextField(searchDeviceEUITextFieldElement, deviceEUI, searchDeviceEUITextField);</span>
+		} else {
+<span class="nc" id="L846">			Assert.fail(&quot;Search Device EUI field is not accessible&quot;);</span>
+		}
+<span class="nc" id="L848">	}</span>
+
+	// Select Device EUI Button
+
+	public void clickSelectDeviceEUIButton() {
+<span class="nc" id="L853">		logManager.logInformation(&quot;Trying to click on Select Device EUI button&quot;, true, true);</span>
+
+<span class="nc" id="L855">		String selectDeviceEUIButton = &quot;selectDeviceEUI&quot;;</span>
+<span class="nc" id="L856">		WebElement selectDeviceEUIButtonElement = pageObject.getButton(selectDeviceEUIButton);</span>
+
+<span class="nc bnc" id="L858" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(selectDeviceEUIButtonElement, largePageTimeout,</span>
+				selectDeviceEUIButton)) {
+<span class="nc" id="L860">			browserActions.clickButton(selectDeviceEUIButtonElement, selectDeviceEUIButton);</span>
+<span class="nc" id="L861">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L862">			logManager.logInformation(&quot;Clicked on Select Device EUI button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L864">			Assert.fail(&quot;Select Device EUI Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L866">	}</span>
+
+	// Select sensorType
+	public void clickSelectSensorTypeButton() {
+<span class="nc" id="L870">		logManager.logInformation(&quot;Trying to click on Select Sensor Type button&quot;, true, true);</span>
+
+<span class="nc" id="L872">		String selectSensorTypeButton = &quot;selectSensorType&quot;;</span>
+<span class="nc" id="L873">		WebElement selectSensorTypeButtonElement = pageObject.getButton(selectSensorTypeButton);</span>
+<span class="nc bnc" id="L874" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(selectSensorTypeButtonElement, largePageTimeout,</span>
+				selectSensorTypeButton)) {
+<span class="nc" id="L876">			browserActions.clickButton(selectSensorTypeButtonElement, selectSensorTypeButton);</span>
+<span class="nc" id="L877">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L878">			logManager.logInformation(&quot;Clicked on Select Sensor Type button&quot;, true, true);</span>
+
+			// Now select the &quot;Neither&quot; option
+<span class="nc" id="L881">			String selectSensorTypeFromFropdownButton = &quot;selectSensorTypeFromFropdown&quot;;</span>
+<span class="nc" id="L882">			WebElement selectSensorTypeFromDropdownElement = pageObject.getButton(selectSensorTypeFromFropdownButton);</span>
+
+<span class="nc bnc" id="L884" title="All 2 branches missed.">			if (browserActions.waitForElementClickable(selectSensorTypeFromDropdownElement, largePageTimeout,</span>
+					selectSensorTypeFromFropdownButton)) {
+<span class="nc" id="L886">				browserActions.clickButton(selectSensorTypeFromDropdownElement, selectSensorTypeFromFropdownButton);</span>
+<span class="nc" id="L887">				browserActions.waitForSeconds(smallestPageTimeout);</span>
+<span class="nc" id="L888">				logManager.logInformation(&quot;Selected 'Neither' sensor type&quot;, true, true);</span>
+			} else {
+<span class="nc" id="L890">				Assert.fail(&quot;Neither option is not clickable&quot;);</span>
+			}
+<span class="nc" id="L892">		} else {</span>
+<span class="nc" id="L893">			Assert.fail(&quot;Select Sensor Type Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L895">	}</span>
+
+	// Submit Sensor Type Button
+	public void clickSubmitSensorTypeButton() {
+<span class="nc" id="L899">		logManager.logInformation(&quot;Trying to click on Submit Sensor Type button: &quot;, true, true);</span>
+
+<span class="nc" id="L901">		String submitSensorTypeButton = &quot;submitSensorType&quot;;</span>
+<span class="nc" id="L902">		WebElement submitSensorTypeButtonElement = pageObject.getButton(submitSensorTypeButton);</span>
+
+<span class="nc bnc" id="L904" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(submitSensorTypeButtonElement, largePageTimeout,</span>
+				submitSensorTypeButton)) {
+<span class="nc" id="L906">			browserActions.clickButton(submitSensorTypeButtonElement, submitSensorTypeButton);</span>
+<span class="nc" id="L907">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L908">			logManager.logInformation(&quot;Clicked on Submit Sensor Type button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L910">			Assert.fail(&quot;Submit Sensor Type Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L912">	}</span>
+
+	// Reset Sensor Type Button
+	public void clickResetSensorTypeButton() {
+<span class="nc" id="L916">		logManager.logInformation(&quot;Trying to click on Reset Sensor Type button: &quot;, true, true);</span>
+
+<span class="nc" id="L918">		String resetSensorTypeButton = &quot;resetSensorType&quot;;</span>
+<span class="nc" id="L919">		WebElement resetSensorTypeButtonElement = pageObject.getButton(resetSensorTypeButton);</span>
+
+<span class="nc bnc" id="L921" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(resetSensorTypeButtonElement, largePageTimeout,</span>
+				resetSensorTypeButton)) {
+<span class="nc" id="L923">			browserActions.clickButton(resetSensorTypeButtonElement, resetSensorTypeButton);</span>
+<span class="nc" id="L924">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L925">			logManager.logInformation(&quot;Clicked on Reset Sensor Type button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L927">			Assert.fail(&quot;Reset Sensor Type Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L929">	}</span>
+
+	// navigate To Asset Details Button
+	public void navigateToAssetDetailsButton() {
+<span class="nc" id="L933">		logManager.logInformation(&quot;Trying to  navigate  AssetDetails: &quot;, true, true);</span>
+
+<span class="nc" id="L935">		String navigateToAssetDetailsButton = &quot;navigateToAssetDetails&quot;;</span>
+<span class="nc" id="L936">		WebElement navigateToAssetDetailsButtonElement = pageObject.getButton(navigateToAssetDetailsButton);</span>
+
+<span class="nc bnc" id="L938" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(navigateToAssetDetailsButtonElement, largePageTimeout,</span>
+				navigateToAssetDetailsButton)) {
+<span class="nc" id="L940">			browserActions.clickButton(navigateToAssetDetailsButtonElement, navigateToAssetDetailsButton);</span>
+<span class="nc" id="L941">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L942">			logManager.logInformation(&quot;Clicked on Asset&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L944">			Assert.fail(&quot;Asset Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L946">	}</span>
+
+	// Create Alarm Button
+
+	public void clickCreateAlarmButton() {
+<span class="nc" id="L951">		logManager.logInformation(&quot;Trying to click on Create Alarm button: &quot;, true, true);</span>
+
+<span class="nc" id="L953">		String createAlarmButton = &quot;createAlarm&quot;;</span>
+<span class="nc" id="L954">		WebElement createAlarmButtonElement = pageObject.getButton(createAlarmButton);</span>
+
+<span class="nc bnc" id="L956" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(createAlarmButtonElement, largePageTimeout, createAlarmButton)) {</span>
+<span class="nc" id="L957">			browserActions.clickButton(createAlarmButtonElement, createAlarmButton);</span>
+<span class="nc" id="L958">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L959">			logManager.logInformation(&quot;Clicked on Create Alarm button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L961">			Assert.fail(&quot;Create Alarm Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L963">	}</span>
+
+	// Select Temperature Alarm Button
+	public void clickSelectTemperatureAlarmButton() {
+<span class="nc" id="L967">		logManager.logInformation(&quot;Trying to click on Select Temperature Alarm button: &quot;, true, true);</span>
+
+<span class="nc" id="L969">		String selectTemperatureAlarmButton = &quot;selectTemperatureAlarm&quot;;</span>
+<span class="nc" id="L970">		WebElement selectTemperatureAlarmButtonElement = pageObject.getButton(selectTemperatureAlarmButton);</span>
+
+<span class="nc bnc" id="L972" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(selectTemperatureAlarmButtonElement, largePageTimeout,</span>
+				selectTemperatureAlarmButton)) {
+<span class="nc" id="L974">			browserActions.clickButton(selectTemperatureAlarmButtonElement, selectTemperatureAlarmButton);</span>
+<span class="nc" id="L975">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L976">			logManager.logInformation(&quot;Clicked on Select Temperature Alarm button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L978">			Assert.fail(&quot;Select Temperature Alarm Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L980">	}</span>
+
+	// Select Humidity Alarm Button
+	public void clickSelectHumidityAlarmButton() {
+<span class="nc" id="L984">		logManager.logInformation(&quot;Trying to click on Select Humidity Alarm button: &quot;, true, true);</span>
+
+<span class="nc" id="L986">		String selectHumidityAlarmButton = &quot;selectHumidityAlarm&quot;;</span>
+<span class="nc" id="L987">		WebElement selectHumidityAlarmButtonElement = pageObject.getButton(selectHumidityAlarmButton);</span>
+
+<span class="nc bnc" id="L989" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(selectHumidityAlarmButtonElement, largePageTimeout,</span>
+				selectHumidityAlarmButton)) {
+<span class="nc" id="L991">			browserActions.clickButton(selectHumidityAlarmButtonElement, selectHumidityAlarmButton);</span>
+<span class="nc" id="L992">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L993">			logManager.logInformation(&quot;Clicked on Select Humidity Alarm button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L995">			Assert.fail(&quot;Select Humidity Alarm Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L997">	}</span>
+
+	// Select Pressure Alarm Button
+	public void clickSelectPressureAlarmButton() {
+<span class="nc" id="L1001">		logManager.logInformation(&quot;Trying to click on Select Pressure Alarm button: &quot;, true, true);</span>
+
+<span class="nc" id="L1003">		String selectPressureAlarmButton = &quot;selectPressureAlarm&quot;;</span>
+<span class="nc" id="L1004">		WebElement selectPressureAlarmButtonElement = pageObject.getButton(selectPressureAlarmButton);</span>
+
+<span class="nc bnc" id="L1006" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(selectPressureAlarmButtonElement, largePageTimeout,</span>
+				selectPressureAlarmButton)) {
+<span class="nc" id="L1008">			browserActions.clickButton(selectPressureAlarmButtonElement, selectPressureAlarmButton);</span>
+<span class="nc" id="L1009">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L1010">			logManager.logInformation(&quot;Clicked on Select Pressure Alarm button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L1012">			Assert.fail(&quot;Select Pressure Alarm Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L1014">	}// Alarm name Textfileds</span>
+
+	public void addAlarmNameDetails(String alarmName) {
+<span class="nc" id="L1017">		String alarmNameTextField = &quot;alarmName&quot;;</span>
+<span class="nc" id="L1018">		WebElement alarmNameTextFieldElement = pageObject.getTextField(alarmNameTextField); // Direct reference</span>
+
+<span class="nc bnc" id="L1020" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(alarmNameTextFieldElement, largestPageTimeout, alarmNameTextField)) {</span>
+<span class="nc" id="L1021">			browserActions.addDataInTheTextField(alarmNameTextFieldElement, alarmName, alarmNameTextField);</span>
+		} else {
+<span class="nc" id="L1023">			Assert.fail(&quot;Alarm Name field is not accessible&quot;);</span>
+		}
+<span class="nc" id="L1025">	}</span>
+
+//tags in alarm
+	public void addTagInAlarmDetails(String tagAlarm) {
+<span class="nc" id="L1029">		String tagInAlarmTextField = &quot;tagInAlarm&quot;;</span>
+<span class="nc" id="L1030">		WebElement tagInAlarmTextFieldElement = pageObject.getTextField(tagInAlarmTextField); // Direct reference</span>
+
+<span class="nc bnc" id="L1032" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(tagInAlarmTextFieldElement, largestPageTimeout, tagInAlarmTextField)) {</span>
+<span class="nc" id="L1033">			browserActions.addDataInTheTextField(tagInAlarmTextFieldElement, tagAlarm, tagInAlarmTextField);</span>
+		} else {
+<span class="nc" id="L1035">			Assert.fail(&quot;Tag in Alarm field is not accessible&quot;);</span>
+		}
+<span class="nc" id="L1037">	}</span>
+
+//delay incident
+	public void addDelayIncidentDetails(String delayIncident) {
+<span class="nc" id="L1041">		String delayIncidentTextField = &quot;delayIncident&quot;;</span>
+<span class="nc" id="L1042">		WebElement delayIncidentTextFieldElement = pageObject.getTextField(delayIncidentTextField); // Direct reference</span>
+
+<span class="nc bnc" id="L1044" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(delayIncidentTextFieldElement, largestPageTimeout,</span>
+				delayIncidentTextField)) {
+<span class="nc" id="L1046">			browserActions.addDataInTheTextField(delayIncidentTextFieldElement, delayIncident, delayIncidentTextField);</span>
+		} else {
+<span class="nc" id="L1048">			Assert.fail(&quot;Delay Incident field is not accessible&quot;);</span>
+		}
+<span class="nc" id="L1050">	}</span>
+
+	// Select Threshold Alarm Button
+	public void clickSelectThresholdAlarmButton() {
+<span class="nc" id="L1054">		logManager.logInformation(&quot;Trying to click on Select Threshold Alarm button: &quot;, true, true);</span>
+
+<span class="nc" id="L1056">		String thresholdAlarmButton = &quot;thresholdAlarm&quot;;</span>
+<span class="nc" id="L1057">		WebElement thresholdAlarmButtonElement = pageObject.getButton(thresholdAlarmButton);</span>
+
+<span class="nc bnc" id="L1059" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(thresholdAlarmButtonElement, largePageTimeout,</span>
+				thresholdAlarmButton)) {
+<span class="nc" id="L1061">			browserActions.clickButton(thresholdAlarmButtonElement, thresholdAlarmButton);</span>
+<span class="nc" id="L1062">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L1063">			logManager.logInformation(&quot;Clicked on Select Threshold Alarm button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L1065">			Assert.fail(&quot;Select Threshold Alarm Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L1067">	}</span>
+
+	// Select Greater Than Threshold Button
+	public void clickSelectGreaterThanThresholdButton() {
+<span class="nc" id="L1071">		logManager.logInformation(&quot;Trying to click on Select Greater Than Threshold button: &quot;, true, true);</span>
+
+<span class="nc" id="L1073">		String greaterThanThresholdButton = &quot;greaterThanThreshold&quot;;</span>
+<span class="nc" id="L1074">		WebElement greaterThanThresholdButtonElement = pageObject.getButton(greaterThanThresholdButton);</span>
+
+<span class="nc bnc" id="L1076" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(greaterThanThresholdButtonElement, largePageTimeout,</span>
+				greaterThanThresholdButton)) {
+<span class="nc" id="L1078">			browserActions.clickButton(greaterThanThresholdButtonElement, greaterThanThresholdButton);</span>
+<span class="nc" id="L1079">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L1080">			logManager.logInformation(&quot;Clicked on Select Greater Than Threshold button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L1082">			Assert.fail(&quot;Select Greater Than Threshold Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L1084">	}</span>
+
+	// Select Less Than Threshold Button
+	public void clickSelectLessThanThresholdButton() {
+<span class="nc" id="L1088">		logManager.logInformation(&quot;Trying to click on Select Less Than Threshold button: &quot;, true, true);</span>
+
+<span class="nc" id="L1090">		String lessThanThresholdButton = &quot;lessThanThreshold&quot;;</span>
+<span class="nc" id="L1091">		WebElement lessThanThresholdButtonElement = pageObject.getButton(lessThanThresholdButton);</span>
+
+<span class="nc bnc" id="L1093" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(lessThanThresholdButtonElement, largePageTimeout,</span>
+				lessThanThresholdButton)) {
+<span class="nc" id="L1095">			browserActions.clickButton(lessThanThresholdButtonElement, lessThanThresholdButton);</span>
+<span class="nc" id="L1096">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L1097">			logManager.logInformation(&quot;Clicked on Select Less Than Threshold button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L1099">			Assert.fail(&quot;Select Less Than Threshold Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L1101">	}</span>
+
+	// Select Hooter Dropdown Button
+	public void clickSelectHooterDropdownButton() {
+<span class="nc" id="L1105">		logManager.logInformation(&quot;Trying to click on Select Hooter Dropdown button: &quot;, true, true);</span>
+
+<span class="nc" id="L1107">		String selectHooterDropdown = &quot;selectHooter&quot;;</span>
+<span class="nc" id="L1108">		WebElement selectHooterDropdownElement = pageObject.getButton(selectHooterDropdown);</span>
+
+<span class="nc bnc" id="L1110" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(selectHooterDropdownElement, largePageTimeout,</span>
+				selectHooterDropdown)) {
+<span class="nc" id="L1112">			browserActions.clickButton(selectHooterDropdownElement, selectHooterDropdown);</span>
+<span class="nc" id="L1113">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L1114">			logManager.logInformation(&quot;Clicked on Select Hooter Dropdown button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L1116">			Assert.fail(&quot;Select Hooter Dropdown Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L1118">	}</span>
+
+	// Select Severity Dropdown Button
+	public void clickSelectSeverityDropdownButton() {
+<span class="nc" id="L1122">		logManager.logInformation(&quot;Trying to click on Select Severity Dropdown button: &quot;, true, true);</span>
+
+<span class="nc" id="L1124">		String severityDropdown = &quot;severityDropdown&quot;;</span>
+<span class="nc" id="L1125">		WebElement severityDropdownElement = pageObject.getButton(severityDropdown);</span>
+
+<span class="nc bnc" id="L1127" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(severityDropdownElement, largePageTimeout, severityDropdown)) {</span>
+<span class="nc" id="L1128">			browserActions.clickButton(severityDropdownElement, severityDropdown);</span>
+<span class="nc" id="L1129">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L1130">			logManager.logInformation(&quot;Clicked on Select Severity Dropdown button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L1132">			Assert.fail(&quot;Select Severity Dropdown Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L1134">	}</span>
+
+	// Select All Checkbox Button
+	public void clickSelectAllCheckboxButton() {
+<span class="nc" id="L1138">		logManager.logInformation(&quot;Trying to click on Select All Checkbox button: &quot;, true, true);</span>
+
+<span class="nc" id="L1140">		String selectAllCheckbox = &quot;selectAllCheckbox&quot;;</span>
+<span class="nc" id="L1141">		WebElement selectAllCheckboxElement = pageObject.getButton(selectAllCheckbox);</span>
+
+<span class="nc bnc" id="L1143" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(selectAllCheckboxElement, largePageTimeout, selectAllCheckbox)) {</span>
+<span class="nc" id="L1144">			browserActions.clickButton(selectAllCheckboxElement, selectAllCheckbox);</span>
+<span class="nc" id="L1145">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L1146">			logManager.logInformation(&quot;Clicked on Select All Checkbox button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L1148">			Assert.fail(&quot;Select All Checkbox Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L1150">	}</span>
+
+	// Select Low Severity Checkbox Button
+	public void clickLowSeverityCheckboxButton() {
+<span class="nc" id="L1154">		logManager.logInformation(&quot;Trying to click on Low Severity Checkbox button: &quot;, true, true);</span>
+
+<span class="nc" id="L1156">		String lowCheckbox = &quot;lowCheckbox&quot;;</span>
+<span class="nc" id="L1157">		WebElement lowCheckboxElement = pageObject.getButton(lowCheckbox);</span>
+
+<span class="nc bnc" id="L1159" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(lowCheckboxElement, largePageTimeout, lowCheckbox)) {</span>
+<span class="nc" id="L1160">			browserActions.clickButton(lowCheckboxElement, lowCheckbox);</span>
+<span class="nc" id="L1161">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L1162">			logManager.logInformation(&quot;Clicked on Low Severity Checkbox button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L1164">			Assert.fail(&quot;Low Severity Checkbox Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L1166">	}</span>
+
+	// Select Medium Severity Checkbox Button
+	public void clickMediumSeverityCheckboxButton() {
+<span class="nc" id="L1170">		logManager.logInformation(&quot;Trying to click on Medium Severity Checkbox button: &quot;, true, true);</span>
+
+<span class="nc" id="L1172">		String mediumCheckbox = &quot;mediumCheckbox&quot;;</span>
+<span class="nc" id="L1173">		WebElement mediumCheckboxElement = pageObject.getButton(mediumCheckbox);</span>
+
+<span class="nc bnc" id="L1175" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(mediumCheckboxElement, largePageTimeout, mediumCheckbox)) {</span>
+<span class="nc" id="L1176">			browserActions.clickButton(mediumCheckboxElement, mediumCheckbox);</span>
+<span class="nc" id="L1177">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L1178">			logManager.logInformation(&quot;Clicked on Medium Severity Checkbox button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L1180">			Assert.fail(&quot;Medium Severity Checkbox Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L1182">	}</span>
+
+	// Select High Severity Checkbox Button
+	public void clickHighSeverityCheckboxButton() {
+<span class="nc" id="L1186">		logManager.logInformation(&quot;Trying to click on High Severity Checkbox button: &quot;, true, true);</span>
+
+<span class="nc" id="L1188">		String highCheckbox = &quot;highCheckbox&quot;;</span>
+<span class="nc" id="L1189">		WebElement highCheckboxElement = pageObject.getButton(highCheckbox);</span>
+
+<span class="nc bnc" id="L1191" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(highCheckboxElement, largePageTimeout, highCheckbox)) {</span>
+<span class="nc" id="L1192">			browserActions.clickButton(highCheckboxElement, highCheckbox);</span>
+<span class="nc" id="L1193">			browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L1194">			logManager.logInformation(&quot;Clicked on High Severity Checkbox button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L1196">			Assert.fail(&quot;High Severity Checkbox Button is not clickable&quot;);</span>
+		}
+<span class="nc" id="L1198">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

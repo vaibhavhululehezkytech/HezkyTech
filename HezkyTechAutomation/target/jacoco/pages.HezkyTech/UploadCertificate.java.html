@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UploadCertificate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">pages.HezkyTech</a> &gt; <span class="el_source">UploadCertificate.java</span></div><h1>UploadCertificate.java</h1><pre class="source lang-java linenums">package pages.HezkyTech;
+
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
+import pages.PageActionsBase;
+import pages.uipages.HezkyTech.CustomerPanelPageUI;
+import pages.uipages.HezkyTech.UploadCertificatePageUI;
+import utils.readers.Config;
+import utils.webdrivers.DriverManager;
+
+public class UploadCertificate extends PageActionsBase {
+
+	/**
+	 * This class contains only login page related actions method
+	 * 
+	 * @author Vaibhav Hulule
+	 */
+	public UploadCertificate(DriverManager driverManager) {
+<span class="nc" id="L20">		super(driverManager, new UploadCertificatePageUI());</span>
+<span class="nc" id="L21">		browserActions.load(Config.getAccessBaseURL());</span>
+<span class="nc" id="L22">	}</span>
+
+	/**
+	 * Method is used to login the page and accessible by outside classes
+	 * 
+	 * @param userName
+	 * @param password
+	 */
+	public void fillUpCredintials(String userName, String password) {
+
+<span class="nc" id="L32">		logManager.logInformation(&quot;Trying to login: &quot;, true, true);</span>
+<span class="nc" id="L33">		addUserNameDetails(userName);</span>
+<span class="nc" id="L34">		addPasswordDetails(password);</span>
+<span class="nc" id="L35">	}</span>
+
+	private void addUserNameDetails(String userName) {
+<span class="nc" id="L38">		String userNameTextField = &quot;userName&quot;;</span>
+<span class="nc" id="L39">		WebElement userNameTextFieldElement = pageObject.getTextField(userNameTextField);</span>
+
+<span class="nc bnc" id="L41" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(userNameTextFieldElement, largestPageTimeout, userNameTextField)) {</span>
+<span class="nc" id="L42">			browserActions.addDataInTheTextField(userNameTextFieldElement, userName, userNameTextField);</span>
+
+		} else {
+
+<span class="nc" id="L46">			Assert.fail(&quot;Username field is not accessible&quot;);</span>
+		}
+
+<span class="nc" id="L49">	}</span>
+
+	/**
+	 * Method is used to add password in Password Text-field
+	 * 
+	 * @param password
+	 */
+	private void addPasswordDetails(String password) {
+<span class="nc" id="L57">		String passwordTextField = &quot;password&quot;;</span>
+<span class="nc" id="L58">		WebElement passwordTextFieldElement = pageObject.getTextField(passwordTextField);</span>
+
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(passwordTextFieldElement, largePageTimeout, passwordTextField)) {</span>
+<span class="nc" id="L61">			browserActions.addDataInTheTextField(passwordTextFieldElement, password, passwordTextField);</span>
+		} else {
+
+<span class="nc" id="L64">			Assert.fail(&quot;Password fied is not accessible&quot;);</span>
+		}
+
+<span class="nc" id="L67">	}</span>
+
+	/**
+	 * Method is used to Click on Login Button
+	 */
+	public void clickOnLoginButton() {
+<span class="nc" id="L73">		logManager.logInformation(&quot;Trying to click on login button: &quot;, true, true);</span>
+
+<span class="nc" id="L75">		String signInButton = &quot;signIn&quot;;</span>
+<span class="nc" id="L76">		WebElement signInButtonElement = pageObject.getButton(signInButton);</span>
+
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(signInButtonElement, largePageTimeout, signInButton)) {</span>
+<span class="nc" id="L79">			browserActions.clickButton(signInButtonElement, signInButton);</span>
+<span class="nc" id="L80">			logManager.logInformation(&quot;Clicked on login button&quot;, true, true);</span>
+<span class="nc" id="L81">			browserActions.waitForSeconds(smallestPageTimeout);</span>
+		} else {
+<span class="nc" id="L83">			Assert.fail(&quot;Submit button is not Clickable&quot;);</span>
+		}
+
+<span class="nc" id="L86">	}</span>
+	//Click on management button
+	
+	public void managementButton() {
+<span class="nc" id="L90">		logManager.logInformation(&quot;Trying to click on management button: &quot;, true, true);</span>
+
+<span class="nc" id="L92">		String managementButton = &quot;management&quot;;</span>
+<span class="nc" id="L93">		WebElement managementButtonElement = pageObject.getButton(managementButton);</span>
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(managementButtonElement, smallPageTimeout, managementButton)) {</span>
+<span class="nc" id="L96">			browserActions.clickButton(managementButtonElement, managementButton);</span>
+<span class="nc" id="L97">			logManager.logInformation(&quot;Clicked on management button&quot;, true, true);</span>
+		} else {
+<span class="nc" id="L99">			Assert.fail(&quot;Management Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L101">	}</span>
+
+	//Click on  certificate management button
+	public void certificateManagementButton() {
+<span class="nc" id="L105">		logManager.logInformation(&quot;Trying to click on certificate management button: &quot;, true, true);</span>
+
+<span class="nc" id="L107">		String certificateManagementButton = &quot;certificateManagement&quot;;</span>
+<span class="nc" id="L108">		WebElement certificateManagementButtonElement = pageObject.getButton(certificateManagementButton);</span>
+
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(certificateManagementButtonElement, largePageTimeout, certificateManagementButton)) {</span>
+<span class="nc" id="L111">			browserActions.clickButton(certificateManagementButtonElement, certificateManagementButton);</span>
+<span class="nc" id="L112">			logManager.logInformation(&quot;Clicked on certificate management button&quot;, true, true);</span>
+<span class="nc" id="L113">			browserActions.waitForSeconds(smallestPageTimeout);</span>
+		}
+		else {
+<span class="nc" id="L116">			Assert.fail(&quot;certificate management Button is not Clickable&quot;);</span>
+		}
+	
+
+<span class="nc" id="L120">	}</span>
+	//Click on add certificate  button
+	public void addCertificateButton() {
+<span class="nc" id="L123">		logManager.logInformation(&quot;Trying to click on add certificate  button: &quot;, true, true);</span>
+
+<span class="nc" id="L125">		String addCertificateButton = &quot;addCertificate&quot;;</span>
+<span class="nc" id="L126">		WebElement addCertificateButtonElement = pageObject.getButton(addCertificateButton);</span>
+
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(addCertificateButtonElement, largePageTimeout, addCertificateButton)) {</span>
+<span class="nc" id="L129">			browserActions.clickButton(addCertificateButtonElement, addCertificateButton);</span>
+	
+<span class="nc" id="L131">			logManager.logInformation(&quot;Clicked on add certificate management button&quot;, true, true);</span>
+<span class="nc" id="L132">			browserActions.waitForSeconds(smallestPageTimeout);</span>
+		}
+		else {
+<span class="nc" id="L135">			Assert.fail(&quot;Add certificate  Button is not Clickable&quot;);</span>
+		}
+<span class="nc" id="L137">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

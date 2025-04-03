@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SiteSelection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">pages.actionpages.authentication</a> &gt; <span class="el_source">SiteSelection.java</span></div><h1>SiteSelection.java</h1><pre class="source lang-java linenums">package pages.actionpages.authentication;
+
+import java.util.List;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+import pages.PageActionsBase;
+import pages.uipages.authentication.SiteSelectionPageUI;
+import utils.webdrivers.DriverManager;
+
+public class SiteSelection extends PageActionsBase {
+
+	public SiteSelection(DriverManager driverManager) {
+<span class="nc" id="L13">		super(driverManager, new SiteSelectionPageUI());		</span>
+<span class="nc" id="L14">	}</span>
+	
+	/**
+	 * Method is used to verify Site selection popup visibility 
+	 */
+	public void verifySiteSelectionPopUpLoaded() {
+		
+<span class="nc" id="L21">		String siteSelectioPopupTitleText = &quot;siteSelectioPopupTitle&quot;;</span>
+<span class="nc" id="L22">		WebElement siteSelectioPopupTitleTextElement  = pageObject.getText(siteSelectioPopupTitleText);</span>
+		
+<span class="nc" id="L24">		Assert.assertTrue(browserActions.waitForElementVisible(siteSelectioPopupTitleTextElement, smallPageTimeout,</span>
+				siteSelectioPopupTitleText), &quot;Site Selection Popup Title text not visible&quot;);
+		
+<span class="nc" id="L27">		String changeSiteSubmitButton = &quot;changeSiteSubmit&quot;;</span>
+<span class="nc" id="L28">		WebElement changeSiteSubmitButtonElement  = pageObject.getButton(changeSiteSubmitButton);</span>
+		
+<span class="nc" id="L30">		Assert.assertTrue(browserActions.waitForElementVisible(changeSiteSubmitButtonElement, smallPageTimeout,</span>
+				changeSiteSubmitButton), &quot;Change Site submit button not visible&quot;);
+		
+<span class="nc" id="L33">		String siteSelectionDropdown = &quot;siteSelection&quot;;</span>
+<span class="nc" id="L34">		WebElement siteSelectionDropdownElement  = pageObject.getDropDown(siteSelectionDropdown);</span>
+		
+<span class="nc" id="L36">		Assert.assertTrue(browserActions.waitForElementVisible(siteSelectionDropdownElement, smallPageTimeout,</span>
+				siteSelectionDropdown), &quot;Site selection dropdown not visible&quot;);
+	
+<span class="nc" id="L39">	}</span>
+	
+	/**
+	 * Method is used to selection Site
+	 * @param siteText
+	 */
+	public void selectSite(String siteText) {
+		
+<span class="nc" id="L47">		verifySiteSelectionPopUpLoaded();</span>
+		
+<span class="nc" id="L49">		String siteSelectionDropdown = &quot;siteSelection&quot;;</span>
+<span class="nc" id="L50">		WebElement siteSelectionDropdownElement  = pageObject.getDropDown(siteSelectionDropdown);</span>
+		
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if(browserActions.waitForElementClickable(siteSelectionDropdownElement, smallPageTimeout, siteSelectionDropdown)) {</span>
+<span class="nc" id="L53">			browserActions.clickButton(siteSelectionDropdownElement, siteSelectionDropdown);</span>
+		}
+		
+<span class="nc" id="L56">		String searchSiteTextField = &quot;searchSite&quot;;</span>
+<span class="nc" id="L57">		WebElement searchSiteTextFieldElement = pageObject.getTextField(searchSiteTextField);</span>
+		
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if(browserActions.waitForElementClickable(searchSiteTextFieldElement, smallPageTimeout, searchSiteTextField)) {</span>
+<span class="nc" id="L60">			browserActions.addDataInTheTextField(searchSiteTextFieldElement, siteText, searchSiteTextField);</span>
+		}
+		
+<span class="nc" id="L63">		String siteTextList = &quot;siteText&quot;;</span>
+<span class="nc" id="L64">		List&lt;WebElement&gt; siteTextListElements = pageObject.getList(siteTextList);</span>
+		
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (siteTextListElements.size() != 0</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">				&amp;&amp; browserActions.getTextContentOfElement(siteTextListElements.get(0), siteTextList).equals(siteText)) {</span>
+<span class="nc" id="L68">			browserActions.clickButton(siteTextListElements.get(0), siteTextList);			</span>
+		} else  {
+<span class="nc" id="L70">			Assert.fail(&quot;Expected Site List not displayed&quot;);</span>
+		}
+	
+<span class="nc" id="L73">		clickOnSumbitPopUpButton();</span>
+<span class="nc" id="L74">		browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L75">	}</span>
+	
+	/**
+	 * Method is used to click on Submit button ofSite Selection Pop-up
+	 */
+	public void clickOnSumbitPopUpButton() {
+<span class="nc" id="L81">		String changeSiteSubmitButton = &quot;changeSiteSubmit&quot;;</span>
+<span class="nc" id="L82">		WebElement changeSiteSubmitButtonElement  = pageObject.getButton(changeSiteSubmitButton);</span>
+		
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if(browserActions.waitForElementClickable(changeSiteSubmitButtonElement, smallPageTimeout, changeSiteSubmitButton)) {</span>
+<span class="nc" id="L85">			browserActions.clickButton(changeSiteSubmitButtonElement, changeSiteSubmitButton);</span>
+		}
+<span class="nc" id="L87">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

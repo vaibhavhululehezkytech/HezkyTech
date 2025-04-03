@@ -1,0 +1,885 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BrowserActions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">utils</a> &gt; <span class="el_source">BrowserActions.java</span></div><h1>BrowserActions.java</h1><pre class="source lang-java linenums">package utils;
+
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+
+import org.testng.Assert;
+
+import utils.logger.LogsManager;
+import utils.readers.Config;
+import utils.webdrivers.DriverManager;
+
+public class BrowserActions extends BrowserActionBase {
+
+    private static final String IN_THE_ELEMENT = &quot; in the element: &quot;;
+    private static final String EXCEPTION_IS = &quot;. Exception is: &quot;;
+    private static final String IN_DROPDOWN = &quot; in the dropdown: &quot;;
+
+    private LogsManager logManager;
+    private DriverManager driverManager;
+
+    
+    public BrowserActions(DriverManager driverManager) {
+<span class="fc" id="L39">        super(driverManager);</span>
+<span class="fc" id="L40">        this.driverManager = driverManager;</span>
+<span class="fc" id="L41">        logManager = new LogsManager(BrowserActions.class.getName());</span>
+<span class="fc" id="L42">    }</span>
+
+    public void clearTextField(WebElement element, String elementName) {
+        try {
+<span class="nc" id="L46">            element.clear();</span>
+<span class="nc" id="L47">            logManager.logInformation(&quot;Text field cleared: &quot; + elementName, false, false);</span>
+
+<span class="nc" id="L49">        } catch (Exception e) {</span>
+<span class="nc" id="L50">            logManager.logError(&quot;Exception while clearing text element: &quot; + e);</span>
+<span class="nc" id="L51">            logManager.addScreenshot(driverManager, &quot;Failed_ToClearTextField&quot;);</span>
+
+<span class="nc" id="L53">            Assert.fail(&quot;Unable to clear the text field: &quot; + elementName + &quot; &quot; + e.getMessage());</span>
+<span class="nc" id="L54">        }</span>
+<span class="nc" id="L55">    }</span>
+
+    public void addDataInTheTextField(WebElement element, String textData, String elementName) {
+
+<span class="nc" id="L59">   clearTextField(element, elementName);</span>
+
+        try {
+<span class="nc" id="L62">            element.sendKeys(textData);</span>
+<span class="nc" id="L63">            logManager.logInformation(&quot;Added text: &quot; + textData + IN_THE_ELEMENT + elementName, true, false);</span>
+
+<span class="nc" id="L65">        } catch (Exception e) {</span>
+<span class="nc" id="L66">            logManager.logError(&quot;Exception while adding text: &quot; + textData + &quot; &quot; + IN_THE_ELEMENT + elementName + &quot; &quot;</span>
+<span class="nc" id="L67">                    + EXCEPTION_IS + &quot; &quot; + e.getMessage());</span>
+<span class="nc" id="L68">            logManager.logException(e, false, false);</span>
+
+<span class="nc" id="L70">            logManager.addScreenshot(driverManager, &quot;Failed_ToAddTextInTextField&quot;);</span>
+
+<span class="nc" id="L72">            Assert.fail(&quot;Unable to add data in the text field: &quot; + elementName + &quot; &quot; + e.getMessage());</span>
+<span class="nc" id="L73">        }</span>
+<span class="nc" id="L74">    }</span>
+    public void addDataInTheTextArea(WebElement element, String textData, String elementName) {
+
+
+<span class="nc" id="L78">    	element.click();</span>
+    	try {
+<span class="nc" id="L80">    	element.sendKeys(textData);</span>
+<span class="nc" id="L81">    	logManager.logInformation(&quot;Added text: &quot; + textData + IN_THE_ELEMENT + elementName, true, false);</span>
+
+<span class="nc" id="L83">    	} catch (Exception e) {</span>
+<span class="nc" id="L84">    	logManager.logError(&quot;Exception while adding text: &quot; + textData + &quot; &quot; + IN_THE_ELEMENT + elementName + &quot; &quot;</span>
+<span class="nc" id="L85">    	+ EXCEPTION_IS + &quot; &quot; + e.getMessage());</span>
+<span class="nc" id="L86">    	logManager.logException(e, false, false);</span>
+
+<span class="nc" id="L88">    	logManager.addScreenshot(driverManager, &quot;Failed_ToAddTextInTextArea&quot;);</span>
+
+<span class="nc" id="L90">    	Assert.fail(&quot;Unable to add data in the text Area: &quot; + elementName + &quot; &quot; + e.getMessage());</span>
+<span class="nc" id="L91">    	}</span>
+<span class="nc" id="L92">    	}</span>
+
+    public void clickOnEnterKey(WebElement element, String elementName) {
+
+        try {
+<span class="nc" id="L97">            element.sendKeys(Keys.ENTER);</span>
+<span class="nc" id="L98">            logManager.logInformation(&quot;Click on textfield: &quot; + elementName, true, false);</span>
+
+<span class="nc" id="L100">        } catch (Exception e) {</span>
+<span class="nc" id="L101">            logManager.logException(e, false, false);</span>
+
+<span class="nc" id="L103">            logManager.addScreenshot(driverManager, &quot;Failed_ToAddTextInTextField&quot;);</span>
+
+<span class="nc" id="L105">            Assert.fail(&quot;Unable to add data in the text field: &quot; + elementName + &quot; &quot; + e.getMessage());</span>
+<span class="nc" id="L106">        }</span>
+<span class="nc" id="L107">    }</span>
+
+    public String getTextWithinElement(WebElement element, String elementName) {
+        try {
+<span class="nc" id="L111">            return element.getText();</span>
+
+<span class="nc" id="L113">        } catch (Exception e) {</span>
+<span class="nc" id="L114">            logManager.logError(&quot;Exception while getting text within element: &quot; + elementName);</span>
+<span class="nc" id="L115">            logManager.logError(e.getMessage());</span>
+
+<span class="nc" id="L117">            logManager.addScreenshot(driverManager, &quot;Failed_WhileGettingTextWithinElement&quot;);</span>
+        }
+<span class="nc" id="L119">        return &quot;&quot;;</span>
+    }
+
+    public boolean isTextFieldEmpty(WebElement element, String elementName) {
+
+<span class="nc" id="L124">        String textFieldValue = element.getAttribute(&quot;value&quot;);</span>
+
+<span class="nc" id="L126">        logManager.logInformation(&quot;Checking if textfield '&quot; + elementName + &quot;' empty: &quot;, false, false);</span>
+
+<span class="nc" id="L128">        boolean result = false;</span>
+
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (textFieldValue.isEmpty()) {</span>
+<span class="nc" id="L131">            result = true;</span>
+        }
+
+<span class="nc" id="L134">        logManager.logInformation(&quot;Is Textfield '&quot; + elementName + &quot;' empty: &quot; + result, false, false);</span>
+
+<span class="nc" id="L136">        return result;</span>
+    }
+
+    public String getTextWithinDisableElement(WebElement element, String elementName) {
+<span class="nc" id="L140">        String text = &quot;&quot;;</span>
+
+        try {
+<span class="nc" id="L143">            text = element.getAttribute(&quot;value&quot;);</span>
+
+<span class="nc" id="L145">        } catch (Exception e) {</span>
+<span class="nc" id="L146">            logManager.logWarning(&quot;Exception while getting value attribute of field: &quot; + elementName, false, true);</span>
+<span class="nc" id="L147">            logManager.addScreenshot(driverManager, &quot;Failed_WhileGettingTextWithinDisabledElement&quot;);</span>
+<span class="nc" id="L148">        }</span>
+
+<span class="nc" id="L150">        return text;</span>
+    }
+
+    public String getTextContentOfElement(WebElement element, String elementName) {
+<span class="nc" id="L154">        String result = &quot;&quot;;</span>
+
+        try {
+<span class="nc" id="L157">            result = element.getAttribute(&quot;textContent&quot;);</span>
+<span class="nc" id="L158">            return result;</span>
+
+<span class="nc" id="L160">        } catch (Exception e) {</span>
+<span class="nc" id="L161">            logManager.logWarning(&quot;Exception while getting text content of element '&quot; + elementName + &quot;' &quot;</span>
+<span class="nc" id="L162">                    + EXCEPTION_IS + &quot; &quot; + e.getMessage(), true, false);</span>
+<span class="nc" id="L163">            logManager.addScreenshot(driverManager, &quot;Failed_WhileGettingTextContentOfElement&quot;);</span>
+        }
+<span class="nc" id="L165">        return result;</span>
+
+    }
+
+    public WebElement getWebElementByXpath(String xpath) {
+<span class="nc" id="L170">        return driverManager.getDriver().findElement(By.xpath(xpath));</span>
+    }
+
+    public List&lt;WebElement&gt; getWebElementsByXpath(String xpath) {
+<span class="nc" id="L174">        return driverManager.getDriver().findElements(By.xpath(xpath));</span>
+    }
+
+    public boolean isFieldReadOnly(WebElement element, String elementName) {
+
+        try {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">            if (element.getAttribute(&quot;disabled&quot;).equalsIgnoreCase(&quot;on&quot;)) {</span>
+<span class="nc" id="L181">                return true;</span>
+            }
+<span class="nc" id="L183">        } catch (Exception e) {</span>
+<span class="nc" id="L184">            logManager.logInformation(&quot;Field is not read only: &quot; + elementName, false, false);</span>
+<span class="nc" id="L185">        }</span>
+
+        try {
+<span class="nc bnc" id="L188" title="All 2 branches missed.">            if (element.getAttribute(&quot;disabled&quot;).equalsIgnoreCase(&quot;true&quot;)) {</span>
+<span class="nc" id="L189">                return true;</span>
+            }
+<span class="nc" id="L191">        } catch (Exception e) {</span>
+<span class="nc" id="L192">            logManager.logInformation(&quot;Field is not disabled: &quot; + elementName, false, false);</span>
+<span class="nc" id="L193">        }</span>
+
+        try {
+<span class="nc bnc" id="L196" title="All 2 branches missed.">            if (element.getAttribute(&quot;readOnly&quot;).equalsIgnoreCase(&quot;true&quot;)) {</span>
+<span class="nc" id="L197">                return true;</span>
+            }
+<span class="nc" id="L199">        } catch (Exception e) {</span>
+<span class="nc" id="L200">            logManager.logInformation(</span>
+<span class="nc" id="L201">                    &quot;Exception while checking field: '&quot; + elementName + &quot;' is readonly: &quot; + e.getMessage(), false,</span>
+                    false);
+<span class="nc" id="L203">        }</span>
+
+<span class="nc" id="L205">        return false;</span>
+    }
+
+    public boolean isElementEnable(WebElement element, String elementName) {
+<span class="nc" id="L209">        boolean result = false;</span>
+
+        try {
+<span class="nc bnc" id="L212" title="All 2 branches missed.">            if (element.getAttribute(&quot;aria-disabled&quot;).equalsIgnoreCase(&quot;false&quot;)) {</span>
+<span class="nc" id="L213">                return true;</span>
+            }
+<span class="nc" id="L215">        } catch (Exception e) {</span>
+<span class="nc" id="L216">            logManager.logInformation(&quot;Field is not disabled: &quot; + elementName, false, false);</span>
+<span class="nc" id="L217">        }</span>
+<span class="nc" id="L218">        return result;</span>
+
+    }
+
+    // Dropdown Field Related Methods
+    public boolean selectDropDownValueByVisibleText(WebElement dropdown, String visibleText, String dropdownName) {
+<span class="nc" id="L224">        Select select = new Select(dropdown);</span>
+
+        try {
+<span class="nc" id="L227">            select.selectByVisibleText(visibleText);</span>
+<span class="nc" id="L228">            return true;</span>
+
+<span class="nc" id="L230">        } catch (Exception e) {</span>
+
+<span class="nc" id="L232">            logManager.logError(&quot;Exception while selecting visible text '&quot; + visibleText + &quot;' &quot; + IN_DROPDOWN + &quot; '&quot;</span>
+<span class="nc" id="L233">                    + dropdownName + &quot;' &quot; + EXCEPTION_IS + &quot;: &quot; + e.getMessage());</span>
+
+<span class="nc" id="L235">            logManager.addScreenshot(driverManager, &quot;Failed_SelectDropDownValueByVisibleText&quot;);</span>
+
+<span class="nc" id="L237">            Assert.fail(&quot;Unable to select value by visible text: &quot; + visibleText + &quot; from dropdown: &quot; + dropdownName</span>
+<span class="nc" id="L238">                    + &quot; : &quot; + e.getMessage());</span>
+
+<span class="nc" id="L240">            return false;</span>
+        }
+    }
+
+    public boolean selectDropDownTextByValue(WebElement dropdown, String value, String dropdownName) {
+<span class="nc" id="L245">        Select select = new Select(dropdown);</span>
+        try {
+<span class="nc" id="L247">            select.selectByValue(value);</span>
+<span class="nc" id="L248">            return true;</span>
+
+<span class="nc" id="L250">        } catch (Exception e) {</span>
+
+<span class="nc" id="L252">            logManager.logError(&quot;Exception while selecting value '&quot; + value + &quot;' &quot; + IN_DROPDOWN + dropdownName</span>
+<span class="nc" id="L253">                    + EXCEPTION_IS + e.getMessage());</span>
+
+<span class="nc" id="L255">            logManager.addScreenshot(driverManager, &quot;Failed_selectDropDowntTextByValue&quot;);</span>
+<span class="nc" id="L256">            Assert.fail(&quot;Unable to select test by value: '&quot; + value + &quot;' from dropdown: &quot; + dropdownName + &quot; : &quot;</span>
+<span class="nc" id="L257">                    + e.getMessage());</span>
+
+<span class="nc" id="L259">            return false;</span>
+        }
+    }
+
+    public void selectDropDownOptionAtIndex(WebElement dropdown, int index, String dropdownName) {
+<span class="nc" id="L264">        Select select = new Select(dropdown);</span>
+
+        try {
+<span class="nc" id="L267">            select.selectByIndex(index);</span>
+
+<span class="nc" id="L269">        } catch (Exception e) {</span>
+
+<span class="nc" id="L271">            logManager.logError(&quot;Exception while selecting value at index &quot; + index + &quot; &quot; + IN_DROPDOWN + &quot;: &quot;</span>
+<span class="nc" id="L272">                    + dropdownName + &quot; &quot; + EXCEPTION_IS + e.getMessage());</span>
+
+<span class="nc" id="L274">            logManager.addScreenshot(driverManager, &quot;Failed_selectDropDownOptionAtIndex&quot;);</span>
+<span class="nc" id="L275">        }</span>
+<span class="nc" id="L276">    }</span>
+
+    public String getSelectedTextInDropdown(WebElement dropdownelement, String dropdownName) {
+
+        try {
+<span class="nc" id="L281">            Select select = new Select(dropdownelement);</span>
+<span class="nc" id="L282">            return select.getFirstSelectedOption().getText();</span>
+
+<span class="nc" id="L284">        } catch (Exception e) {</span>
+<span class="nc" id="L285">            logManager.logInformation(&quot;Exception while getting first selected text from the select: &quot; + dropdownName,</span>
+                    false, false);
+
+<span class="nc" id="L288">            logManager.addScreenshot(driverManager, &quot;Failed_getSelectedTextInDropdown&quot;);</span>
+        }
+
+<span class="nc" id="L291">        return &quot;&quot;;</span>
+    }
+
+    // Radio Button Related Methods
+    public void selectRadioButton(WebElement element, String radioButtonName) {
+        try {
+<span class="nc bnc" id="L297" title="All 2 branches missed.">            if (!element.isSelected()) {</span>
+<span class="nc" id="L298">                element.click();</span>
+
+<span class="nc" id="L300">                logManager.logInformation(&quot;Radio button selected: &quot; + radioButtonName, false, false);</span>
+            } else {
+<span class="nc" id="L302">                logManager.logWarning(&quot;Radio button is already selected: &quot; + radioButtonName, true, true);</span>
+            }
+
+<span class="nc" id="L305">        } catch (Exception e) {</span>
+<span class="nc" id="L306">            logManager.logError(&quot;Exception while selecting radio button: &quot; + radioButtonName);</span>
+<span class="nc" id="L307">            logManager.logException(e, true, true);</span>
+
+<span class="nc" id="L309">            logManager.addScreenshot(driverManager, &quot;Failed_selectRadioButton&quot;);</span>
+<span class="nc" id="L310">            Assert.fail(&quot;Failed to select the radio button: &quot; + radioButtonName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L311">        }</span>
+<span class="nc" id="L312">    }</span>
+
+    // Generic Element Methods
+
+    /**
+     * This method will check if element is showing on the page. If element is not
+     * showing then it will just log information that element is not showing. This
+     * method best suited to cross check if element is no more showing on the page.
+     * 
+     * @param element     This is Web Element to check whether it is displayed on
+     *                    the page
+     * @param elementName This is the name of the Web Element
+     * @return boolean This return true if element displayed otherwise return false
+     */
+    public boolean isElementDisplayed(WebElement element, String elementName) {
+
+        // Increased timeout from 3 seconds to 7 due to failing tests in OSE, likely due
+        // to exceeding timeout
+<span class="nc" id="L330">        setDefaultDriverTimeout(7);</span>
+<span class="nc" id="L331">        logManager.logInformation(&quot;Checking if &quot; + elementName + &quot; visible: &quot;, false, false);</span>
+
+<span class="nc" id="L333">        boolean result = false;</span>
+
+        try {
+<span class="nc bnc" id="L336" title="All 2 branches missed.">            if (element.isDisplayed()) {</span>
+<span class="nc" id="L337">                result = true;</span>
+<span class="nc" id="L338">                logManager.logInformation(&quot;Element is showing on the page.&quot;, false, false);</span>
+            }
+
+<span class="nc" id="L341">        } catch (Exception e) {</span>
+
+            // Let's log the actual exception message to see if there's something to help
+            // identify why the exception is thrown
+<span class="nc" id="L345">            logManager.logInformation(e.getMessage(), false, false);</span>
+<span class="nc" id="L346">            logManager.logInformation(elementName + &quot; is not displayed.&quot; + elementName, false, false);</span>
+<span class="nc" id="L347">        }</span>
+<span class="nc" id="L348">        setDefaultDriverTimeout();</span>
+
+<span class="nc" id="L350">        return result;</span>
+    }
+
+    /**
+     * This method will log an error and fail the test if element is not displayed
+     * on the page
+     * 
+     * @param element     This is Web Element to check whether it is displayed on
+     *                    the page
+     * @param elementName This is the name of the Web Element
+     * @return boolean This return true if element displayed otherwise return false
+     */
+    public boolean isElementDisplayedWithAssertFail(WebElement element, String elementName) {
+
+<span class="nc" id="L364">        boolean result = true;</span>
+        try {
+<span class="nc bnc" id="L366" title="All 2 branches missed.">            if (!isElementDisplayed(element, elementName)) {</span>
+<span class="nc" id="L367">                result = false;</span>
+<span class="nc" id="L368">                logManager.addScreenshot(driverManager, &quot;Failed_&quot; + elementName + &quot;_isNotShowing&quot;);</span>
+<span class="nc" id="L369">                Assert.fail(&quot;Element &quot; + elementName + &quot; is not showing on the page.&quot;);</span>
+            }
+<span class="nc" id="L371">        } catch (AssertionError e) {</span>
+<span class="nc" id="L372">            logManager.logError(&quot;Element : &quot; + elementName + &quot; is  not Showing&quot;);</span>
+<span class="nc" id="L373">        }</span>
+
+<span class="nc" id="L375">        return result;</span>
+    }
+
+    public void scrollToLoadElementVisible(WebElement element, String elementName) {
+        try {
+<span class="fc" id="L380">            ((JavascriptExecutor) driverManager.getDriver()).executeScript(&quot;arguments[0].scrollIntoView();&quot;, element);</span>
+
+<span class="nc" id="L382">        } catch (Exception e) {</span>
+<span class="nc" id="L383">            logManager.logWarning(</span>
+<span class="nc" id="L384">                    &quot;Exception while scrolling for element: &quot; + elementName + &quot; &quot; + EXCEPTION_IS + &quot; &quot; + e.getMessage(),</span>
+                    false, false);
+
+<span class="nc" id="L387">            logManager.addScreenshot(driverManager, &quot;Failed_scrollToLoadElementVisible&quot;);</span>
+<span class="fc" id="L388">        }</span>
+<span class="fc" id="L389">    }</span>
+
+    public boolean isFieldHasFocus(WebElement element, String elementName) {
+<span class="nc" id="L392">        boolean result = false;</span>
+
+        try {
+<span class="nc bnc" id="L395" title="All 2 branches missed.">            if (element.equals(driverManager.getDriver().switchTo().activeElement())) {</span>
+<span class="nc" id="L396">                result = true;</span>
+
+            } else {
+<span class="nc" id="L399">                WebElement focusedElement = driverManager.getDriver().switchTo().activeElement();</span>
+<span class="nc" id="L400">                logManager.logInformation(</span>
+                        &quot;Element &quot; + elementName + &quot; is not currently focused. Focused Element is: &quot; + focusedElement,
+                        false, false);
+            }
+
+<span class="nc" id="L405">        } catch (Exception e) {</span>
+<span class="nc" id="L406">            logManager.logInformation(&quot;Exception while checking if &quot; + elementName + &quot; is focused: &quot; + e.getMessage(),</span>
+                    false, false);
+<span class="nc" id="L408">            logManager.addScreenshot(driverManager, &quot;Failed_isFieldHasFocus&quot;);</span>
+<span class="nc" id="L409">        }</span>
+
+<span class="nc" id="L411">        return result;</span>
+
+    }
+
+    public String getErrorMessageShowingForField(WebElement element, String elementName) {
+        try {
+<span class="nc" id="L417">            return element.getAttribute(&quot;validationMessage&quot;);</span>
+
+<span class="nc" id="L419">        } catch (Exception e) {</span>
+<span class="nc" id="L420">            logManager.logWarning(</span>
+<span class="nc" id="L421">                    &quot;Exception while getting error message for element: &quot; + elementName + &quot;: &quot; + e.getMessage(), false,</span>
+                    false);
+<span class="nc" id="L423">            logManager.addScreenshot(driverManager, &quot;Failed_getErrorMessageShowingForField&quot;);</span>
+
+<span class="nc" id="L425">            return &quot;&quot;;</span>
+        }
+    }
+
+    public String getSourceOfImage(WebElement imageLocator, String imageName) {
+        try {
+<span class="nc" id="L431">            return imageLocator.getAttribute(&quot;src&quot;);</span>
+
+<span class="nc" id="L433">        } catch (Exception e) {</span>
+<span class="nc" id="L434">            logManager.logError(&quot;Cannot get image file path for image: &quot; + imageName + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L435">            logManager.addScreenshot(driverManager, &quot;Failed_getSourceOfImage&quot;);</span>
+
+<span class="nc" id="L437">            return &quot;&quot;;</span>
+        }
+    }
+    
+
+    public String getAttributeOfWebElement(WebElement element, String attribute, String elementName) {
+        try {
+<span class="nc" id="L444">            return element.getAttribute(attribute);</span>
+
+<span class="nc" id="L446">        } catch (Exception e) {</span>
+<span class="nc" id="L447">            logManager.logWarning(&quot;Exception while getting attribute &quot; + attribute + &quot; for field: &quot; + elementName,</span>
+                    false, false);
+
+<span class="nc" id="L450">            logManager.addScreenshot(driverManager, &quot;Failed_getAttributeOfWebElement&quot;);</span>
+
+<span class="nc" id="L452">            return &quot;&quot;;</span>
+        }
+    }
+
+    // Page Related Methods
+    public void load(String url) {
+
+<span class="fc" id="L459">        logManager.logInformation(&quot;Loading URL in browser: &quot; + url, true, false);</span>
+
+        try {
+<span class="fc" id="L462">            driverManager.getDriver().get(url);</span>
+<span class="fc" id="L463">            waitForPageLoadCompletes(Config.getLargestPageTimeoutSeconds());</span>
+
+<span class="fc" id="L465">            logManager.logInformation(&quot;Page loaded.&quot;, true, false);</span>
+
+<span class="nc" id="L467">        } catch (Exception e) {</span>
+<span class="nc" id="L468">            logManager.logError(&quot;Error while loading URL: &quot; + url + &quot; &quot; + e.getMessage());</span>
+<span class="nc" id="L469">            logManager.addScreenshot(driverManager, &quot;Failed to load URL: &quot; + url);</span>
+<span class="fc" id="L470">        }</span>
+<span class="fc" id="L471">    }</span>
+
+    public String getPageURL() {
+<span class="nc" id="L474">        return driverManager.getDriver().getCurrentUrl();</span>
+    }
+
+    public String getPageTitle() {
+<span class="nc" id="L478">        return driverManager.getDriver().getTitle();</span>
+    }
+
+    public void refreshPage() {
+        try {
+<span class="nc" id="L483">            driverManager.getDriver().navigate().refresh();</span>
+
+<span class="nc" id="L485">        } catch (Exception e) {</span>
+<span class="nc" id="L486">            logManager.logError(&quot;Exception while refreshing the page. &quot; + e.getMessage());</span>
+<span class="nc" id="L487">            logManager.addScreenshot(driverManager, &quot;Failed_refreshPage&quot;);</span>
+<span class="nc" id="L488">        }</span>
+<span class="nc" id="L489">    }</span>
+
+    public void goToBackPage() {
+        try {
+<span class="fc" id="L493">            driverManager.getDriver().navigate().back();</span>
+
+<span class="nc" id="L495">        } catch (Exception e) {</span>
+<span class="nc" id="L496">            logManager.logError(&quot;Exception while loading back page.&quot;);</span>
+<span class="nc" id="L497">            logManager.addScreenshot(driverManager, &quot;Failed_goToBackPage&quot;);</span>
+<span class="fc" id="L498">        }</span>
+<span class="fc" id="L499">    }</span>
+
+    // Alert Related Methods
+    public boolean isAlertShowing() {
+<span class="nc" id="L503">        boolean result = false;</span>
+
+        try {
+<span class="nc bnc" id="L506" title="All 2 branches missed.">            if (driverManager.getWebDriverWait(2).until(ExpectedConditions.alertIsPresent()) != null)</span>
+<span class="nc" id="L507">                result = true;</span>
+<span class="nc" id="L508">        } catch (Exception e) {</span>
+<span class="nc" id="L509">            logManager.logWarning(&quot;Alert is not showing on the page.&quot;, true, true);</span>
+<span class="nc" id="L510">            logManager.addScreenshot(driverManager, &quot;Check_isAlertShowingOnPage&quot;);</span>
+<span class="nc" id="L511">        }</span>
+
+<span class="nc" id="L513">        return result;</span>
+    }
+
+    public boolean isAlertShowingWithAssertFail() {
+<span class="nc" id="L517">        boolean result = true;</span>
+        try {
+<span class="nc bnc" id="L519" title="All 2 branches missed.">            if (!isAlertShowing()) {</span>
+<span class="nc" id="L520">                result = false;</span>
+<span class="nc" id="L521">                Assert.fail(&quot;Alert is not showing.&quot;);</span>
+            }
+<span class="nc" id="L523">        } catch (AssertionError e) {</span>
+<span class="nc" id="L524">            logManager.logError(e.getMessage());</span>
+<span class="nc" id="L525">        }</span>
+
+<span class="nc" id="L527">        return result;</span>
+    }
+
+    public String getAlertText() {
+<span class="nc" id="L531">        String noAlertText = &quot;Failed: No Alert Present on the page.&quot;;</span>
+<span class="nc" id="L532">        String result = &quot;&quot;;</span>
+
+        try {
+<span class="nc bnc" id="L535" title="All 2 branches missed.">            if (isAlertShowing())</span>
+<span class="nc" id="L536">                result = driverManager.getDriver().switchTo().alert().getText();</span>
+            else
+<span class="nc" id="L538">                result = noAlertText;</span>
+
+<span class="nc" id="L540">        } catch (Exception e) {</span>
+<span class="nc" id="L541">            logManager.logError(&quot;Alert is not present on the page.&quot;);</span>
+<span class="nc" id="L542">            logManager.addScreenshot(driverManager, &quot;Failed_getAlertText&quot;);</span>
+
+<span class="nc" id="L544">            result = noAlertText;</span>
+<span class="nc" id="L545">        }</span>
+
+<span class="nc" id="L547">        return result;</span>
+    }
+
+    public boolean acceptAlert() {
+<span class="nc" id="L551">        boolean result = false;</span>
+
+<span class="nc bnc" id="L553" title="All 2 branches missed.">        if (isAlertShowing()) {</span>
+<span class="nc" id="L554">            driverManager.getDriver().switchTo().alert().accept();</span>
+<span class="nc" id="L555">            logManager.logInformation(&quot;Alert is closed.&quot;, true, false);</span>
+
+<span class="nc" id="L557">            result = true;</span>
+        }
+
+<span class="nc" id="L560">        return result;</span>
+    }
+
+    public boolean dismissAlert() {
+<span class="nc" id="L564">        boolean result = false;</span>
+
+<span class="nc bnc" id="L566" title="All 2 branches missed.">        if (isAlertShowing()) {</span>
+<span class="nc" id="L567">            driverManager.getDriver().switchTo().alert().dismiss();</span>
+<span class="nc" id="L568">            logManager.logInformation(&quot;Alert is closed.&quot;, true, false);</span>
+
+<span class="nc" id="L570">            result = true;</span>
+        }
+
+<span class="nc" id="L573">        return result;</span>
+    }
+
+    public void addTextInAlertTextBox(String inputText) {
+
+<span class="nc bnc" id="L578" title="All 2 branches missed.">        if (isAlertShowing()) {</span>
+<span class="nc" id="L579">            driverManager.getDriver().switchTo().alert().sendKeys(inputText);</span>
+<span class="nc" id="L580">            logManager.logInformation(&quot;Added text in alert text box.&quot; + inputText, true, false);</span>
+
+        }
+
+<span class="nc" id="L584">    }</span>
+
+    // Window Related Methods
+    public String getCurrentWindowHandle() {
+        try {
+<span class="nc" id="L589">            return driverManager.getDriver().getWindowHandle();</span>
+
+<span class="nc" id="L591">        } catch (Exception e) {</span>
+<span class="nc" id="L592">            logManager.logError(&quot;Exception while getting current window handle. Exception is: &quot; + e.getMessage());</span>
+        }
+
+<span class="nc" id="L595">        return &quot;&quot;;</span>
+    }
+
+    public void closeCurrentTab() {
+        try {
+<span class="nc" id="L600">            driverManager.getDriver().close();</span>
+<span class="nc" id="L601">        } catch (Exception e) {</span>
+<span class="nc" id="L602">            logManager.logError(&quot;Exception while closing current tab: Exception is: &quot; + e.getMessage());</span>
+<span class="nc" id="L603">            logManager.addScreenshot(driverManager, &quot;Failed_closeCurrentTab&quot;);</span>
+
+<span class="nc" id="L605">        }</span>
+
+<span class="nc" id="L607">    }</span>
+
+    public void goToWindow(String windowHandle) {
+        try {
+<span class="nc" id="L611">            driverManager.getDriver().switchTo().window(windowHandle);</span>
+<span class="nc" id="L612">        } catch (Exception e) {</span>
+<span class="nc" id="L613">            logManager.logError(</span>
+<span class="nc" id="L614">                    &quot;Exception while loading window :   &quot; + windowHandle + &quot; &quot; + EXCEPTION_IS + &quot; &quot; + e.getMessage());</span>
+<span class="nc" id="L615">            logManager.addScreenshot(driverManager, &quot;Failed_goToWindow&quot;);</span>
+<span class="nc" id="L616">        }</span>
+
+<span class="nc" id="L618">    }</span>
+
+    public Set&lt;String&gt; getAllWindowHandles() {
+        try {
+<span class="nc" id="L622">            return driverManager.getDriver().getWindowHandles();</span>
+
+<span class="nc" id="L624">        } catch (Exception e) {</span>
+<span class="nc" id="L625">            logManager.logError(&quot;Exception while getting all window handles.&quot;);</span>
+        }
+
+<span class="nc" id="L628">        return new HashSet&lt;&gt;();</span>
+    }
+
+    // Common Browser Methods
+    public void scrollUpByPixels(int pixels) {
+        try {
+<span class="nc" id="L634">            pixels = pixels * -1;</span>
+<span class="nc" id="L635">            ((JavascriptExecutor) driverManager.getDriver()).executeScript(&quot;window.scrollBy(0, arguments[0]);&quot;, pixels);</span>
+
+<span class="nc" id="L637">        } catch (Exception e) {</span>
+<span class="nc" id="L638">            logManager.logInformation(</span>
+<span class="nc" id="L639">                    &quot;Exception while scrolling up by pixels: &quot; + pixels + EXCEPTION_IS + e.getMessage(), false, false);</span>
+<span class="nc" id="L640">            logManager.addScreenshot(driverManager, &quot;Failed_scrollUpByPixels&quot;);</span>
+<span class="nc" id="L641">        }</span>
+<span class="nc" id="L642">    }</span>
+
+    public void scrollDownAtTheBottomOfPage() {
+        try {
+<span class="nc" id="L646">            ((JavascriptExecutor) driverManager.getDriver())</span>
+<span class="nc" id="L647">                    .executeScript(&quot;window.scrollTo(0, document.body.scrollHeight)&quot;);</span>
+
+<span class="nc" id="L649">        } catch (Exception e) {</span>
+<span class="nc" id="L650">            logManager.logInformation(</span>
+<span class="nc" id="L651">                    &quot;Exception while scrolling down at the bottom of the page: Exception is: &quot; + e.getMessage(), false,</span>
+                    true);
+
+<span class="nc" id="L654">            logManager.addScreenshot(driverManager, &quot;Failed_scrollDownAtTheBottomOfPage&quot;);</span>
+<span class="nc" id="L655">        }</span>
+
+<span class="nc" id="L657">    }</span>
+    public void verifyPageScrollPresence() {
+        
+<span class="fc" id="L660">        Long scrollHeight = (Long) ((JavascriptExecutor) driverManager.getDriver()).executeScript(&quot;return document.documentElement.scrollHeight&quot;);</span>
+<span class="fc" id="L661">        Long clientHeight = (Long) ((JavascriptExecutor) driverManager.getDriver()).executeScript(&quot;return document.documentElement.clientHeight&quot;);</span>
+
+<span class="pc bpc" id="L663" title="1 of 2 branches missed.">        if (scrollHeight &gt; clientHeight) {</span>
+<span class="fc" id="L664">            System.out.println(&quot;Test Passed: Scroll is present on the page when needed.&quot;);</span>
+        } else {
+<span class="nc" id="L666">            System.out.println(&quot;Test Failed: Scroll is NOT present on the page when needed.&quot;);</span>
+        }
+<span class="fc" id="L668">    }</span>
+    
+    public void scrollUpAtTheTopOfPage() {
+        try {
+<span class="nc" id="L672">            ((JavascriptExecutor) driverManager.getDriver())</span>
+<span class="nc" id="L673">                    .executeScript(&quot;window.scrollTo(0, -document.body.scrollHeight)&quot;);</span>
+
+<span class="nc" id="L675">        } catch (Exception e) {</span>
+<span class="nc" id="L676">            logManager.logInformation(</span>
+<span class="nc" id="L677">                    &quot;Exception while scrolling down at the bottom of the page: Exception is: &quot; + e.getMessage(), false,</span>
+                    true);
+
+<span class="nc" id="L680">            logManager.addScreenshot(driverManager, &quot;Failed_scrollDownAtTheBottomOfPage&quot;);</span>
+<span class="nc" id="L681">        }</span>
+
+<span class="nc" id="L683">    }</span>
+
+    public void pressKey(String keyName) {
+<span class="nc" id="L686">        Actions action = driverManager.getActions();</span>
+<span class="nc" id="L687">        logManager.logInformation(&quot;In Press Key Method&quot;, false, true);</span>
+        try {          
+<span class="nc" id="L689">                action.sendKeys(Keys.valueOf(keyName.toUpperCase())).build().perform();</span>
+<span class="nc" id="L690">                logManager.logInformation(&quot;Pressing Tab Key&quot;, false, true);</span>
+            
+<span class="nc" id="L692">        } catch (Exception e) {</span>
+<span class="nc" id="L693">            logManager.logError(&quot;Exception while pressing Escape key&quot;);</span>
+<span class="nc" id="L694">        }</span>
+<span class="nc" id="L695">    }</span>
+
+    // Common Function Methods
+
+    public String getCurrentDateTime() {
+<span class="nc" id="L700">        return DateTimeFormatter.ofPattern(&quot;yyyy/MM/dd HH:mm:ss&quot;).format(LocalDateTime.now());</span>
+    }
+
+    // Upload file using robot class
+
+    public void uploadFileUsingRobotClass(String imagePath, WebElement browseFileButton) {
+<span class="nc" id="L706">        String profileImagePath = System.getProperty(&quot;user.dir&quot;) + imagePath;</span>
+<span class="nc" id="L707">        System.out.println(&quot;ProfileImagePath&quot;);</span>
+<span class="nc" id="L708">        logManager.logInformation(&quot;Image used to upload profile picture is: &quot; + profileImagePath, false, true);</span>
+
+<span class="nc" id="L710">        StringSelection select = new StringSelection(profileImagePath);</span>
+
+        // copy the path to clipboard
+<span class="nc" id="L713">        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(select, null);</span>
+
+        // Click on Upload file button
+<span class="nc" id="L716">        scrollToLoadElementVisible(browseFileButton, &quot;Browse Button&quot;);</span>
+<span class="nc" id="L717">        scrollUpByPixels(70);</span>
+<span class="nc" id="L718">        clickButton(browseFileButton, &quot;Browse Button&quot;);</span>
+        //clickButtonUsingJavaScript(browseFileButton, &quot;Browse Button&quot;);
+        
+<span class="nc" id="L721">        logManager.logInformation(&quot;Clicked on the Upload file button.&quot;, true, true);</span>
+
+        // Paste path using robot class
+        Robot robot;
+
+        try {
+<span class="nc" id="L727">            robot = new Robot();</span>
+
+<span class="nc" id="L729">            driverManager.getActions().keyDown(Keys.CONTROL).sendKeys(&quot;v&quot;).keyUp(Keys.CONTROL).perform();</span>
+
+<span class="nc" id="L731">            waitForSeconds(10);</span>
+
+            // Press CTRL+V
+<span class="nc" id="L734">            robot.keyPress(KeyEvent.VK_CONTROL);</span>
+<span class="nc" id="L735">            robot.keyPress(KeyEvent.VK_V);</span>
+<span class="nc" id="L736">            robot.keyRelease(KeyEvent.VK_V);</span>
+<span class="nc" id="L737">            robot.keyRelease(KeyEvent.VK_CONTROL);</span>
+
+            // Press Enter
+
+<span class="nc" id="L741">            robot.keyPress(KeyEvent.VK_ENTER);</span>
+<span class="nc" id="L742">            robot.keyRelease(KeyEvent.VK_ENTER);</span>
+
+<span class="nc" id="L744">        } catch (Exception e) {</span>
+<span class="nc" id="L745">            logManager.logError(&quot;Exception while uploading file.&quot;);</span>
+<span class="nc" id="L746">            logManager.logException(e, true, true);</span>
+<span class="nc" id="L747">        }</span>
+<span class="nc" id="L748">    }</span>
+
+    public String getCssValueOfWebElement(WebElement element, String attribute, String elementName) {
+        try {
+<span class="nc" id="L752">            return element.getCssValue(attribute);</span>
+
+<span class="nc" id="L754">        } catch (Exception e) {</span>
+<span class="nc" id="L755">            logManager.logWarning(&quot;Exception while getting attribute &quot; + attribute + &quot; for field: &quot; + elementName,</span>
+                    false, false);
+
+<span class="nc" id="L758">            logManager.addScreenshot(driverManager, &quot;Failed_getAttributeOfWebElement&quot;);</span>
+
+<span class="nc" id="L760">            return &quot;&quot;;</span>
+        }
+    }
+
+
+    /**
+     * Method will be used to double-click on element
+     * @param element
+     * @param elementName
+     */
+    public void doubleClickOnElement(WebElement element, String elementName) {
+
+        try {
+<span class="nc" id="L773">            Actions action = driverManager.getActions();</span>
+<span class="nc" id="L774">            action.doubleClick(element).build().perform();</span>
+<span class="nc" id="L775">            logManager.logInformation(&quot;Double click on element: &quot; + elementName, true, false);</span>
+
+<span class="nc" id="L777">        } catch (Exception e) {</span>
+<span class="nc" id="L778">            logManager.logError(&quot;Exception while double clicking on element: &quot; + elementName);</span>
+
+<span class="nc" id="L780">            logManager.addScreenshot(driverManager, &quot;Failed_doubleClickElement&quot;);</span>
+
+<span class="nc" id="L782">            Assert.fail(&quot;Failed to double click on the element: &quot; + elementName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L783">        }</span>
+<span class="nc" id="L784">    }</span>
+    
+    public void moveToElementByAxisElement(WebElement element, String elementName) {
+
+        try {
+<span class="nc" id="L789">            Actions action = driverManager.getActions();</span>
+<span class="nc" id="L790">            action.moveToElement(element, 120, 1);</span>
+<span class="nc" id="L791">            logManager.logInformation(&quot; click on element: &quot; + elementName, true, false);</span>
+
+<span class="nc" id="L793">        } catch (Exception e) {</span>
+<span class="nc" id="L794">            logManager.logError(&quot;Exception while double clicking on element: &quot; + elementName);</span>
+
+<span class="nc" id="L796">            logManager.addScreenshot(driverManager, &quot;Failed_doubleClickElement&quot;);</span>
+
+<span class="nc" id="L798">            Assert.fail(&quot;Failed to  click on the element: &quot; + elementName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L799">        }</span>
+<span class="nc" id="L800">    }</span>
+    
+    public void moveToElementAtCenterOfScreen(WebElement element, String elementName) {
+
+		try {
+<span class="nc" id="L805">			String scrollElementIntoMiddle = &quot;var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);&quot;</span>
+					+ &quot;var elementTop = arguments[0].getBoundingClientRect().top;&quot;
+					+ &quot;window.scrollBy(0, elementTop-(viewPortHeight/2));&quot;;
+
+<span class="nc" id="L809">			((JavascriptExecutor) driverManager.getDriver()).executeScript(scrollElementIntoMiddle, element);</span>
+<span class="nc" id="L810">			logManager.logInformation(&quot; Scroll on element: &quot; + elementName, true, false);</span>
+
+<span class="nc" id="L812">		} catch (Exception e) {</span>
+<span class="nc" id="L813">			logManager.logError(&quot;Exception while scrolling on element: &quot; + elementName);</span>
+
+<span class="nc" id="L815">			logManager.addScreenshot(driverManager, &quot;Failed_To_Scroll&quot;);</span>
+
+<span class="nc" id="L817">			Assert.fail(&quot;Failed to scroll on the element: &quot; + elementName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L818">		}</span>
+<span class="nc" id="L819">    }</span>
+    
+    /**
+	 * Verify element background color
+	 */
+	public boolean verifyElementBackGroundColor(WebElement element, String elementName, String colorCode) {
+		
+<span class="nc" id="L826">		boolean result = false;</span>
+		
+<span class="nc bnc" id="L828" title="All 2 branches missed.">		if (isElementDisplayed(element, elementName)</span>
+<span class="nc bnc" id="L829" title="All 2 branches missed.">				&amp;&amp; element.getCssValue(&quot;background-color&quot;).equals(colorCode)) {</span>
+<span class="nc" id="L830">			logManager.logInformation(&quot;Element Color is getting displayed as expected.&quot;, true, false);</span>
+<span class="nc" id="L831">			result = true;</span>
+		}
+		
+<span class="nc" id="L834">		return result;</span>
+	}
+	
+	/**
+	 * Method to get the latest file from specified location
+	 * @param dirPath
+	 * @return last Modified File
+	 */
+	public File getLatestFilefromDir(String dirPath) {
+<span class="nc" id="L843">		File dir = new File(dirPath);</span>
+<span class="nc" id="L844">		File[] files = dir.listFiles();</span>
+<span class="nc bnc" id="L845" title="All 4 branches missed.">		if (files == null || files.length == 0) {</span>
+<span class="nc" id="L846">			return null;</span>
+		}
+
+<span class="nc" id="L849">		File lastModifiedFile = files[0];</span>
+<span class="nc bnc" id="L850" title="All 2 branches missed.">		for (int i = 1; i &lt; files.length; i++) {</span>
+<span class="nc bnc" id="L851" title="All 2 branches missed.">			if (lastModifiedFile.lastModified() &lt; files[i].lastModified()) {</span>
+<span class="nc" id="L852">				lastModifiedFile = files[i];</span>
+			}
+		}
+<span class="nc" id="L855">		return lastModifiedFile;</span>
+	}
+	
+	/**
+	 * Verify file/Report is downloaded correctly
+	 * return true if downloaded file is correct else false
+	 */
+	public boolean checkFileIsDownloadedCorrectly(String expectedFileName) {
+		
+<span class="nc" id="L864">		boolean result = false;</span>
+		
+<span class="nc" id="L866">		String downloadPath = System.getProperty(&quot;user.dir&quot;) + File.separator + &quot;test-output&quot; + File.separator</span>
+				+ &quot;downloadedReports&quot;;
+		
+<span class="nc" id="L869">		waitForSeconds(3);</span>
+<span class="nc" id="L870">		File getLatestFile = getLatestFilefromDir(downloadPath);		</span>
+<span class="nc bnc" id="L871" title="All 2 branches missed.">		if (getLatestFile != null) {</span>
+<span class="nc" id="L872">			String fileName = getLatestFile.getName();</span>
+
+<span class="nc" id="L874">			logManager.logInformation(&quot;File name is &quot; + fileName, false, false);</span>
+			
+<span class="nc bnc" id="L876" title="All 2 branches missed.">			result = (fileName.contains(expectedFileName))? true : false;</span>
+
+<span class="nc" id="L878">		} else {</span>
+<span class="nc" id="L879">			logManager.logInformation(&quot;Invalid download path or path does not contain File/report.&quot;, true, false);</span>
+		}
+<span class="nc" id="L881">		return result;</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

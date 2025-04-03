@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="4" total="28" passed="24">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Surefire suite" duration-ms="20589" started-at="2025-04-02T16:21:43 IST" finished-at="2025-04-02T16:22:04 IST">
+    <groups>
+    </groups>
+    <test name="Surefire test" duration-ms="20589" started-at="2025-04-02T16:21:43 IST" finished-at="2025-04-02T16:22:04 IST">
+      <class name="tests.HezkyTechPageTest.LoginPageTest">
+        <test-method status="PASS" signature="initializeExtentReport(org.testng.ITestContext)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentReport" is-config="true" duration-ms="170" started-at="2025-04-02T16:21:43 IST" finished-at="2025-04-02T16:21:43 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@12d26d3a]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentReport -->
+        <test-method status="PASS" signature="initializeDriver(java.lang.String)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeDriver" is-config="true" duration-ms="3029" started-at="2025-04-02T16:21:43 IST" finished-at="2025-04-02T16:21:46 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[chrome]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeDriver -->
+        <test-method status="PASS" signature="initPageObject()[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initPageObject" is-config="true" duration-ms="2" started-at="2025-04-02T16:21:46 IST" finished-at="2025-04-02T16:21:46 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initPageObject -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="19" started-at="2025-04-02T16:21:46 IST" finished-at="2025-04-02T16:21:46 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_001_verifyCompanyLogoVisible()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_001_verifyCompanyLogoVisible()[pri:1, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_001_verifyCompanyLogoVisible" duration-ms="9510" started-at="2025-04-02T16:21:46 IST" description="Verify Company logo is clearly visible on landing page" finished-at="2025-04-02T16:21:56 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_001_verifyCompanyLogoVisible -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="598" started-at="2025-04-02T16:21:56 IST" finished-at="2025-04-02T16:21:57 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_001_verifyCompanyLogoVisible status=SUCCESS method=LoginPageTest.LP_001_verifyCompanyLogoVisible()[pri:1, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:21:57 IST" finished-at="2025-04-02T16:21:57 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_002_verifyPageScrollPresence()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_002_verifyPageScrollPresence()[pri:2, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_002_verifyPageScrollPresence" duration-ms="575" started-at="2025-04-02T16:21:57 IST" description="Verify Page scroll is present on page when needed" finished-at="2025-04-02T16:21:57 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_002_verifyPageScrollPresence -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="59" started-at="2025-04-02T16:21:57 IST" finished-at="2025-04-02T16:21:57 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_002_verifyPageScrollPresence status=SUCCESS method=LoginPageTest.LP_002_verifyPageScrollPresence()[pri:2, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:21:57 IST" finished-at="2025-04-02T16:21:57 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_007_verifyAllLinksClickable()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_007_verifyAllLinksClickable()[pri:7, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_007_verifyAllLinksClickable" duration-ms="2471" started-at="2025-04-02T16:21:57 IST" description="Verify all links are clickable on the page" finished-at="2025-04-02T16:22:00 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_007_verifyAllLinksClickable -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="60" started-at="2025-04-02T16:22:00 IST" finished-at="2025-04-02T16:22:00 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_007_verifyAllLinksClickable status=SUCCESS method=LoginPageTest.LP_007_verifyAllLinksClickable()[pri:7, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:00 IST" finished-at="2025-04-02T16:22:00 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_008_verifyNavigationBackFromLinks()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_008_verifyNavigationBackFromLinks()[pri:8, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_008_verifyNavigationBackFromLinks" duration-ms="2031" started-at="2025-04-02T16:22:00 IST" description="Verify user can navigate back easily after clicking the links like about us, terms and conditions, privacy and policy." finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_008_verifyNavigationBackFromLinks -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="69" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_008_verifyNavigationBackFromLinks status=SUCCESS method=LoginPageTest.LP_008_verifyNavigationBackFromLinks()[pri:8, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_009_verifyForgotPasswordFunctionality()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="47" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_009_verifyForgotPasswordFunctionality status=SUCCESS method=LoginPageTest.LP_009_verifyForgotPasswordFunctionality()[pri:9, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="LP_009_verifyForgotPasswordFunctionality()[pri:9, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_009_verifyForgotPasswordFunctionality" duration-ms="0" started-at="2025-04-02T16:22:02 IST" description="Verify forgot password functionality" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_009_verifyForgotPasswordFunctionality -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_010_verifyNavigationBackFromForgotPassword()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="46" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_010_verifyNavigationBackFromForgotPassword status=SUCCESS method=LoginPageTest.LP_010_verifyNavigationBackFromForgotPassword()[pri:10, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="LP_010_verifyNavigationBackFromForgotPassword()[pri:10, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_010_verifyNavigationBackFromForgotPassword" duration-ms="0" started-at="2025-04-02T16:22:02 IST" description="Verify user can navigate back to login page from forgot password popup" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_010_verifyNavigationBackFromForgotPassword -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_011_verifyErrorMessageForInvalidEmail()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_011_verifyErrorMessageForInvalidEmail()[pri:11, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_011_verifyErrorMessageForInvalidEmail" duration-ms="0" started-at="2025-04-02T16:22:02 IST" description="Verify when user enter incorrect Email in forgot password popup error message should be displayed" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_011_verifyErrorMessageForInvalidEmail -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="41" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_011_verifyErrorMessageForInvalidEmail status=SUCCESS method=LoginPageTest.LP_011_verifyErrorMessageForInvalidEmail()[pri:11, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_012_verifyOTPSentForValidEmail()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="46" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_012_verifyOTPSentForValidEmail status=SUCCESS method=LoginPageTest.LP_012_verifyOTPSentForValidEmail()[pri:12, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="LP_012_verifyOTPSentForValidEmail()[pri:12, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_012_verifyOTPSentForValidEmail" duration-ms="0" started-at="2025-04-02T16:22:02 IST" description="Verify OTP is sent when user enter valid email in email textbox of Forgot password pop-up" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_012_verifyOTPSentForValidEmail -->
+        <test-method status="PASS" signature="LP_013_verifyUpdatePasswordPageAfterOTP()[pri:13, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_013_verifyUpdatePasswordPageAfterOTP" duration-ms="1" started-at="2025-04-02T16:22:02 IST" description="Verify update password page is showing after OTP sent to valid email" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_013_verifyUpdatePasswordPageAfterOTP -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="0" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_013_verifyUpdatePasswordPageAfterOTP()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="41" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_013_verifyUpdatePasswordPageAfterOTP status=SUCCESS method=LoginPageTest.LP_013_verifyUpdatePasswordPageAfterOTP()[pri:13, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="LP_014_verifyErrorForWrongOTP()[pri:14, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_014_verifyErrorForWrongOTP" duration-ms="1" started-at="2025-04-02T16:22:02 IST" description="Verify user can not update password using wrong OTP and error message is showing" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_014_verifyErrorForWrongOTP -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="0" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_014_verifyErrorForWrongOTP()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="58" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_014_verifyErrorForWrongOTP status=SUCCESS method=LoginPageTest.LP_014_verifyErrorForWrongOTP()[pri:14, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_015_verifyResendOTPFunctionality()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="67" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_015_verifyResendOTPFunctionality status=SUCCESS method=LoginPageTest.LP_015_verifyResendOTPFunctionality()[pri:15, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="LP_015_verifyResendOTPFunctionality()[pri:15, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_015_verifyResendOTPFunctionality" duration-ms="0" started-at="2025-04-02T16:22:02 IST" description="Verify resend OTP button functionality" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_015_verifyResendOTPFunctionality -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_016_verifySuccessfulLogin()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="65" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_016_verifySuccessfulLogin status=SUCCESS method=LoginPageTest.LP_016_verifySuccessfulLogin()[pri:16, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="LP_016_verifySuccessfulLogin()[pri:16, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_016_verifySuccessfulLogin" duration-ms="0" started-at="2025-04-02T16:22:02 IST" description="Successful login with valid username, password, and Customer ID" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_016_verifySuccessfulLogin -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="2" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_017_verifyOTPSentAfterValidLogin()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="58" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_017_verifyOTPSentAfterValidLogin status=SUCCESS method=LoginPageTest.LP_017_verifyOTPSentAfterValidLogin()[pri:17, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="LP_017_verifyOTPSentAfterValidLogin()[pri:17, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_017_verifyOTPSentAfterValidLogin" duration-ms="0" started-at="2025-04-02T16:22:02 IST" description="Verify user gets Authentication via OTP Sent to Email after inserting valid credentials" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_017_verifyOTPSentAfterValidLogin -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="0" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_018_verifyAuthorizationPageAfterLogin()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_018_verifyAuthorizationPageAfterLogin()[pri:18, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_018_verifyAuthorizationPageAfterLogin" duration-ms="0" started-at="2025-04-02T16:22:02 IST" description="Verify authorization page is open after user insert all valid credentials" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_018_verifyAuthorizationPageAfterLogin -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="54" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_018_verifyAuthorizationPageAfterLogin status=SUCCESS method=LoginPageTest.LP_018_verifyAuthorizationPageAfterLogin()[pri:18, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_019_verifySuccessfulLoginAfterOTP()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_019_verifySuccessfulLoginAfterOTP()[pri:19, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_019_verifySuccessfulLoginAfterOTP" duration-ms="0" started-at="2025-04-02T16:22:02 IST" description="Verify user is logged in successfully after valid OTP" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_019_verifySuccessfulLoginAfterOTP -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="44" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_019_verifySuccessfulLoginAfterOTP status=SUCCESS method=LoginPageTest.LP_019_verifySuccessfulLoginAfterOTP()[pri:19, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_020_verifyLoginFailureWithInvalidOTP()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_020_verifyLoginFailureWithInvalidOTP()[pri:20, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_020_verifyLoginFailureWithInvalidOTP" duration-ms="1" started-at="2025-04-02T16:22:02 IST" description="Verify user can&#039;t log-in using after invalid OTP" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_020_verifyLoginFailureWithInvalidOTP -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="53" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_020_verifyLoginFailureWithInvalidOTP status=SUCCESS method=LoginPageTest.LP_020_verifyLoginFailureWithInvalidOTP()[pri:20, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="0" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_021_verifyLoginFailureWithInvalidCredentials()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="38" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:02 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_021_verifyLoginFailureWithInvalidCredentials status=SUCCESS method=LoginPageTest.LP_021_verifyLoginFailureWithInvalidCredentials()[pri:21, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="LP_021_verifyLoginFailureWithInvalidCredentials()[pri:21, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_021_verifyLoginFailureWithInvalidCredentials" duration-ms="0" started-at="2025-04-02T16:22:02 IST" description="Verify user can not log in using invalid username and password combination" finished-at="2025-04-02T16:22:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_021_verifyLoginFailureWithInvalidCredentials -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:02 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_022_verifyLoginFailureWithIncorrectCustomerID()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_022_verifyLoginFailureWithIncorrectCustomerID()[pri:22, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_022_verifyLoginFailureWithIncorrectCustomerID" duration-ms="0" started-at="2025-04-02T16:22:03 IST" description="Verify Login failure with incorrect Customer ID" finished-at="2025-04-02T16:22:03 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_022_verifyLoginFailureWithIncorrectCustomerID -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="66" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_022_verifyLoginFailureWithIncorrectCustomerID status=SUCCESS method=LoginPageTest.LP_022_verifyLoginFailureWithIncorrectCustomerID()[pri:22, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="0" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_023_verifyLoginFailureWithMissingCustomerID()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_023_verifyLoginFailureWithMissingCustomerID()[pri:23, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_023_verifyLoginFailureWithMissingCustomerID" duration-ms="2" started-at="2025-04-02T16:22:03 IST" description="Verify Login failure with missing Customer ID" finished-at="2025-04-02T16:22:03 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_023_verifyLoginFailureWithMissingCustomerID -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="59" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_023_verifyLoginFailureWithMissingCustomerID status=SUCCESS method=LoginPageTest.LP_023_verifyLoginFailureWithMissingCustomerID()[pri:23, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_024_verifyAccountLockoutAfterFailedAttempts()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_024_verifyAccountLockoutAfterFailedAttempts()[pri:24, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_024_verifyAccountLockoutAfterFailedAttempts" duration-ms="1" started-at="2025-04-02T16:22:03 IST" description="Verify Account lockout after 05 failed login attempts" finished-at="2025-04-02T16:22:03 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_024_verifyAccountLockoutAfterFailedAttempts -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="67" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_024_verifyAccountLockoutAfterFailedAttempts status=SUCCESS method=LoginPageTest.LP_024_verifyAccountLockoutAfterFailedAttempts()[pri:24, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="2" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_025_verifyErrorMessageAfterFailedAttempts()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_025_verifyErrorMessageAfterFailedAttempts()[pri:25, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_025_verifyErrorMessageAfterFailedAttempts" duration-ms="0" started-at="2025-04-02T16:22:03 IST" description="Verify error message for after 05 failed login attempts" finished-at="2025-04-02T16:22:03 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_025_verifyErrorMessageAfterFailedAttempts -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="54" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_025_verifyErrorMessageAfterFailedAttempts status=SUCCESS method=LoginPageTest.LP_025_verifyErrorMessageAfterFailedAttempts()[pri:25, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="0" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_026_verifySuccessfulLoginAfterRetry()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_026_verifySuccessfulLoginAfterRetry()[pri:26, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_026_verifySuccessfulLoginAfterRetry" duration-ms="0" started-at="2025-04-02T16:22:03 IST" description="Verify Successful login after entering correct Customer ID on retry" finished-at="2025-04-02T16:22:03 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_026_verifySuccessfulLoginAfterRetry -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="46" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_026_verifySuccessfulLoginAfterRetry status=SUCCESS method=LoginPageTest.LP_026_verifySuccessfulLoginAfterRetry()[pri:26, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="1" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_027_verifyErrorMessageForMissingFields()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="LP_027_verifyErrorMessageForMissingFields()[pri:27, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_027_verifyErrorMessageForMissingFields" duration-ms="0" started-at="2025-04-02T16:22:03 IST" description="Verify Error message for missing fields" finished-at="2025-04-02T16:22:03 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_027_verifyErrorMessageForMissingFields -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="50" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_027_verifyErrorMessageForMissingFields status=SUCCESS method=LoginPageTest.LP_027_verifyErrorMessageForMissingFields()[pri:27, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="initializeExtentTest(java.lang.reflect.Method)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="initializeExtentTest" is-config="true" duration-ms="0" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void tests.HezkyTechPageTest.LoginPageTest.LP_028_verifyDataAccessAfterLogin()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initializeExtentTest -->
+        <test-method status="PASS" signature="afterMethodUpdateExtentReportWithTestDetails(org.testng.ITestResult)[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="afterMethodUpdateExtentReportWithTestDetails" is-config="true" duration-ms="45" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:03 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LP_028_verifyDataAccessAfterLogin status=SUCCESS method=LoginPageTest.LP_028_verifyDataAccessAfterLogin()[pri:28, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodUpdateExtentReportWithTestDetails -->
+        <test-method status="PASS" signature="LP_028_verifyDataAccessAfterLogin()[pri:28, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="LP_028_verifyDataAccessAfterLogin" duration-ms="0" started-at="2025-04-02T16:22:03 IST" description="Verify Ensure customer-specific data is only accessible after successful login" finished-at="2025-04-02T16:22:03 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LP_028_verifyDataAccessAfterLogin -->
+        <test-method status="PASS" signature="logClassExecutionCompletedMsg()[pri:0, instance:tests.HezkyTechPageTest.LoginPageTest@67671db1]" name="logClassExecutionCompletedMsg" is-config="true" duration-ms="1024" started-at="2025-04-02T16:22:03 IST" finished-at="2025-04-02T16:22:04 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logClassExecutionCompletedMsg -->
+      </class> <!-- tests.HezkyTechPageTest.LoginPageTest -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>

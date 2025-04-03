@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdminPanel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">pages.HezkyTech</a> &gt; <span class="el_source">AdminPanel.java</span></div><h1>AdminPanel.java</h1><pre class="source lang-java linenums">package pages.HezkyTech;
+
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
+import pages.PageActionsBase;
+
+import pages.uipages.HezkyTech.AdminPanelPageUI;
+import utils.readers.Config;
+import utils.webdrivers.DriverManager;
+
+public class AdminPanel extends PageActionsBase {
+
+/**
+ * This class contains only login page related actions method
+ * 
+ * @author Vaibhav
+ */
+	public AdminPanel(DriverManager driverManager) {
+<span class="nc" id="L20">		super(driverManager, new AdminPanelPageUI());</span>
+<span class="nc" id="L21">		browserActions.load(Config.getAccessBaseURL());</span>
+<span class="nc" id="L22">	}</span>
+	/**
+	 * Method is used to login the page and accessible by outside classes
+	 * 
+	 * @param userName
+	 * @param password
+	 */
+	public void fillUpCredintials( String userName, String password) {
+		
+<span class="nc" id="L31">		logManager.logInformation(&quot;Trying to login: &quot;, true, true);</span>
+<span class="nc" id="L32">		addUserNameDetails(userName);</span>
+<span class="nc" id="L33">		addPasswordDetails(password);</span>
+<span class="nc" id="L34">		clickOnLoginButton();</span>
+<span class="nc" id="L35">	}</span>
+
+
+	/**
+	 * Method is used to add userName in UserName Text-field
+	 * 
+	 * @param userName
+	 */
+	private void addUserNameDetails(String userName) {
+<span class="nc" id="L44">		String userNameTextField = &quot;userName&quot;;</span>
+<span class="nc" id="L45">		WebElement userNameTextFieldElement = pageObject.getTextField(userNameTextField);</span>
+
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(userNameTextFieldElement, smallPageTimeout, userNameTextField)) {</span>
+<span class="nc" id="L48">			browserActions.addDataInTheTextField(userNameTextFieldElement, userName, userNameTextField);</span>
+			
+		}else {
+			
+<span class="nc" id="L52">			Assert.fail(&quot;Username field is not accessible&quot;);</span>
+		}
+
+<span class="nc" id="L55">	}</span>
+
+	/**
+	 * Method is used to add password in Password Text-field
+	 * 
+	 * @param password
+	 */
+	private void addPasswordDetails(String password) {
+<span class="nc" id="L63">		String passwordTextField = &quot;password&quot;;</span>
+<span class="nc" id="L64">		WebElement passwordTextFieldElement = pageObject.getTextField(passwordTextField);</span>
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (browserActions.waitForElementVisible(passwordTextFieldElement, smallPageTimeout, passwordTextField)) {</span>
+<span class="nc" id="L67">			browserActions.addDataInTheTextField(passwordTextFieldElement, password, passwordTextField);</span>
+		}else {
+			
+<span class="nc" id="L70">			Assert.fail(&quot;Password fied is not accessible&quot;);</span>
+		}
+
+<span class="nc" id="L73">	}</span>
+
+	/**
+	 * Method is used to Click on Login Button
+	 */
+	private void clickOnLoginButton() {
+<span class="nc" id="L79">		String signInButton = &quot;signIn&quot;;</span>
+<span class="nc" id="L80">		WebElement signInButtonElement = pageObject.getButton(signInButton);</span>
+		
+<span class="nc" id="L82">		String usernameValidationText = &quot;usernameValidation&quot;;</span>
+<span class="nc" id="L83">		WebElement usernameValidationTextElement  = pageObject.getText(usernameValidationText);</span>
+		
+		
+
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(signInButtonElement, smallPageTimeout, signInButton)) {</span>
+<span class="nc" id="L88">			browserActions.clickButton(signInButtonElement, signInButton);</span>
+<span class="nc" id="L89">			browserActions.waitForSeconds(mediumPageTimeout);</span>
+			
+<span class="nc" id="L91">			Assert.assertTrue(browserActions.waitForElementVisible(usernameValidationTextElement, smallPageTimeout,</span>
+					usernameValidationText), &quot;Login Failed , Username Title text not visible&quot;);
+		}
+
+<span class="nc" id="L95">	}	</span>
+// HomePAGE
+	//click on Inventory Management
+	public void clickOnInventoryManagementButton() {
+<span class="nc" id="L99">		logManager.logInformation(&quot;Trying to click on Inventory Management: &quot;, true, true);</span>
+<span class="nc" id="L100">		String inventoryManagementButton = &quot;inventoryManagement&quot;;</span>
+<span class="nc" id="L101">		WebElement inventoryManagementButtonElement = pageObject.getButton(inventoryManagementButton);</span>
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(inventoryManagementButtonElement, largePageTimeout, inventoryManagementButton)) {</span>
+<span class="nc" id="L104">			browserActions.clickButton(inventoryManagementButtonElement, inventoryManagementButton);</span>
+			
+		}else {
+			
+<span class="nc" id="L108">			Assert.fail(&quot;Inventory management Button/Dropdown is not Clickable &quot;);</span>
+		}
+
+<span class="nc" id="L111">	}</span>
+//click on Gateway Management 
+	public void clickOnGatewayManagementButton() {
+<span class="nc" id="L114">		logManager.logInformation(&quot;Trying to click on Gateway Management: &quot;, true, true);</span>
+<span class="nc" id="L115">		String gatewayManagementButton = &quot;gatewayManagement&quot;;</span>
+<span class="nc" id="L116">		WebElement gatewayManagementButtonElement = pageObject.getButton(gatewayManagementButton);</span>
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(gatewayManagementButtonElement, mediumPageTimeout, gatewayManagementButton)) {</span>
+<span class="nc" id="L119">			browserActions.clickButton(gatewayManagementButtonElement, gatewayManagementButton);</span>
+<span class="nc" id="L120">			logManager.logInformation(&quot;clicked on Gateway management button&quot;, true, true);</span>
+		} else{
+			
+<span class="nc" id="L123">			Assert.fail(&quot;Gateway management Button/Dropdown is not Clickable &quot;);</span>
+		}
+
+<span class="nc" id="L126">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

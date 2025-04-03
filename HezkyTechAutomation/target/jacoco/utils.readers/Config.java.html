@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Config.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">utils.readers</a> &gt; <span class="el_source">Config.java</span></div><h1>Config.java</h1><pre class="source lang-java linenums">package utils.readers;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+import utils.logger.LogsManager;
+
+public class Config {
+<span class="fc" id="L13">    private static String projectBaseDirectory = System.getProperty(&quot;user.dir&quot;);</span>
+<span class="fc" id="L14">    private static Map&lt;String, String&gt; globalProperties = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L15">    private static String propertiesDirectoryPath = projectBaseDirectory + File.separator + &quot;properties&quot;</span>
+            + File.separator;
+
+<span class="fc" id="L18">    static LogsManager logManager = new LogsManager(Config.class.getName());</span>
+
+<span class="nc" id="L20">    private Config() {</span>
+<span class="nc" id="L21">        throw new IllegalStateException(&quot;Utility class - ConfigReader&quot;);</span>
+    }
+
+    public static void loadTestConfigurationFiles() {
+<span class="fc" id="L25">        Config.loadEnvironmentSpecificProperties();</span>
+<span class="fc" id="L26">        Config.loadCommonProperties();</span>
+<span class="fc" id="L27">    }</span>
+
+    private static void loadEnvironmentSpecificProperties() {
+<span class="fc" id="L30">        String propertyFileName = &quot;&quot;;</span>
+<span class="fc" id="L31">        String env = getTestRunEnvironment();</span>
+
+<span class="fc" id="L33">        propertyFileName = propertiesDirectoryPath + &quot;env.&quot; + env + &quot;.properties&quot;;</span>
+
+        // Load Test Environment Specific Properties
+<span class="fc" id="L36">        loadPropertyFile(propertyFileName);</span>
+<span class="fc" id="L37">        logManager.logInformation(&quot;Test Environment Specific property file loaded successfully.&quot; + propertyFileName,</span>
+                false, true);
+
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * This method returns the test run environment specified in the command line.
+     * If no environment is specified then it returns &quot;test&quot; as execution
+     * environment. All property file names should be specified with all the lower
+     * case letter. On Windows environment file name are not case sensitive but in
+     * Linux environment those are case sensitive.
+     * 
+     * @return env - Environment name as lowercase.
+     */
+    public static String getTestRunEnvironment() {
+
+<span class="fc" id="L53">        String env = System.getProperty(&quot;execution.env&quot;);</span>
+
+<span class="pc bpc" id="L55" title="2 of 4 branches missed.">        if (env == null || env.isEmpty()) {</span>
+<span class="nc" id="L56">            logManager.logInformation(&quot;env not set, using default 'test'&quot;, false, true);</span>
+<span class="nc" id="L57">            env = &quot;test&quot;;</span>
+        }
+
+<span class="fc" id="L60">        return env.toLowerCase();</span>
+    }
+
+    private static void loadCommonProperties() {
+<span class="fc" id="L64">        String commonPropertiesFileName = &quot;env.common.properties&quot;;</span>
+
+<span class="fc" id="L66">        String propertyFilePath = propertiesDirectoryPath + File.separator + commonPropertiesFileName;</span>
+
+        try {
+<span class="fc" id="L69">            loadPropertyFile(propertyFilePath);</span>
+<span class="fc" id="L70">            logManager.logInformation(&quot;Common property file loaded successfully.&quot; + propertyFilePath, false, true);</span>
+<span class="nc" id="L71">        } catch (Exception e) {</span>
+<span class="nc" id="L72">            logManager.logInformation(&quot;Failed to load common property file: &quot; + propertyFilePath, false, true);</span>
+<span class="fc" id="L73">        }</span>
+<span class="fc" id="L74">    }</span>
+
+    @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+    private static void loadPropertyFile(String fileName) {
+<span class="fc" id="L78">        InputStream inputStream = null;</span>
+<span class="fc" id="L79">        Properties prop = new Properties();</span>
+
+        try {
+<span class="fc" id="L82">            inputStream = new FileInputStream(fileName);</span>
+<span class="fc" id="L83">            prop.load(inputStream);</span>
+<span class="fc" id="L84">            inputStream.close();</span>
+
+<span class="nc" id="L86">        } catch (Exception e) {</span>
+<span class="nc" id="L87">            logManager.logInformation(&quot;Error while reading config file: &quot; + fileName, false, true);</span>
+<span class="nc" id="L88">            logManager.logException(e, false, true);</span>
+
+<span class="nc" id="L90">            logManager.logInformation(&quot;Execution stopped due to unavailability of data.&quot; + fileName, false, true);</span>
+<span class="nc" id="L91">            System.exit(0);</span>
+<span class="fc" id="L92">        }</span>
+
+<span class="fc" id="L94">        globalProperties.putAll((Map) prop);</span>
+<span class="fc" id="L95">    }</span>
+
+    private static String getPropertyValue(String propertyName) {
+<span class="fc" id="L98">        return globalProperties.get(propertyName).trim();</span>
+    }
+
+    public static String getAccessBaseURL() {
+    	
+<span class="fc" id="L103">    	 String url = getPropertyValue(&quot;Access_Base_URL&quot;);</span>
+    	
+<span class="fc" id="L105">        return url;</span>
+    }
+
+    static String getTestDataDirectoryPath() {
+<span class="nc" id="L109">        return projectBaseDirectory + &quot;//src//test//resources//&quot;;</span>
+    }
+
+    static String getTestDataFileName() {
+<span class="nc" id="L113">        return getPropertyValue(&quot;Test_Data_File_Name&quot;);</span>
+    }
+
+    public static String getImagePath(String image) {
+<span class="nc" id="L117">        return &quot;\\src\\test\\resources\\profilePictures\\&quot; + image;</span>
+    }
+
+    public static int getSmallestPageTimeoutSeconds() {
+        try {
+<span class="fc" id="L122">            return Integer.parseInt(getPropertyValue(&quot;Smallest_Page_Timeout_Seconds&quot;));</span>
+<span class="nc" id="L123">        } catch (Exception e) {</span>
+<span class="nc" id="L124">            return 5;</span>
+        }
+    }
+
+    public static int getSmallPageTimeoutSeconds() {
+        try {
+<span class="fc" id="L130">            return Integer.parseInt(getPropertyValue(&quot;Small_Page_Timeout_Seconds&quot;));</span>
+<span class="nc" id="L131">        } catch (Exception e) {</span>
+<span class="nc" id="L132">            return 15;</span>
+        }
+    }
+
+    public static int getMediunPageTimeoutSeconds() {
+        try {
+<span class="fc" id="L138">            return Integer.parseInt(getPropertyValue(&quot;Mediun_Page_Timeout_Seconds&quot;));</span>
+<span class="nc" id="L139">        } catch (Exception e) {</span>
+<span class="nc" id="L140">            return 30;</span>
+        }
+    }
+
+    public static int getLargePageTimeoutSeconds() {
+        try {
+<span class="fc" id="L146">            return Integer.parseInt(getPropertyValue(&quot;Large_Page_Timeout_Seconds&quot;));</span>
+<span class="nc" id="L147">        } catch (Exception e) {</span>
+<span class="nc" id="L148">            return 45;</span>
+        }
+    }
+
+    public static int getLargestPageTimeoutSeconds() {
+        try {
+<span class="fc" id="L154">            return Integer.parseInt(getPropertyValue(&quot;Largest_Page_Timeout_Seconds&quot;));</span>
+<span class="nc" id="L155">        } catch (Exception e) {</span>
+<span class="nc" id="L156">            return 60;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerPanelPageUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">pages.uipages.HezkyTech</a> &gt; <span class="el_source">CustomerPanelPageUI.java</span></div><h1>CustomerPanelPageUI.java</h1><pre class="source lang-java linenums">package pages.uipages.HezkyTech;
+
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+import pages.PageUIBase;
+
+<span class="fc" id="L10">public class CustomerPanelPageUI extends PageUIBase {</span>
+
+	//Comapny logo on Landing page
+	@FindBy(xpath = &quot;//img[@src='assets/svg/hezky_logo_V2.svg']&quot;)
+	public static WebElement companyLogoOnLandingPageText;
+	// Broken links
+	@FindBy(tagName = &quot;a&quot;)
+	public static List&lt;WebElement&gt; checkBrokenLinksList;
+	// customerID Textfiled
+	@FindBy(xpath = &quot;//input[@placeholder='Customer ID']&quot;)
+	public static WebElement customerIDTextField;
+	// Username Textfiled
+	@FindBy(xpath = &quot;//input[@placeholder='Email Address']&quot;)
+	public static WebElement userNameTextField;
+	// Password Textfield
+	@FindBy(xpath = &quot;//input[@placeholder='Password']&quot;)
+	public static WebElement passwordTextField;
+	// Submit Button
+	@FindBy(xpath = &quot;//button[@aria-label='Sign In']&quot;)
+	public static WebElement signInButton; //
+	// Home page loaded verification text of Username
+	@FindBy(xpath = &quot;//span[text()='Vaibhav']&quot;)
+	public static WebElement usernameValidationText;
+	// Comapny logo
+	@FindBy(xpath = &quot;//img[@src='/assets/svg/hezkytech_logo.svg']&quot;)
+	public static WebElement companyLogoText;
+
+	// Dashboard
+	@FindBy(xpath = &quot;//a[text()=' Dashboard ']&quot;)
+	public static WebElement dashboardButton;
+	// Assets
+	@FindBy(xpath = &quot;//a[text()=' Assets ']&quot;)
+	public static WebElement assetsButton;
+	// Incidents
+	@FindBy(xpath = &quot;//a[text()=' Incidents ']&quot;)
+	public static WebElement incidentsButton;
+	// Reports
+	@FindBy(xpath = &quot;//a[text()=' Reports ']&quot;)
+	public static WebElement reportsButton;
+	// Admin
+	@FindBy(xpath = &quot;//span[text()='Admin']&quot;)
+	public static WebElement adminButton;
+	// Show More 1
+	@FindBy(xpath = &quot;(//a[text()='Show More'])[1]&quot;)
+	public static WebElement showMore1Button;
+	// Show More 2
+	@FindBy(xpath = &quot;(//a[text()='Show More'])[2]&quot;)
+	public static WebElement showMore2Button;
+	// Show less 1
+	@FindBy(xpath = &quot;(//a[text()='Show Less'])[1]&quot;)
+	public static WebElement showLess1Button;
+	// Show less 2
+	@FindBy(xpath = &quot;(//a[text()='Show Less'])[2]&quot;)
+	public static WebElement showLess2Button;
+	// Location Icon
+	@FindBy(xpath = &quot;//button[@data-target='#filterGroupModel']&quot;)
+	public static WebElement locationIconButton;
+	// Expand Location
+	@FindBy(xpath = &quot;(//i[@class='fa fa-plus' and (@aria-hidden='true')])[1]&quot;)
+	public static WebElement expandLocationButton;
+	// Select Location 
+	@FindBy(xpath = &quot;(//mat-tree-node[@role='treeitem'])[1]&quot;)
+	public static WebElement selectLocationButton;
+	// Notification Icon
+	@FindBy(xpath = &quot;//button[@matbadgecolor='warn']&quot;)
+	public static WebElement notificationIconButton;
+	// UserName
+	@FindBy(xpath = &quot;(//a[@data-toggle='dropdown'])[2]//span&quot;)
+	public static WebElement userNameButton;
+	// Assigned User
+	@FindBy(xpath = &quot;//select[@name='users']&quot;)
+	public static WebElement assignedUserButton;
+	// Acknowledge
+	@FindBy(xpath = &quot;//button[@class='btn btn-acknowledged form-control btn_ack']&quot;)
+	public static WebElement acknowledgeButton;
+	// Alert Okey= //button//span[text()='Okay']
+	@FindBy(xpath = &quot;//button//span[text()='Okay']&quot;)
+	public static WebElement alertOkayButton;
+	// Alert Cancel
+	@FindBy(xpath = &quot;//button//span[text()='Cancel']&quot;)
+	public static WebElement alertCancelButton;
+	// Alert Popup Text
+	@FindBy(xpath = &quot;//h4[text()='Alert']&quot;)
+	public static WebElement alertPopupValidationText;
+
+	// Asset page
+	// Asset count
+	@FindBy(xpath = &quot;//h3[text()='ASSETS ']//span&quot;)
+	public static WebElement assetCountButton;
+	// Asset Normal
+	@FindBy(xpath = &quot;(//h3[text()='ASSETS ']//span//following::button)[1]&quot;)
+	public static WebElement normalAssetButton;
+	// Asset with Alarm
+	@FindBy(xpath = &quot;(//h3[text()='ASSETS ']//span//following::button)[2]&quot;)
+	public static WebElement assetWithAlarmButton;
+	// Asset inactive
+	@FindBy(xpath = &quot;(//h3[text()='ASSETS ']//span//following::button)[3]&quot;)
+	public static WebElement inactiveAssetButton;
+	// Add Asset
+	@FindBy(xpath = &quot;//*[text()=' Add Asset']&quot;)
+	public static WebElement addAssetButton;
+	// Asset Search reload
+	@FindBy(xpath = &quot;(//h3[text()='ASSETS ']//span//following::button)[5]&quot;)
+	public static WebElement reloadSearchAssetButton;
+	// Asset Filter
+	@FindBy(xpath = &quot;(//h3[text()='ASSETS ']//span//following::button)[6]&quot;)
+	public static WebElement filterAssetButton;
+	// Expand Asset
+	@FindBy(xpath = &quot;(//h3[text()='ASSETS ']//following::td)[2]//img&quot;)
+	public static WebElement expandAssetButton;
+	// Edit Asset
+	@FindBy(xpath = &quot;(//h3[text()='ASSETS ']//span//following::button)[7]&quot;)
+	public static WebElement editAssetButton;
+
+	// Add asset page
+	// Close add asset page
+	@FindBy(xpath = &quot;(//h5//span//following::button)[1]&quot;)
+	public static WebElement closeAddAssetPageButton;
+	// configure new sensor
+	@FindBy(xpath = &quot;(//h5//span//following::button)[2]&quot;)
+	public static WebElement configureNewSensorButton;
+	// Submit Asset
+	@FindBy(xpath = &quot;(//h5//span//following::button)[3]&quot;)
+	public static WebElement submitAssetButton;
+	// Submit And Add Another
+	@FindBy(xpath = &quot;(//h5//span//following::button)[4]&quot;)
+	public static WebElement submitAndAddAnotherAssetButton;
+	// Reset Add Asset page
+	@FindBy(xpath = &quot;(//h5//span//following::button)[5]&quot;)
+	public static WebElement resetAddaAssetPageButton;
+
+	// Select environment button
+	@FindBy(xpath = &quot;//select&quot;)
+	public static WebElement selectEnvioronmentButton;
+	// select from dropdown
+	@FindBy(xpath = &quot;//select//option[text()='Cooler']&quot;)
+	public static WebElement selectCoolerButton;
+
+	// Asset name textfield (//input[@type='text'])[1]
+	@FindBy(xpath = &quot;(//input[@type='text'])[1]&quot;)
+	public static WebElement assetNameTextField;
+	// make textfiled
+	@FindBy(xpath = &quot;(//input[@type='text'])[2]&quot;)
+	public static WebElement makeTextField;
+	// Model textfiled
+	@FindBy(xpath = &quot;(//input[@type='text'])[3]&quot;)
+	public static WebElement modelTextField;
+	// tag textfiled
+	@FindBy(xpath = &quot;(//input[@type='text'])[5]&quot;)
+	public static WebElement tagTextField;
+	// searchDeviceEUI textfiled
+	@FindBy(xpath = &quot;(//input[@type='search']&quot;)
+	public static WebElement searchDeviceEUITextField;
+	// select DevcieEUI
+	@FindBy(xpath = &quot;(//input[@type='search']//following::div//li)[1]&quot;)
+	public static WebElement selectDevcieEUIButton;
+
+	// selectSensorTypeButton
+	@FindBy(xpath = &quot;//select[@name='sensor_type']&quot;)
+	public static WebElement selectSensorTypeButton;
+	// Select sensor type from dropdown
+	@FindBy(xpath = &quot;//select//option[text()='Neither']&quot;)
+	public static WebElement selectSensorTypeFromFropdownButton;
+
+	// submit sensorType
+	@FindBy(xpath = &quot;(//button[text()='Submit'])[2]&quot;)
+	public static WebElement submitSensorTypeButton;
+	// reset sensorType
+	@FindBy(xpath = &quot;(//button[text()='Reset'])[2]&quot;)
+	public static WebElement resetSensorTypeButton;
+
+	// Asset details page
+	// navigateToAssetDetailsButton
+	@FindBy(xpath = &quot;(//tr//td[3])[1]&quot;)
+	public static WebElement navigateToAssetDetailsButton;
+
+	// create Alarm
+	@FindBy(xpath = &quot;//*[text()=' Create Alarm ']&quot;)
+	public static WebElement createAlarmButton;
+	// select Temperaturer alarm button
+	@FindBy(xpath = &quot;//a[text()='Temperature']&quot;)
+	public static WebElement selectTemperatureAlarmButton;
+	// select Temperaturer alarm button
+	@FindBy(xpath = &quot;//a[text()='Humidity']&quot;)
+	public static WebElement selectHumidityAlarmButton;
+	// select Temperaturer alarm button
+	@FindBy(xpath = &quot;(//a[text()='Pressure'])[1]&quot;)
+	public static WebElement selectPressureAlarmButton;
+
+	// Alarm name textfiled
+	@FindBy(xpath = &quot;(//label[@for='alarm_name']//following::input)[1]&quot;)
+	public static WebElement alarmNameTextField;
+	// Alarm name textfiled
+	@FindBy(xpath = &quot;(//label[@for='tags']//following::input)[1]&quot;)
+	public static WebElement tagInAlarmTextField;
+	// Alarm name textfiled
+	@FindBy(xpath = &quot;(//label[@for='delay_vlaue']//following::input)[1]&quot;)
+	public static WebElement deleyIncidentTextField;
+
+	
+	
+	
+	// Select alrm Threashould /
+	@FindBy(xpath = &quot;//select[@name='threshold_condition']&quot;)
+	public static WebElement threashouldAlarmButton;
+	// GreaterThan Threashould
+	@FindBy(xpath = &quot;//OPTION[@value='Greater than']&quot;)
+	public static WebElement greaterThanThreashouldAlarmButton;
+	// LessThan Threashould
+	@FindBy(xpath = &quot;//OPTION[@value='Less than']&quot;)
+	public static WebElement lessThanThreashouldAlarmButton;
+	// select Hooter
+	@FindBy(xpath = &quot;//ng-multiselect-dropdown[@name='hooters']&quot;)
+	public static WebElement selectHooterDropdownButton;
+	// select severities
+	@FindBy(xpath = &quot;//ng-multiselect-dropdown[@name='severities']&quot;)
+	public static WebElement severityDropdownButton;
+	// select all severity
+	@FindBy(xpath = &quot;//input[@aria-label='multiselect-select-all']&quot;)
+	public static WebElement selectAllCheckboxButton;
+	// low severuty
+	@FindBy(xpath = &quot;//input[@aria-label='Low']&quot;)
+	public static WebElement lowCheckboxButton;
+	// mediam severity
+	@FindBy(xpath = &quot;//input[@aria-label='Medium']&quot;)
+	public static WebElement mediumCheckboxButton;
+	// high severity
+	@FindBy(xpath = &quot;//input[@aria-label='High']&quot;)
+	public static WebElement highCheckboxButton;
+		
+		
+		
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

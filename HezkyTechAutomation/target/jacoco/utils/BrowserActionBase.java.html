@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BrowserActionBase.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">utils</a> &gt; <span class="el_source">BrowserActionBase.java</span></div><h1>BrowserActionBase.java</h1><pre class="source lang-java linenums">package utils;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import utils.logger.LogsManager;
+import utils.webdrivers.DriverManager;
+
+public class BrowserActionBase {
+
+    private LogsManager logManager;
+
+    private static final String EXCEPTION_IS = &quot;. Exception is: &quot;;
+
+    private DriverManager driverManager;
+
+<span class="fc" id="L26">    public BrowserActionBase(DriverManager driverManager) {</span>
+<span class="fc" id="L27">        this.driverManager = driverManager;</span>
+<span class="fc" id="L28">        logManager = new LogsManager(BrowserActionBase.class.getName());</span>
+<span class="fc" id="L29">    }</span>
+
+    // Button Related Methods
+    public void clickButton(WebElement element, String buttonName) {
+
+        try {
+<span class="nc" id="L35">            element.click();</span>
+<span class="nc" id="L36">            logManager.logInformation(&quot;Clicked on the button: &quot; + buttonName, true, false);</span>
+
+<span class="nc" id="L38">        } catch (Exception e) {</span>
+<span class="nc" id="L39">            logManager.logError(&quot;Exception while clicking on button: &quot; + buttonName);</span>
+
+<span class="nc" id="L41">            logManager.addScreenshot(driverManager, &quot;Failed_clickButton&quot;);</span>
+
+<span class="nc" id="L43">            Assert.fail(&quot;Failed to click on the button: &quot; + buttonName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L44">        }</span>
+<span class="nc" id="L45">    }</span>
+
+    public void clickButtonUsingJavaScript(WebElement element, String buttonName) {
+        try {
+<span class="nc" id="L49">            ((JavascriptExecutor) driverManager.getDriver()).executeScript(&quot;arguments[0].click();&quot;, element);</span>
+
+<span class="nc" id="L51">        } catch (Exception e) {</span>
+<span class="nc" id="L52">            logManager.logError(&quot;Exception while clicking on the button using JS: &quot; + buttonName + &quot; &quot; + EXCEPTION_IS</span>
+<span class="nc" id="L53">                    + &quot; &quot; + e.getMessage());</span>
+
+<span class="nc" id="L55">            logManager.addScreenshot(driverManager, &quot;Failed_clickButtonUsingJavaScript&quot;);</span>
+
+<span class="nc" id="L57">            Assert.fail(&quot;Failed to click on the button using JS: &quot; + buttonName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L58">        }</span>
+
+<span class="nc" id="L60">    }</span>
+
+    // This method is used to hover over an element
+    public void hoverOnElement(WebElement element, String elementName) {
+
+        try {
+<span class="nc" id="L66">            Actions action = driverManager.getActions();</span>
+<span class="nc" id="L67">            action.moveToElement(element).build().perform();</span>
+<span class="nc" id="L68">            logManager.logInformation(&quot;Hovering on element: &quot; + elementName, true, false);</span>
+
+<span class="nc" id="L70">        } catch (Exception e) {</span>
+<span class="nc" id="L71">            logManager.logError(&quot;Exception while hovering on element: &quot; + elementName);</span>
+
+<span class="nc" id="L73">            logManager.addScreenshot(driverManager, &quot;Failed_hoverElement&quot;);</span>
+
+<span class="nc" id="L75">            Assert.fail(&quot;Failed to hover on the element: &quot; + elementName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L76">        }</span>
+<span class="nc" id="L77">    }</span>
+
+    // Hyperlink Related Methods
+    public void clickOnLink(WebElement element, String linkName) {
+        try {
+<span class="nc" id="L82">            element.click();</span>
+<span class="nc" id="L83">            logManager.logInformation(&quot;Clicked on the link: &quot; + linkName, true, false);</span>
+
+<span class="nc" id="L85">        } catch (Exception e) {</span>
+<span class="nc" id="L86">            logManager.logInformation(&quot;Exception while Clicking on the link:  &quot; + linkName, true, false);</span>
+<span class="nc" id="L87">            logManager.addScreenshot(driverManager, &quot;Failed_clickOnLink&quot;);</span>
+
+<span class="nc" id="L89">            Assert.fail(&quot;Failed to click on the link: &quot; + linkName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L90">        }</span>
+<span class="nc" id="L91">    }</span>
+
+    // Checkbox Related Methods
+    public void checkTheCheckbox(WebElement element, String checkboxName) {
+        try {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            if (!element.isSelected()) {</span>
+<span class="nc" id="L97">                element.click();</span>
+
+<span class="nc" id="L99">                logManager.logInformation(&quot;Checkbox checked: &quot; + checkboxName, true, false);</span>
+
+            } else {
+<span class="nc" id="L102">                logManager.logWarning(&quot;Checkbox is already checked: &quot; + checkboxName, true, true);</span>
+            }
+
+<span class="nc" id="L105">        } catch (Exception e) {</span>
+<span class="nc" id="L106">            logManager.logError(&quot;Exception while checking the checkbox: &quot; + checkboxName);</span>
+<span class="nc" id="L107">            logManager.logException(e, true, true);</span>
+
+<span class="nc" id="L109">            logManager.addScreenshot(driverManager, &quot;Failed_checkTheCheckbox&quot;);</span>
+
+<span class="nc" id="L111">            Assert.fail(&quot;Failed to check the checkbox: &quot; + checkboxName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L112">        }</span>
+<span class="nc" id="L113">    }</span>
+
+    public void uncheckTheCheckbox(WebElement element, String checkboxName) {
+        try {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            if (element.isSelected()) {</span>
+<span class="nc" id="L118">                element.click();</span>
+<span class="nc" id="L119">                logManager.logInformation(&quot;Checkbox unchecked: &quot; + checkboxName, false, false);</span>
+            } else {
+<span class="nc" id="L121">                logManager.logWarning(&quot;Checkbox is already unchecked: &quot; + checkboxName, true, true);</span>
+            }
+
+<span class="nc" id="L124">        } catch (Exception e) {</span>
+<span class="nc" id="L125">            logManager.logError(&quot;Exception while unchecking the checkbox: &quot; + checkboxName);</span>
+<span class="nc" id="L126">            logManager.logException(e, true, true);</span>
+
+<span class="nc" id="L128">            logManager.addScreenshot(driverManager, &quot;Failed_uncheckTheCheckbox&quot;);</span>
+
+<span class="nc" id="L130">            Assert.fail(&quot;Failed to uncheck the checkbox: &quot; + checkboxName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L131">        }</span>
+<span class="nc" id="L132">    }</span>
+
+    public boolean isCheckboxChecked(WebElement checkbox, String checkboxName) {
+<span class="nc" id="L135">        boolean result = false;</span>
+
+        try {
+<span class="nc" id="L138">            result = checkbox.isSelected();</span>
+
+<span class="nc" id="L140">        } catch (Exception e) {</span>
+<span class="nc" id="L141">            logManager.logError(</span>
+<span class="nc" id="L142">                    &quot;Exception while checking if checkbox: &quot; + checkboxName + &quot; is checked: &quot; + e.getMessage());</span>
+
+<span class="nc" id="L144">            logManager.addScreenshot(driverManager, &quot;Failed_isCheckboxChecked&quot;);</span>
+<span class="nc" id="L145">        }</span>
+
+<span class="nc" id="L147">        return result;</span>
+    }
+
+    public void setDefaultDriverTimeout(int seconds) {
+<span class="nc" id="L151">        driverManager.getDriver().manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);</span>
+<span class="nc" id="L152">    }</span>
+
+    public void setDefaultDriverTimeout() {
+<span class="fc" id="L155">        driverManager.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);</span>
+<span class="fc" id="L156">    }</span>
+
+    // Wait Related Methods
+    public boolean waitForElementVisible(WebElement element, int timeoutInSeconds, String elementName) {
+<span class="fc" id="L160">        boolean result = false;</span>
+<span class="fc" id="L161">        logManager.logInformation(&quot;Waiting for element to be visible: &quot; + elementName, false, false);</span>
+
+        try {
+<span class="fc" id="L164">            WebDriverWait wait = driverManager.getWebDriverWait(timeoutInSeconds);</span>
+<span class="fc" id="L165">            wait.until(ExpectedConditions.visibilityOf(element));</span>
+<span class="fc" id="L166">            setDefaultDriverTimeout();</span>
+
+<span class="fc" id="L168">            result = element.isDisplayed();</span>
+
+<span class="nc" id="L170">        } catch (Exception e) {</span>
+<span class="nc" id="L171">            logManager.logError(&quot;WebElement is not visible: &quot; + elementName);</span>
+
+<span class="nc" id="L173">            logManager.addScreenshot(driverManager, &quot;Failed_waitForElementVisible&quot;);</span>
+<span class="fc" id="L174">        }</span>
+
+<span class="fc" id="L176">        return result;</span>
+    }
+
+    public void waitForElementInvisible(WebElement element, int timeoutInSeconds, String elementName) {
+
+<span class="nc" id="L181">        setDefaultDriverTimeout(1);</span>
+
+<span class="nc" id="L183">        BrowserActions browserAction = new BrowserActions(driverManager);</span>
+
+<span class="nc" id="L185">        boolean isElementShowing = browserAction.isElementDisplayed(element, elementName);</span>
+
+<span class="nc bnc" id="L187" title="All 2 branches missed.">        if (isElementShowing) {</span>
+<span class="nc" id="L188">            logManager.logInformation(&quot;Element  is showing and waiting till it gets disappear: &quot; + elementName, false,</span>
+                    false);
+
+            // WebDriverWait and Expected Conditions don't work here. It waits for the full
+            // time though element is not showing on the page.
+            // driverManager getWebDriverWait (timeoutInSeconds) until(Expected
+            // Conditions invisibilityOf (element) )
+
+<span class="nc" id="L196">            int count = 1;</span>
+<span class="nc bnc" id="L197" title="All 4 branches missed.">            while (isElementShowing &amp;&amp; count &lt; (timeoutInSeconds * 4)) {</span>
+                try {
+<span class="nc" id="L199">                    Thread.sleep(250);</span>
+<span class="nc" id="L200">                    isElementShowing = browserAction.isElementDisplayed(element, elementName);</span>
+<span class="nc" id="L201">                    count++;</span>
+<span class="nc" id="L202">                } catch (Exception e) {</span>
+<span class="nc" id="L203">                    isElementShowing = false;</span>
+<span class="nc" id="L204">                    break;</span>
+<span class="nc" id="L205">                }</span>
+            }
+
+<span class="nc bnc" id="L208" title="All 2 branches missed.">            if (isElementShowing) {</span>
+<span class="nc" id="L209">                logManager.logWarning(</span>
+                        &quot;Element  didn't disappear within timeout  seconds&quot; + elementName + &quot; &quot; + timeoutInSeconds,
+                        true, true);
+
+<span class="nc" id="L213">                logManager.addScreenshot(driverManager, &quot;Warning_elementStillVisible&quot;);</span>
+
+                // Try one more time to get element disappear
+<span class="nc" id="L216">                logManager.logInformation(&quot;Waiting again to get element: &quot; + elementName + &quot; disappear.&quot;, false, false);</span>
+
+                try {
+<span class="nc" id="L219">                    driverManager.getWebDriverWait(timeoutInSeconds).until(ExpectedConditions.invisibilityOf(element));</span>
+<span class="nc" id="L220">                } catch (Exception e) {</span>
+<span class="nc" id="L221">                    logManager.logError(elementName + &quot; hasn't disappeared from the page.&quot;);</span>
+<span class="nc" id="L222">                    logManager.addScreenshot(driverManager, &quot;Failed_elementStillVisible&quot;);</span>
+<span class="nc" id="L223">                }</span>
+
+            }
+
+<span class="nc" id="L227">        } else {</span>
+<span class="nc" id="L228">            logManager.logInformation(&quot;Element is not showing on the page. &quot; + elementName, false, false);</span>
+
+        }
+
+<span class="nc" id="L232">        setDefaultDriverTimeout();</span>
+<span class="nc" id="L233">    }</span>
+
+    public void waitForPageLoadCompletes(int timeoutInSeconds) {
+<span class="fc" id="L236">        logManager.logInformation(&quot;Waiting for page load to complete.&quot;, false, false);</span>
+
+        try {
+
+<span class="fc" id="L240">            driverManager.getWebDriverWait(timeoutInSeconds).until(</span>
+<span class="fc" id="L241">                    dvr -&gt; ((JavascriptExecutor) dvr).executeScript(&quot;return document.readyState&quot;).equals(&quot;complete&quot;));</span>
+
+<span class="nc" id="L243">            driverManager.getWebDriverWait(timeoutInSeconds).until(dvr -&gt; ((JavascriptExecutor) dvr).executeScript(</span>
+                    &quot;return if(typeof(window.jQuery) != \&quot;undefined\&quot;) {window.jQuery.active == 0} else {document.readyState == \&quot;complete\&quot;}&quot;));
+
+<span class="fc" id="L246">        } catch (Exception e) {</span>
+<span class="fc" id="L247">            setDefaultDriverTimeout();</span>
+<span class="nc" id="L248">        }</span>
+
+<span class="fc" id="L250">    }</span>
+
+    public void waitForSeconds(int seconds) {
+        try {
+<span class="nc" id="L254">            Thread.sleep(seconds * 1000L);</span>
+
+<span class="nc" id="L256">        } catch (Exception e) {</span>
+<span class="nc" id="L257">            logManager.logInformation(&quot;Exception while waiting for seconds: &quot; + seconds, false, false);</span>
+<span class="nc" id="L258">            e.printStackTrace();</span>
+<span class="nc" id="L259">        }</span>
+<span class="nc" id="L260">    }</span>
+
+    /**
+     * This method will wait for alert to show on the page for the number of seconds
+     * specified in the parameter. If alert doesn't show on the page then it will
+     * log exception but won't fail the test.
+     * 
+     * @param waitTimeInSeconds This wait time in number of seconds
+     */
+    public void waitForAlertToShowOnPage(int waitTimeInSeconds) {
+
+        try {
+<span class="nc" id="L272">            driverManager.getWebDriverWait(waitTimeInSeconds).until(ExpectedConditions.alertIsPresent());</span>
+
+<span class="nc" id="L274">            driverManager.getDriver().switchTo().alert();</span>
+
+<span class="nc" id="L276">        } catch (NoAlertPresentException e) {</span>
+<span class="nc" id="L277">            logManager.logInformation(</span>
+                    &quot;Alert is not present on the page after waiting for seconds: &quot; + waitTimeInSeconds, false, false);
+
+<span class="nc" id="L280">            logManager.addScreenshot(driverManager, &quot;Failed_waitForAlertToShowOnPage&quot;);</span>
+<span class="nc" id="L281">        }</span>
+<span class="nc" id="L282">    }</span>
+
+    public void waitForURLContains(String url, int timeoutInseconds) {
+        try {
+<span class="nc" id="L286">            driverManager.getWebDriverWait(timeoutInseconds).until(ExpectedConditions.urlContains(url));</span>
+
+<span class="nc" id="L288">        } catch (Exception e) {</span>
+<span class="nc" id="L289">            logManager.logError(&quot;Exception while redirecting to URL &quot; + url);</span>
+<span class="nc" id="L290">            logManager.addScreenshot(driverManager, &quot;Failed_waitForURLContains&quot;);</span>
+<span class="nc" id="L291">        }</span>
+<span class="nc" id="L292">    }</span>
+
+    public String getMonthName(String monthNameOrIndex) {
+        try {
+
+<span class="nc" id="L297">            int monthIndex = Integer.parseInt(monthNameOrIndex);</span>
+
+<span class="nc bnc" id="L299" title="All 4 branches missed.">            if (monthIndex &gt; 0 &amp;&amp; monthIndex &lt; 13) {</span>
+<span class="nc bnc" id="L300" title="All 12 branches missed.">                switch (Integer.parseInt(monthNameOrIndex)) {</span>
+                case 2:
+<span class="nc" id="L302">                    return &quot;February&quot;;</span>
+                case 3:
+<span class="nc" id="L304">                    return &quot;March&quot;;</span>
+                case 4:
+<span class="nc" id="L306">                    return &quot;April&quot;;</span>
+                case 5:
+<span class="nc" id="L308">                    return &quot;May&quot;;</span>
+                case 6:
+<span class="nc" id="L310">                    return &quot;June&quot;;</span>
+                case 7:
+<span class="nc" id="L312">                    return &quot;July&quot;;</span>
+                case 8:
+<span class="nc" id="L314">                    return &quot;August&quot;;</span>
+                case 9:
+<span class="nc" id="L316">                    return &quot;September&quot;;</span>
+                case 10:
+<span class="nc" id="L318">                    return &quot;October&quot;;</span>
+                case 11:
+<span class="nc" id="L320">                    return &quot;November&quot;;</span>
+                case 12:
+<span class="nc" id="L322">                    return &quot;December&quot;;</span>
+                case 1:
+                default:
+<span class="nc" id="L325">                    return &quot;January&quot;;</span>
+                }
+
+            } else
+<span class="nc" id="L329">                return &quot;January&quot;;</span>
+
+<span class="nc" id="L331">        } catch (Exception e) {</span>
+
+<span class="nc" id="L333">            return monthNameOrIndex;</span>
+        }
+    }
+    
+    /**
+     * Method will use to wait till the element is not clickable
+     * @param element
+     * @param timeoutInSeconds
+     * @param elementName
+     * @return
+     */
+	public boolean waitForElementClickable(WebElement element, int timeoutInSeconds, String elementName) {
+<span class="fc" id="L345">		boolean result = false;</span>
+<span class="fc" id="L346">		logManager.logInformation(&quot;Waiting for element to be Clickable: &quot; + elementName, false, false);</span>
+
+		try {
+<span class="fc" id="L349">			driverManager.getWebDriverWait(timeoutInSeconds)			</span>
+<span class="fc" id="L350">			.pollingEvery(Duration.ofMillis(100))</span>
+<span class="fc" id="L351">			.ignoring(WebDriverException.class) </span>
+<span class="fc" id="L352">			.until(ExpectedConditions.elementToBeClickable(element));						</span>
+<span class="fc" id="L353">			result = element.isEnabled();</span>
+
+<span class="nc" id="L355">		} catch (Exception e) {</span>
+<span class="nc" id="L356">			logManager.logInformation(&quot;WebElement is not Clickable: &quot; + elementName, true, false);</span>
+
+<span class="nc" id="L358">			logManager.addScreenshot(driverManager, &quot;Failed_waitForElementClickable&quot;);</span>
+<span class="fc" id="L359">		}</span>
+
+<span class="fc" id="L361">		return result;</span>
+	}
+
+	/**
+	 * Method will wait for grid table to load
+	 * @param timeoutInSeconds
+	 * @return true if grid is loaded correctly in expected time else false
+	 */
+	public boolean waitForGridToLoad(WebElement activeGridTableRow, int timeoutInSeconds) {
+		
+<span class="nc" id="L371">		boolean result = false;</span>
+	
+<span class="nc" id="L373">		result = driverManager.getWebDriverWait(timeoutInSeconds)</span>
+<span class="nc" id="L374">				.until(</span>
+<span class="nc" id="L375">                ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(activeGridTableRow, &quot;Loading items...&quot;)));</span>
+		
+<span class="nc bnc" id="L377" title="All 2 branches missed.">		if(result)</span>
+<span class="nc" id="L378">			return true;</span>
+		else {
+<span class="nc" id="L380">			logManager.logError(&quot;Grid table is not loaded, taking longger time as expected.&quot;);</span>
+<span class="nc" id="L381">			return false;</span>
+		}			
+	}
+
+    /**
+     * Method is used to check expected text is visible or not
+     * @param element
+     * @param text_to_be_visible
+     * @param timeoutInSeconds
+     * @return true if text visible else false
+     */
+    public boolean waitForVisibilityOfElementText(WebElement element, String text_to_be_visible, int timeoutInSeconds) {
+<span class="nc" id="L393">        return driverManager.getWebDriverWait(timeoutInSeconds)</span>
+<span class="nc" id="L394">                .until(ExpectedConditions.textToBePresentInElement(element, text_to_be_visible));</span>
+    }
+    // This method is used to right click on an element
+    public void rightClickElement(WebElement element, String elementName) {
+
+        try {
+<span class="nc" id="L400">            Actions action = driverManager.getActions();</span>
+<span class="nc" id="L401">            action.contextClick(element).build().perform();</span>
+<span class="nc" id="L402">            logManager.logInformation(&quot;right click on element: &quot; + elementName, true, false);</span>
+
+<span class="nc" id="L404">        } catch (Exception e) {</span>
+<span class="nc" id="L405">            logManager.logError(&quot;Exception while hovering on element: &quot; + elementName);</span>
+
+<span class="nc" id="L407">            logManager.addScreenshot(driverManager, &quot;Failed_hoverElement&quot;);</span>
+
+<span class="nc" id="L409">            Assert.fail(&quot;Failed to hover on the element: &quot; + elementName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L410">        }</span>
+<span class="nc" id="L411">    }</span>
+  
+   
+    public void dragNdrop(WebElement element, String elementName,WebElement element1, String element1Name) {
+
+        try {
+<span class="nc" id="L417">            Actions action = driverManager.getActions();</span>
+        //  action.dragAndDrop(element, element1);
+<span class="nc" id="L419">          action.clickAndHold(element).moveToElement(element1).release(element1).build().perform();</span>
+          
+<span class="nc" id="L421">            logManager.logInformation(&quot;Drag and Drop  element: &quot; + elementName, true, false);</span>
+        
+<span class="nc" id="L423">        } catch (Exception e) {</span>
+<span class="nc" id="L424">            logManager.logError(&quot;Exception while Drag and Drop element: &quot; + elementName);</span>
+
+<span class="nc" id="L426">            logManager.addScreenshot(driverManager, &quot;Failed to Drag and Drop&quot;);</span>
+           
+<span class="nc" id="L428">            Assert.fail(&quot;Failed to Drag and Drop element: &quot; + elementName + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L429">        }</span>
+<span class="nc" id="L430">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

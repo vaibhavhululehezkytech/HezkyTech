@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SelectModule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">pages.actionpages.authentication</a> &gt; <span class="el_source">SelectModule.java</span></div><h1>SelectModule.java</h1><pre class="source lang-java linenums">package pages.actionpages.authentication;
+
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
+import pages.PageActionsBase;
+import pages.uipages.authentication.SelectModulePageUI;
+import utils.webdrivers.DriverManager;
+
+public class SelectModule extends PageActionsBase {
+
+	public SelectModule(DriverManager driverManager) {
+<span class="nc" id="L13">		super(driverManager, new SelectModulePageUI());</span>
+<span class="nc" id="L14">	}</span>
+
+	/**
+	 * Method is used to click on Administrator Module
+	 */
+	public void getAdministrator() {
+<span class="nc" id="L20">		String administratorModuleLink = &quot;administratorModule&quot;;</span>
+<span class="nc" id="L21">		WebElement administratorModuleTextElement = pageObject.getLink(administratorModuleLink);</span>
+
+<span class="nc bnc" id="L23" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(administratorModuleTextElement, mediumPageTimeout,</span>
+				administratorModuleLink)) {
+<span class="nc" id="L25">			browserActions.clickButtonUsingJavaScript(administratorModuleTextElement, administratorModuleLink);</span>
+<span class="nc" id="L26">			browserActions.waitForSeconds(mediumPageTimeout);</span>
+		}
+<span class="nc" id="L28">	}</span>
+	
+	/**
+	 * Method is used to click on Control tower Module
+	 */
+	public void getControlTower() {
+<span class="nc" id="L34">		String controlTowerButton = &quot;controlTower&quot;;</span>
+<span class="nc" id="L35">		WebElement controlTowerButtonElement = pageObject.getButton(controlTowerButton);</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(controlTowerButtonElement, largePageTimeout, controlTowerButton))</span>
+<span class="nc" id="L37">			browserActions.clickButtonUsingJavaScript(controlTowerButtonElement, controlTowerButton);</span>
+<span class="nc" id="L38">		browserActions.waitForSeconds(smallPageTimeout);</span>
+<span class="nc" id="L39">	}</span>
+
+	
+	
+	/**
+	 * Method is used to click on Ramgps Module
+	 */
+	public void getRamgps() {
+<span class="nc" id="L47">		String ramgpsModuleLink = &quot;ramgpsModule&quot;;</span>
+<span class="nc" id="L48">		WebElement ramgpsModuleLinkElement = pageObject.getLink(ramgpsModuleLink);</span>
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(ramgpsModuleLinkElement, largePageTimeout, ramgpsModuleLink)) {</span>
+<span class="nc" id="L51">			browserActions.clickButtonUsingJavaScript(ramgpsModuleLinkElement, ramgpsModuleLink);</span>
+<span class="nc" id="L52">			browserActions.waitForSeconds(smallestPageTimeout);</span>
+		}
+<span class="nc" id="L54">	}</span>
+
+	/**
+	 * Method is used to click on PMO Module
+	 */
+	public void getPMO() {
+<span class="nc" id="L60">		String pmoModuleLink = &quot;pmoModule&quot;;</span>
+<span class="nc" id="L61">		WebElement pmoModuleLinkElement = pageObject.getLink(pmoModuleLink);</span>
+
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(pmoModuleLinkElement, largePageTimeout, pmoModuleLink)) {</span>
+<span class="nc" id="L64">			browserActions.clickButtonUsingJavaScript(pmoModuleLinkElement, pmoModuleLink);</span>
+<span class="nc" id="L65">			browserActions.waitForSeconds(5);</span>
+		}
+<span class="nc" id="L67">	}</span>
+
+	public void companyButton() {
+<span class="nc" id="L70">		String companyButton = &quot;company&quot;;</span>
+<span class="nc" id="L71">		WebElement companyButtonElement = pageObject.getButton(companyButton);</span>
+
+<span class="nc" id="L73">		Assert.assertTrue(browserActions.waitForElementClickable(companyButtonElement, largePageTimeout, companyButton),</span>
+				&quot;abc&quot;);
+<span class="nc" id="L75">	}</span>
+
+	/**
+	 * Method is used to click on Productivity Study Module
+	 */
+	public void getProductivity_Study() {
+<span class="nc" id="L81">		String getProductivityStudyLink = &quot;getProductivityStudy&quot;;</span>
+<span class="nc" id="L82">		WebElement getProductivityStudyLinkElement = pageObject.getLink(getProductivityStudyLink);</span>
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(getProductivityStudyLinkElement, largePageTimeout,</span>
+				getProductivityStudyLink)) {
+<span class="nc" id="L86">			browserActions.clickButtonUsingJavaScript(getProductivityStudyLinkElement, getProductivityStudyLink);</span>
+<span class="nc" id="L87">			browserActions.waitForSeconds(smallestPageTimeout);</span>
+		}
+<span class="nc" id="L89">	}</span>
+
+	public void getECR() {
+<span class="nc" id="L92">		String ecrModuleLink = &quot;ecrModule&quot;;</span>
+<span class="nc" id="L93">		WebElement ecrModuleLinkElement = pageObject.getLink(ecrModuleLink);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(ecrModuleLinkElement, largePageTimeout, ecrModuleLink)) {</span>
+<span class="nc" id="L95">			browserActions.clickButtonUsingJavaScript(ecrModuleLinkElement, ecrModuleLink);</span>
+<span class="nc" id="L96">			browserActions.waitForSeconds(smallPageTimeout);</span>
+		}
+<span class="nc" id="L98">	}</span>
+
+	public void getObjectiveAlignmentButton() {
+<span class="nc" id="L101">		String objectiveAlignmentButton = &quot;objectiveAlignment&quot;;</span>
+<span class="nc" id="L102">		WebElement objectiveAlignmentButtonElement = pageObject.getButton(objectiveAlignmentButton);</span>
+
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (browserActions.waitForElementClickable(objectiveAlignmentButtonElement, largePageTimeout,</span>
+				objectiveAlignmentButton)) {
+<span class="nc" id="L106">			browserActions.clickButton(objectiveAlignmentButtonElement, objectiveAlignmentButton);</span>
+<span class="nc" id="L107">			browserActions.waitForSeconds(3);</span>
+		}
+<span class="nc" id="L109">	}</span>
+	public void getPCR() {
+<span class="nc" id="L111">		String pcrModuleLink = &quot;pcrModule&quot;;</span>
+<span class="nc" id="L112">		WebElement pcrModuleLinkElement =pageObject.getLink(pcrModuleLink);</span>
+
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if(browserActions.waitForElementClickable(pcrModuleLinkElement, largePageTimeout, pcrModuleLink))</span>
+		{
+<span class="nc" id="L116">		browserActions.scrollToLoadElementVisible(pcrModuleLinkElement, pcrModuleLink);</span>
+<span class="nc" id="L117">		browserActions.clickButtonUsingJavaScript(pcrModuleLinkElement, pcrModuleLink);</span>
+<span class="nc" id="L118">		browserActions.waitForSeconds(smallestPageTimeout);</span>
+		}
+<span class="nc" id="L120">		}</span>
+
+		public void getPerformanceAnalytix() {
+<span class="nc" id="L123">		String performanceAnalytixModuleLink = &quot;performanceAnalytixModule&quot;;</span>
+<span class="nc" id="L124">		WebElement performanceAnalytixModuleLinkElement =pageObject.getLink(performanceAnalytixModuleLink);</span>
+
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if(browserActions.waitForElementClickable(performanceAnalytixModuleLinkElement, largePageTimeout, performanceAnalytixModuleLink))</span>
+		{
+<span class="nc" id="L128">		browserActions.scrollToLoadElementVisible(performanceAnalytixModuleLinkElement, performanceAnalytixModuleLink);</span>
+<span class="nc" id="L129">		browserActions.clickButtonUsingJavaScript(performanceAnalytixModuleLinkElement, performanceAnalytixModuleLink);</span>
+<span class="nc" id="L130">		browserActions.waitForSeconds(smallestPageTimeout);</span>
+		}
+<span class="nc" id="L132">		}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

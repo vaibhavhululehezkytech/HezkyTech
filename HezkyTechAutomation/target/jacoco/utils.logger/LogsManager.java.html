@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LogsManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">utils.logger</a> &gt; <span class="el_source">LogsManager.java</span></div><h1>LogsManager.java</h1><pre class="source lang-java linenums">package utils.logger;
+
+import java.util.Arrays;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.Configurator;
+
+import utils.ExtentReport;
+import utils.webdrivers.DriverManager;
+
+public class LogsManager {
+
+<span class="fc" id="L14">    static String fileSeparator = System.getProperty(&quot;file.separator&quot;);</span>
+    private Logger log;
+<span class="fc" id="L16">    static boolean configurationLoaded = false;</span>
+
+    /**
+     * This references the path of the log4j configuration file, which should be loaded before starting any logging.
+     */
+<span class="fc" id="L21">    private static String log4jConfigFilePath = System.getProperty(&quot;user.dir&quot;) + fileSeparator + &quot;src&quot; + fileSeparator</span>
+            + &quot;main&quot; + fileSeparator + &quot;java&quot; + fileSeparator + &quot;utils&quot; + fileSeparator + &quot;logger&quot; + fileSeparator
+            + &quot;log4j2.xml&quot;;
+
+    /**
+     * This is parameterized constructor which takes name of the class as parameter.
+     * It first loads the configuration file if not loaded already and sets logger
+     * with the class name provided as parameter.
+     * 
+     * @param loggerName - name of the class for which log has to be initiated
+     */
+<span class="fc" id="L32">    public LogsManager(String loggerName) {</span>
+
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (!configurationLoaded)</span>
+<span class="fc" id="L35">            loadLog4jConfiguration();</span>
+
+<span class="fc" id="L37">        initializeLogger(loggerName);</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * This method initializes logger with class name provided as a parameter. It
+     * registers the class name provided so that the logs added will be logged with
+     * registered class' name.
+     * 
+     * @param loggingClassName
+     */
+    private void initializeLogger(String loggingClassName) {
+<span class="fc" id="L48">        log = LogManager.getLogger(loggingClassName);</span>
+        
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        if(log == null) {</span>
+           
+<span class="nc" id="L52">            logInformation(&quot;Failed to get Log4j logger created for the class: &quot; + loggingClassName + &quot;. System existing.&quot;, false, true);</span>
+<span class="nc" id="L53">            System.exit(78);</span>
+        }
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * This method loads the log4j configuration file. This file can be located in
+     * the logger package.
+     */
+    public static void loadLog4jConfiguration() {
+<span class="fc" id="L62">        Configurator.initialize(null, log4jConfigFilePath);</span>
+<span class="fc" id="L63">        configurationLoaded = true;</span>
+<span class="fc" id="L64">    }</span>
+
+    /**
+     * This method adds class execution started log in the log4j log file. Ideally
+     * this should be called explicitly before starting class execution and testBase
+     * would be the best choice to call this method.
+     * 
+     * @param className - name of the class for which execution would be start
+     */
+    public void logClassProcessingStartedMessage(String className) {
+<span class="fc" id="L74">        logClassProcessingStatusAs(className, &quot;Started&quot;);</span>
+
+<span class="fc" id="L76">    }</span>
+
+    /**
+     * This method adds class execution completed log in the log4j log file. Ideally
+     * this should be called explicitly after finishing class execution and testBase
+     * would be the best choice to call this method.
+     * 
+     * @param className - name of the class for which execution has been finished
+     */
+    public void logClassProcessingCompletedMessage(String className) {
+<span class="fc" id="L86">        logClassProcessingStatusAs(className, &quot;Completed&quot;);</span>
+<span class="fc" id="L87">    }</span>
+
+    /**
+     * This method logs class processing status. Status parameter can be set as Completed, Started, Paused, Skipped etc.
+     * @param className - Name of the class for which processing status has to be logged
+     * @param status - Status to be logged e.g. Started, Completed, Paused, Skipped
+     */
+    private void logClassProcessingStatusAs(String className, String status) {
+        
+<span class="fc" id="L96">         String starsDecoration = &quot;****************************************************************************************&quot;;</span>
+        
+<span class="fc" id="L98">        log.info(starsDecoration);</span>
+
+<span class="fc" id="L100">        log.info(&quot;# # # # # Execution of Class {} {} # # # # #&quot;, className, status);</span>
+
+<span class="fc" id="L102">        log.info(starsDecoration);</span>
+<span class="fc" id="L103">    }</span>
+    
+    /**
+     * This method adds method execution started log in the log4j log file. Ideally
+     * this should be called before starting method execution and testBase would be
+     * the best choice to call this method.
+     * 
+     * @param methodName - name of the method for which execution would start
+     */
+    public void logMethodStartedMessage(String methodName) {
+
+<span class="fc" id="L114">        log.info(&quot;= = = = = Execution of Method {} Started  = = = = =\n&quot;, methodName);</span>
+
+<span class="fc" id="L116">    }</span>
+
+    /**
+     * This method adds method execution finished log in the log4j log file. Ideally
+     * this should be called after finishing method execution and testBase would be
+     * the best choice to call this method.
+     * 
+     * @param methodName - name of the method for which execution has been completed
+     */
+    public void logMethodCompletedMessage(String methodName) {
+
+<span class="fc" id="L127">        log.info(&quot;= = = = = Execution of Method {} Completed  = = = = =\n\n&quot;, methodName);</span>
+
+<span class="fc" id="L129">    }</span>
+
+    /**
+     * This method logs the message in the log4j logger and based on the parameters
+     * provided it will also be logged in the extent report and to the console. This
+     * method logs the message as information in the log4j and in the extent report.
+     * 
+     * @param message           - Message to log
+     * @param logInExtentReport - If message has to be added in the Extent Report
+     * @param displayInConsole  - If message has to be shown in console
+     */
+    public void logInformation(String message, boolean logInExtentReport, boolean displayInConsole) {
+
+<span class="fc" id="L142">        log.info(message);</span>
+
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        if (logInExtentReport)</span>
+<span class="fc" id="L145">            ExtentReport.logInformation(message);</span>
+
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (displayInConsole)</span>
+<span class="fc" id="L148">            System.out.println(message);</span>
+<span class="fc" id="L149">    }</span>
+
+    /**
+     * This method logs the message in the log4j logger and based on the parameters
+     * provided it will also be logged in the extent report and to the console. This
+     * method logs the message as success in the log4j report and in the extent
+     * report.
+     * 
+     * @param message - Message to log
+     */
+    public void logSuccess(String message) {
+<span class="fc" id="L160">        log.info(&quot;Success: {}&quot;, message);</span>
+        
+<span class="fc" id="L162">        ExtentReport.logSuccess(message);</span>
+        
+<span class="fc" id="L164">       logInformation(message, false, true);</span>
+<span class="fc" id="L165">    }</span>
+
+    /**
+     * This method logs the message in the log4j logger and based on the parameters
+     * provided it will also be logged in the extent report and to the console. This
+     * method logs the message as warning in the log4j report and in the extent
+     * report.
+     * 
+     * @param message           - Message to log
+     * @param logInExtentReport - If message has to be added in the Extent Report
+     * @param displayInConsole  - If message has to be shown in console
+     */
+    public void logWarning(String message, boolean logInExtentReport, boolean displayInConsole) {
+<span class="nc" id="L178">        log.warn(message);</span>
+
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        if (logInExtentReport)</span>
+<span class="nc" id="L181">            ExtentReport.logWarning(message);</span>
+
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        if (displayInConsole)</span>
+<span class="nc" id="L184">        	 logInformation(message, false, true);</span>
+<span class="nc" id="L185">    }</span>
+
+    /**
+     * This method logs the message in the log4j logger and also loggs in the extent
+     * report and to the console. This method logs the message as error.
+     * 
+     * @param message - Message to log in all loggers
+     */
+    public void logError(String message) {
+<span class="nc" id="L194">        log.error(message);</span>
+
+<span class="nc" id="L196">        ExtentReport.logError(message);</span>
+
+<span class="nc" id="L198">        logInformation(message, false, true);</span>
+<span class="nc" id="L199">    }</span>
+    
+    /**
+     * This method logs the message in the log4j logger and also loggs in the extent
+     * report and to the console. This method logs the message as Fail.
+     * 
+     * @param message - Message to log in all loggers
+     */
+    public void logFail(String message) {
+<span class="nc" id="L208">        log.error(message);</span>
+
+<span class="nc" id="L210">        ExtentReport.logFail(message);</span>
+
+<span class="nc" id="L212">        logInformation(message, false, true);</span>
+<span class="nc" id="L213">    }</span>
+
+    /**
+     * This method logs the exception in the log4j logger and based on the
+     * parameters provided it will also be logged in the extent report and to the
+     * console. report.
+     * 
+     * @param e           - Exception to log
+     * @param logInExtentReport - If message has to be added in the Extent Report
+     * @param displayInConsole  - If message has to be shown in console
+     */
+    public void logException(Exception e, boolean logInExtentReport, boolean displayInConsole) {
+        
+<span class="nc" id="L226">        String stackTrace = Arrays.toString(e.getStackTrace());</span>
+        
+<span class="nc" id="L228">        log.info(&quot;Exception: {}&quot;, stackTrace);</span>
+
+<span class="nc bnc" id="L230" title="All 2 branches missed.">        if (logInExtentReport)</span>
+<span class="nc" id="L231">            ExtentReport.logException(e);</span>
+
+<span class="nc bnc" id="L233" title="All 2 branches missed.">        if (displayInConsole)</span>
+<span class="nc" id="L234">            System.out.println(e.getStackTrace());</span>
+<span class="nc" id="L235">    }</span>
+
+    /**
+     * This method logs the message in the log4j logger and based on the parameters
+     * provided it will also be logged in the extent report and to the console. This
+     * method logs the message as skipped in the log4j report and in the extent
+     * report.
+     * 
+     * @param message           - Message to log
+     * @param logInExtentReport - If message has to be added in the Extent Report
+     * @param displayInConsole  - If message has to be shown in console
+     */
+    public void logSkipped(String message, boolean logInExtentReport, boolean displayInConsole) {
+<span class="nc" id="L248">        log.info(&quot;Skipped: {}&quot;, message);</span>
+
+<span class="nc bnc" id="L250" title="All 2 branches missed.">        if (logInExtentReport)</span>
+<span class="nc" id="L251">            ExtentReport.logSkipped(message);</span>
+
+<span class="nc bnc" id="L253" title="All 2 branches missed.">        if (displayInConsole)</span>
+<span class="nc" id="L254">        	 logInformation(message, false, true);</span>
+<span class="nc" id="L255">    }</span>
+
+    public void addScreenshot(DriverManager driverManager, String fileName) {
+<span class="nc" id="L258">        ExtentReport.addScreenshot(driverManager, fileName);</span>
+<span class="nc" id="L259">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

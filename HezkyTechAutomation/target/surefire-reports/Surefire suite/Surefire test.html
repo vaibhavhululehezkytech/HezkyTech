@@ -1,0 +1,199 @@
+<html>
+<head>
+<title>TestNG:  Surefire test</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Surefire test</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>24/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Wed Apr 02 16:21:43 IST 2025</td>
+</tr>
+<tr><td>Total time:</td><td>20 seconds (20589 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_001_verifyCompanyLogoVisible()'><b>LP_001_verifyCompanyLogoVisible</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify Company logo is clearly visible on landing page</td>
+<td></td>
+<td>9</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_002_verifyPageScrollPresence()'><b>LP_002_verifyPageScrollPresence</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify Page scroll is present on page when needed</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_007_verifyAllLinksClickable()'><b>LP_007_verifyAllLinksClickable</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify all links are clickable on the page</td>
+<td></td>
+<td>2</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_008_verifyNavigationBackFromLinks()'><b>LP_008_verifyNavigationBackFromLinks</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify user can navigate back easily after clicking the links like about us, terms and conditions, privacy and policy.</td>
+<td></td>
+<td>2</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_009_verifyForgotPasswordFunctionality()'><b>LP_009_verifyForgotPasswordFunctionality</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify forgot password functionality</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_010_verifyNavigationBackFromForgotPassword()'><b>LP_010_verifyNavigationBackFromForgotPassword</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify user can navigate back to login page from forgot password popup</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_011_verifyErrorMessageForInvalidEmail()'><b>LP_011_verifyErrorMessageForInvalidEmail</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify when user enter incorrect Email in forgot password popup error message should be displayed</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_012_verifyOTPSentForValidEmail()'><b>LP_012_verifyOTPSentForValidEmail</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify OTP is sent when user enter valid email in email textbox of Forgot password pop-up</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_013_verifyUpdatePasswordPageAfterOTP()'><b>LP_013_verifyUpdatePasswordPageAfterOTP</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify update password page is showing after OTP sent to valid email</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_014_verifyErrorForWrongOTP()'><b>LP_014_verifyErrorForWrongOTP</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify user can not update password using wrong OTP and error message is showing</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_015_verifyResendOTPFunctionality()'><b>LP_015_verifyResendOTPFunctionality</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify resend OTP button functionality</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_016_verifySuccessfulLogin()'><b>LP_016_verifySuccessfulLogin</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Successful login with valid username, password, and Customer ID</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_017_verifyOTPSentAfterValidLogin()'><b>LP_017_verifyOTPSentAfterValidLogin</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify user gets Authentication via OTP Sent to Email after inserting valid credentials</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_018_verifyAuthorizationPageAfterLogin()'><b>LP_018_verifyAuthorizationPageAfterLogin</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify authorization page is open after user insert all valid credentials</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_019_verifySuccessfulLoginAfterOTP()'><b>LP_019_verifySuccessfulLoginAfterOTP</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify user is logged in successfully after valid OTP</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_020_verifyLoginFailureWithInvalidOTP()'><b>LP_020_verifyLoginFailureWithInvalidOTP</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify user can't log-in using after invalid OTP</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_021_verifyLoginFailureWithInvalidCredentials()'><b>LP_021_verifyLoginFailureWithInvalidCredentials</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify user can not log in using invalid username and password combination</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_022_verifyLoginFailureWithIncorrectCustomerID()'><b>LP_022_verifyLoginFailureWithIncorrectCustomerID</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify Login failure with incorrect Customer ID</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_023_verifyLoginFailureWithMissingCustomerID()'><b>LP_023_verifyLoginFailureWithMissingCustomerID</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify Login failure with missing Customer ID</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_024_verifyAccountLockoutAfterFailedAttempts()'><b>LP_024_verifyAccountLockoutAfterFailedAttempts</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify Account lockout after 05 failed login attempts</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_025_verifyErrorMessageAfterFailedAttempts()'><b>LP_025_verifyErrorMessageAfterFailedAttempts</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify error message for after 05 failed login attempts</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_026_verifySuccessfulLoginAfterRetry()'><b>LP_026_verifySuccessfulLoginAfterRetry</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify Successful login after entering correct Customer ID on retry</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_027_verifyErrorMessageForMissingFields()'><b>LP_027_verifyErrorMessageForMissingFields</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify Error message for missing fields</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+<tr>
+<td title='tests.HezkyTechPageTest.LoginPageTest.LP_028_verifyDataAccessAfterLogin()'><b>LP_028_verifyDataAccessAfterLogin</b><br>Test class: tests.HezkyTechPageTest.LoginPageTest<br>Test method: Verify Ensure customer-specific data is only accessible after successful login</td>
+<td></td>
+<td>0</td>
+<td>tests.HezkyTechPageTest.LoginPageTest@67671db1</td></tr>
+</table><p>
+</body>
+</html>

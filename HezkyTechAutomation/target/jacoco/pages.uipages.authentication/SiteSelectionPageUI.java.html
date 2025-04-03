@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SiteSelectionPageUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">pages.uipages.authentication</a> &gt; <span class="el_source">SiteSelectionPageUI.java</span></div><h1>SiteSelectionPageUI.java</h1><pre class="source lang-java linenums">package pages.uipages.authentication;
+
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+import pages.PageUIBase;
+
+<span class="nc" id="L10">public class SiteSelectionPageUI extends PageUIBase {</span>
+
+	@FindBy(xpath = &quot;//*[text()='Site:']/parent::*/following-sibling::*&quot;)
+	public static WebElement siteSelectionDropdown;
+	
+	@FindBy(xpath = &quot;//kendo-popup//input&quot;)
+	public static WebElement searchSiteTextField;
+	
+	@FindBy(xpath = &quot;//kendo-popup//kendo-list//li/*&quot;)
+	public static List&lt;WebElement&gt; siteTextList;
+	
+	@FindBy(xpath = &quot;//*[text()='Select Site']/following-sibling::*/button&quot;)
+	public static WebElement changeSiteSubmitButton;
+	
+	@FindBy(xpath = &quot;//h6[text()='Select Site']&quot;)
+	public static WebElement siteSelectioPopupTitleText;
+	
+	@FindBy(xpath = &quot;(//li[@role='option'])[2]&quot;)
+	public static WebElement site1Button;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

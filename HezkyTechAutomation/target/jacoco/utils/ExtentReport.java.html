@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtentReport.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PmoAutomationProject</a> &gt; <a href="index.source.html" class="el_package">utils</a> &gt; <span class="el_source">ExtentReport.java</span></div><h1>ExtentReport.java</h1><pre class="source lang-java linenums">package utils;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+import utils.logger.LogsManager;
+import utils.readers.Config;
+import utils.webdrivers.DriverManager;
+
+public class ExtentReport {
+
+<span class="nc" id="L25">    private ExtentReport() {</span>
+<span class="nc" id="L26">        throw new IllegalStateException(&quot;Utility class - ExtentReport - cannot be instantiated.&quot;);</span>
+    }
+
+<span class="fc" id="L29">    private static boolean isExtentReportDirectorySetUp = false;</span>
+    private static ExtentReports extReport;
+<span class="fc" id="L31">    private static ExtentTest extTest = null;</span>
+<span class="fc" id="L32">    private static ExtentTest testNode = null;</span>
+
+<span class="fc" id="L34">    private static LogsManager logManager = new LogsManager(ExtentReport.class.getName());</span>
+
+    public static ExtentReports initializeReport(String suiteName) {
+
+        // Strip out whitespaces
+<span class="fc" id="L39">        suiteName = suiteName.replaceAll(&quot;\\s+&quot;, &quot;_&quot;);</span>
+
+        ExtentHtmlReporter htmlReporter;
+
+<span class="fc" id="L43">        setupExtentReportDirectory();</span>
+
+<span class="fc" id="L45">        htmlReporter = new ExtentHtmlReporter(</span>
+<span class="fc" id="L46">                System.getProperty(&quot;user.dir&quot;) + &quot;/test-output/extentReports/&quot; + suiteName + &quot;.html&quot;);</span>
+
+<span class="fc" id="L48">        htmlReporter.config().setDocumentTitle(suiteName); // Title of report</span>
+<span class="fc" id="L49">        htmlReporter.config().setReportName(suiteName); // Name of the report</span>
+<span class="fc" id="L50">        htmlReporter.config().setTheme(Theme.DARK);</span>
+
+<span class="fc" id="L52">        extReport = new ExtentReports();</span>
+<span class="fc" id="L53">        extReport.attachReporter(htmlReporter);</span>
+
+        // Passing General information
+       // extReport.setSystemInfo(&quot;Host name&quot;, Config.getCastlebranchBaseURL());
+<span class="fc" id="L57">        extReport.setSystemInfo(&quot;Environment&quot;, Config.getTestRunEnvironment());</span>
+
+<span class="fc" id="L59">        return extReport;</span>
+    }
+
+    public static void initializeExtentReportTests(Method method) {
+<span class="fc" id="L63">        String testDescription = &quot;&quot;;</span>
+
+        List&lt;String&gt; testGroups;
+
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (extReport == null) {</span>
+<span class="nc" id="L68">        	logManager.logError(&quot;Extent is null&quot;);</span>
+<span class="nc" id="L69">            return;</span>
+        }
+
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (method == null) {</span>
+<span class="nc" id="L73">            logManager.logError(&quot;Method is null&quot;);</span>
+<span class="nc" id="L74">            return;</span>
+        }
+
+<span class="fc" id="L77">        testDescription = method.getAnnotation(Test.class).description();</span>
+
+<span class="fc" id="L79">        logManager.logInformation(&quot;test description is: &quot; + testDescription, false, true);</span>
+
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (!testDescription.isEmpty()) {</span>
+<span class="fc" id="L82">            extTest = extReport.createTest(testDescription);</span>
+        } else
+<span class="nc" id="L84">            extTest = extReport.createTest(method.getName());</span>
+
+<span class="fc" id="L86">        extTest.assignAuthor(&quot;Test Automation&quot;);</span>
+
+<span class="fc" id="L88">        testGroups = Arrays.asList(method.getAnnotation(Test.class).groups());</span>
+
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (!testGroups.isEmpty()) {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">            for (String group : testGroups) {</span>
+<span class="nc" id="L92">                extTest.assignCategory(group);</span>
+<span class="nc" id="L93">            }</span>
+        } else {
+<span class="fc" id="L95">            extTest.assignCategory(&quot;Smoke&quot;);</span>
+        }
+<span class="fc" id="L97">    }</span>
+
+    private static void setupExtentReportDirectory() {
+
+<span class="fc" id="L101">        String fileSeparator = System.getProperty(&quot;file.separator&quot;);</span>
+
+<span class="fc" id="L103">        File directory = new File(</span>
+<span class="fc" id="L104">                System.getProperty(&quot;user.dir&quot;) + fileSeparator + &quot;test-output&quot; + fileSeparator + &quot;extentReports&quot;);</span>
+
+        try {
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">            if (!directory.exists()) {</span>
+<span class="nc" id="L108">                directory.mkdir();</span>
+<span class="nc" id="L109">                logManager.logInformation(&quot;Extent Report Directory Created.&quot;, false, true);</span>
+<span class="nc" id="L110">                isExtentReportDirectorySetUp = true;</span>
+            } else {
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">                if (!isExtentReportDirectorySetUp) {</span>
+<span class="fc" id="L113">                    FileUtils.cleanDirectory(directory);</span>
+<span class="fc" id="L114">                    logManager.logInformation(&quot;Extent report directory cleared.&quot;, false, true);</span>
+<span class="fc" id="L115">                    isExtentReportDirectorySetUp = true;</span>
+                }
+            }
+<span class="nc" id="L118">        } catch (IOException e) {</span>
+<span class="nc" id="L119">            logManager.logInformation(&quot;Exception in the set up screenshot directory.&quot;, false, true);</span>
+<span class="nc" id="L120">            logManager.logException(e, false, false);</span>
+<span class="fc" id="L121">        }</span>
+<span class="fc" id="L122">    }</span>
+
+    public static void closeNode() {
+<span class="nc" id="L125">        testNode = null;</span>
+<span class="nc" id="L126">    }</span>
+
+    public static void createNode(String nodeName) {
+<span class="nc" id="L129">        testNode = extTest.createNode(nodeName);</span>
+<span class="nc" id="L130">    }</span>
+
+    public static void flushReport() {
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        if (extReport != null)</span>
+<span class="fc" id="L134">            extReport.flush();</span>
+
+<span class="fc" id="L136">    }</span>
+
+    public static void logInformation(String log) {
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        if (extTest != null) {</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">            if (testNode != null) {</span>
+<span class="nc" id="L141">                testNode.log(Status.INFO, log);</span>
+            } else {
+<span class="fc" id="L143">                extTest.log(Status.INFO, log);</span>
+            }
+        }
+
+<span class="fc" id="L147">    }</span>
+
+    public static void logSuccess(String log) {
+
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">        if (extTest != null) {</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">            if (testNode != null) {</span>
+<span class="nc" id="L153">                testNode.log(Status.PASS, MarkupHelper.createLabel(log, ExtentColor.GREEN));</span>
+            } else {
+<span class="fc" id="L155">                extTest.log(Status.PASS, MarkupHelper.createLabel(log, ExtentColor.GREEN));</span>
+            }
+        }
+
+<span class="fc" id="L159">    }</span>
+
+    public static void logWarning(String log) {
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        if (extTest != null) {</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">            if (testNode != null) {</span>
+<span class="nc" id="L165">                testNode.log(Status.WARNING, MarkupHelper.createLabel(log, ExtentColor.ORANGE));</span>
+            } else {
+<span class="nc" id="L167">                extTest.log(Status.WARNING, MarkupHelper.createLabel(log, ExtentColor.ORANGE));</span>
+            }
+        }
+
+<span class="nc" id="L171">    }</span>
+
+    public static void logError(String log) {
+
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        if (extTest != null) {</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">            if (testNode != null) {</span>
+<span class="nc" id="L177">                testNode.log(Status.ERROR, MarkupHelper.createLabel(log, ExtentColor.RED));</span>
+            } else {
+<span class="nc" id="L179">                extTest.log(Status.ERROR, MarkupHelper.createLabel(log, ExtentColor.RED));</span>
+            }
+        }
+
+<span class="nc" id="L183">    }</span>
+    
+    public static void logFail(String log) {
+
+<span class="nc bnc" id="L187" title="All 2 branches missed.">        if (extTest != null) {</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">            if (testNode != null) {</span>
+<span class="nc" id="L189">                testNode.log(Status.FAIL, MarkupHelper.createLabel(log, ExtentColor.RED));</span>
+            } else {
+<span class="nc" id="L191">                extTest.log(Status.FAIL, MarkupHelper.createLabel(log, ExtentColor.RED));</span>
+            }
+        }
+
+<span class="nc" id="L195">    }</span>
+
+    public static void logSkipped(String log) {
+
+<span class="nc bnc" id="L199" title="All 2 branches missed.">        if (extTest != null) {</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">            if (testNode != null) {</span>
+<span class="nc" id="L201">                testNode.log(Status.SKIP, MarkupHelper.createLabel(log, ExtentColor.GREY));</span>
+            } else {
+<span class="nc" id="L203">                extTest.log(Status.SKIP, MarkupHelper.createLabel(log, ExtentColor.GREY));</span>
+
+            }
+        }
+
+<span class="nc" id="L208">    }</span>
+
+    public static void logException(Exception e) {
+
+<span class="nc bnc" id="L212" title="All 2 branches missed.">        if (extTest != null) {</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">            if (testNode != null) {</span>
+<span class="nc" id="L214">                testNode.error(Arrays.toString(e.getStackTrace()));</span>
+            } else {
+<span class="nc" id="L216">                extTest.error(Arrays.toString(e.getStackTrace()));</span>
+            }
+        }
+<span class="nc" id="L219">    }</span>
+
+    public static void addScreenshot(DriverManager driverManager, String fileName) {
+
+<span class="nc" id="L223">        String screenshotPath = ScreenshotHelper.takeScreenshot(driverManager, fileName);</span>
+
+<span class="nc bnc" id="L225" title="All 2 branches missed.">        if (!screenshotPath.isEmpty())</span>
+            try {
+
+<span class="nc bnc" id="L228" title="All 2 branches missed.">                if (extTest != null) {</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">                    if (testNode != null) {</span>
+<span class="nc" id="L230">                        testNode.addScreenCaptureFromPath(screenshotPath);</span>
+                    } else {
+<span class="nc" id="L232">                        extTest.addScreenCaptureFromPath(screenshotPath);</span>
+                    }
+                }
+
+<span class="nc" id="L236">            } catch (IOException e) {</span>
+<span class="nc" id="L237">                logManager.logError(&quot;Exception while adding screenshot: &quot; + fileName);</span>
+<span class="nc" id="L238">                logManager.logException(e, false, false);</span>
+<span class="nc" id="L239">            }</span>
+
+<span class="nc" id="L241">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
